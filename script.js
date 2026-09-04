@@ -19,6 +19,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     requestAnimationFrame(raf);
 
+    // --- Prevent Jump to Top on Refresh (Sync Lenis with Hash / Scroll position) ---
+    if (window.location.hash) {
+        const hashTarget = document.querySelector(window.location.hash);
+        if (hashTarget) {
+            lenis.scrollTo(hashTarget, { immediate: true });
+        }
+    } else if (window.scrollY > 0) {
+        lenis.scrollTo(window.scrollY, { immediate: true });
+    }
+
+    // --- Smooth Scroll for Anchor Links via Lenis ---
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', (e) => {
+            const targetId = anchor.getAttribute('href');
+            if (targetId && targetId !== '#') {
+                const targetEl = document.querySelector(targetId);
+                if (targetEl) {
+                    e.preventDefault();
+                    lenis.scrollTo(targetEl, { duration: 1.2 });
+                    history.pushState(null, '', targetId);
+                }
+            }
+        });
+    });
+
     // --- Align Duplicate Tracks in Portfolio ---
     function alignTracks() {
         const hero = document.querySelector('.hero');
