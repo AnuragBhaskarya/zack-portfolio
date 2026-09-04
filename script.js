@@ -690,4 +690,19 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
+
+    // --- Image Protection (Prevent Right-Click & Drag) ---
+    document.addEventListener('contextmenu', (e) => {
+        if (e.target.tagName === 'IMG' || e.target.closest('.portfolio') || e.target.closest('.portfolio-grid')) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    document.addEventListener('dragstart', (e) => {
+        if (e.target.tagName === 'IMG') {
+            e.preventDefault();
+            return false;
+        }
+    });
 });

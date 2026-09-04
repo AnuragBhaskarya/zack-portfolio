@@ -1204,6 +1204,25 @@ footer {
     padding: 0 16px;
 }
 
+/* ===== IMAGE PROTECTION (PREVENT DOWNLOAD / LONG-PRESS SAVE) ===== */
+img,
+.thumb-card,
+.grid-thumb {
+    -webkit-touch-callout: none !important; /* Disables iOS long-press context menu (Save Image) */
+    -webkit-user-select: none !important;
+    -khtml-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    -webkit-user-drag: none !important;     /* Disables dragging image to save */
+    user-drag: none !important;
+}
+
+.portfolio img,
+.grid-thumb {
+    pointer-events: none !important;        /* Prevents direct tap/hold targeting on portfolio images */
+}
+
 .grid-thumb {
     width: 100%;
     aspect-ratio: 16 / 9;
