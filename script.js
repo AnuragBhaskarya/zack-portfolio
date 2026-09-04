@@ -574,4 +574,37 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }, { threshold: 0.5 });
+
+    // --- Load More Portfolio Grid (Mobile) ---
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    const portfolioGrid = document.getElementById('portfolioGrid');
+
+    if (loadMoreBtn && portfolioGrid) {
+        const gridThumbs = portfolioGrid.querySelectorAll('.grid-thumb');
+        const initialCount = 16; // 8 rows × 2 columns
+        let shown = initialCount;
+
+        // Hide thumbnails beyond initial count
+        gridThumbs.forEach((thumb, i) => {
+            if (i >= initialCount) {
+                thumb.classList.add('grid-thumb-hidden');
+            }
+        });
+
+        // Hide button if all items already shown
+        if (shown >= gridThumbs.length) {
+            loadMoreBtn.style.display = 'none';
+        }
+
+        loadMoreBtn.addEventListener('click', () => {
+            const nextShow = Math.min(shown + 4, gridThumbs.length);
+            for (let i = shown; i < nextShow; i++) {
+                gridThumbs[i].classList.remove('grid-thumb-hidden');
+            }
+            shown = nextShow;
+            if (shown >= gridThumbs.length) {
+                loadMoreBtn.style.display = 'none';
+            }
+        });
+    }
 });
