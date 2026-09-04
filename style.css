@@ -376,11 +376,13 @@ main {
 
 /* PERF: Portfolio tracks start paused, activated by IntersectionObserver */
 .tracks-deferred .icon-node,
-.tracks-deferred .circle-track {
+.tracks-deferred .circle-track,
+.tracks-deferred .icon-asset {
     animation-play-state: paused;
 }
 .tracks-deferred.tracks-active .icon-node,
-.tracks-deferred.tracks-active .circle-track {
+.tracks-deferred.tracks-active .circle-track,
+.tracks-deferred.tracks-active .icon-asset {
     animation-play-state: running;
 }
 
@@ -405,6 +407,8 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+    animation: counter-orbit var(--duration) linear infinite var(--dir, normal);
+    will-change: transform;
 }
 
 .icon-asset-right {
