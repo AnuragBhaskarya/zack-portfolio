@@ -19,15 +19,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     requestAnimationFrame(raf);
 
-    // --- Prevent Jump to Top on Refresh (Sync Lenis with Hash / Scroll position) ---
-    if (window.location.hash) {
-        const hashTarget = document.querySelector(window.location.hash);
-        if (hashTarget) {
-            lenis.scrollTo(hashTarget, { immediate: true });
-        }
-    } else if (window.scrollY > 0) {
-        lenis.scrollTo(window.scrollY, { immediate: true });
+    // --- Force Page to Always Load/Refresh at Top (0,0) ---
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
     }
+    window.scrollTo(0, 0);
+    lenis.scrollTo(0, { immediate: true });
+    if (window.location.hash) {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+    window.addEventListener('beforeunload', () => {
+        window.scrollTo(0, 0);
+    });
 
     // --- Smooth Scroll for Anchor Links via Lenis ---
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
