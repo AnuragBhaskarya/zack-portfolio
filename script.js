@@ -599,10 +599,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // --- Staggered reveal for mobile ---
         if (isMobile) {
-            // Stagger-reveal a set of thumbs: one by one, left then right per row
+            // Helper: execute callback when image finishes loading
+            function whenImageLoaded(img, callback) {
+                if (img.complete && img.naturalWidth > 0) {
+                    callback();
+                } else {
+                    const handleDone = () => {
+                        img.removeEventListener('load', handleDone);
+                        img.removeEventListener('error', handleDone);
+                        callback();
+                    };
+                    img.addEventListener('load', handleDone);
+                    img.addEventListener('error', handleDone);
+                }
+            }
+
+            // Stagger-reveal a set of thumbs: one by one after image actually loads
             function staggerReveal(thumbs, baseDelay) {
                 let delay = baseDelay || 0;
-                const ITEM_DELAY = 120;  // ms between each individual thumbnail
+                const ITEM_DELAY = 120; // ms between each individual thumbnail queue
 
                 // Reorder so left column comes before right for each row
                 const ordered = [];
@@ -613,7 +628,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 ordered.forEach((thumb) => {
                     setTimeout(() => {
-                        thumb.classList.add('grid-thumb-visible');
+                        whenImageLoaded(thumb, () => {
+                            requestAnimationFrame(() => {
+                                thumb.classList.add('grid-thumb-visible');
+                            });
+                        });
                     }, delay);
                     delay += ITEM_DELAY;
                 });
