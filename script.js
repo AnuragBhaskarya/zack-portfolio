@@ -366,7 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, observerOptions);
 
     // Select elements to lazily animate (excluding hero section which has keyframes)
-    const lazyElements = document.querySelectorAll('section:not(.hero) .badge, .portfolio, .faq-container, .section-title, .testimonials-slider, .footer-col');
+    const lazyElements = document.querySelectorAll('section:not(.hero) .badge, .faq-container, .section-title, .testimonials-slider, .footer-col');
     
     lazyElements.forEach(el => {
         el.classList.add('lazy-anim');

@@ -1025,6 +1025,11 @@ footer {
     animation: fadeSlideUp 0.8s ease-out both;
 }
 
+.portfolio {
+    animation: fadeSlideUp 0.8s ease-out both;
+    animation-delay: 1.6s;
+}
+
 .hero-content .badge { animation-delay: 0.6s; }
 .hero-content .hero-title { animation-delay: 0.8s; }
 .hero-content .hero-subtitle { animation-delay: 1.0s; }
