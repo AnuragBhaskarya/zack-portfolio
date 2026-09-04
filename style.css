@@ -1236,11 +1236,28 @@ footer {
         display: none;
     }
 
-    /* Remove hero entrance animations for performance */
+    /* Keep hero text slide-up animation like desktop, with smaller distance */
     .hero-content > * {
+        animation: fadeSlideUp 0.7s ease-out both !important;
+    }
+
+    .hero-content .badge { animation-delay: 0.2s !important; }
+    .hero-content .hero-title { animation-delay: 0.35s !important; }
+    .hero-content .hero-subtitle { animation-delay: 0.5s !important; }
+    .hero-content .hero-cta { animation-delay: 0.65s !important; }
+    .hero-content .trust-badge { animation-delay: 0.8s !important; }
+
+    /* Make all containers rigid (no fade-up) on mobile */
+    .portfolio {
         animation: none !important;
         opacity: 1 !important;
         transform: none !important;
+    }
+
+    .lazy-anim {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
     }
 
     .header {
@@ -1394,14 +1411,14 @@ footer {
     }
 
     .grid-thumb {
-        opacity: 0;
-        transform: translateY(18px);
-        transition: opacity 0.4s ease, transform 0.4s ease;
+        opacity: 0 !important;
+        transform: translateY(22px) !important;
+        transition: opacity 0.45s ease, transform 0.45s ease !important;
     }
 
     .grid-thumb.grid-thumb-visible {
-        opacity: 1;
-        transform: translateY(0);
+        opacity: 1 !important;
+        transform: translateY(0) !important;
     }
 
     .load-more-btn {

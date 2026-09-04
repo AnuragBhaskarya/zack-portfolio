@@ -599,24 +599,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // --- Staggered reveal for mobile ---
         if (isMobile) {
-            // Stagger-reveal a set of thumbs: left first, then right per row
+            // Stagger-reveal a set of thumbs: one by one, left then right per row
             function staggerReveal(thumbs, baseDelay) {
-                // Group into rows of 2 (2-column grid)
-                const rows = [];
-                for (let i = 0; i < thumbs.length; i += 2) {
-                    rows.push(thumbs.slice(i, i + 2));
-                }
                 let delay = baseDelay || 0;
-                const ROW_DELAY = 100;  // ms between rows
-                const COL_DELAY = 80;   // ms between left and right in same row
+                const ITEM_DELAY = 120;  // ms between each individual thumbnail
 
-                rows.forEach((row) => {
-                    row.forEach((thumb, colIdx) => {
-                        setTimeout(() => {
-                            thumb.classList.add('grid-thumb-visible');
-                        }, delay + colIdx * COL_DELAY);
-                    });
-                    delay += ROW_DELAY;
+                // Reorder so left column comes before right for each row
+                const ordered = [];
+                for (let i = 0; i < thumbs.length; i += 2) {
+                    ordered.push(thumbs[i]);
+                    if (i + 1 < thumbs.length) ordered.push(thumbs[i + 1]);
+                }
+
+                ordered.forEach((thumb) => {
+                    setTimeout(() => {
+                        thumb.classList.add('grid-thumb-visible');
+                    }, delay);
+                    delay += ITEM_DELAY;
                 });
             }
 
