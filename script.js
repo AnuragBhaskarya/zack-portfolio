@@ -583,6 +583,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const gridThumbs = portfolioGrid.querySelectorAll('.grid-thumb');
         const initialCount = 16; // 8 rows × 2 columns
         let shown = initialCount;
+        const isMobile = window.innerWidth <= 768;
 
         // Hide thumbnails beyond initial count
         gridThumbs.forEach((thumb, i) => {
@@ -596,15 +597,98 @@ document.addEventListener('DOMContentLoaded', () => {
             loadMoreBtn.style.display = 'none';
         }
 
-        loadMoreBtn.addEventListener('click', () => {
-            const nextShow = Math.min(shown + 4, gridThumbs.length);
-            for (let i = shown; i < nextShow; i++) {
-                gridThumbs[i].classList.remove('grid-thumb-hidden');
+        // --- Staggered reveal for mobile ---
+        if (isMobile) {
+            // Stagger-reveal a set of thumbs: left first, then right per row
+            function staggerReveal(thumbs, baseDelay) {
+                // Group into rows of 2 (2-column grid)
+                const rows = [];
+                for (let i = 0; i < thumbs.length; i += 2) {
+                    rows.push(thumbs.slice(i, i + 2));
+                }
+                let delay = baseDelay || 0;
+                const ROW_DELAY = 100;  // ms between rows
+                const COL_DELAY = 80;   // ms between left and right in same row
+
+                rows.forEach((row) => {
+                    row.forEach((thumb, colIdx) => {
+                        setTimeout(() => {
+                            thumb.classList.add('grid-thumb-visible');
+                        }, delay + colIdx * COL_DELAY);
+                    });
+                    delay += ROW_DELAY;
+                });
             }
-            shown = nextShow;
-            if (shown >= gridThumbs.length) {
-                loadMoreBtn.style.display = 'none';
-            }
-        });
+
+            // Initial load: stagger the first visible batch
+            const initialThumbs = Array.from(gridThumbs).slice(0, initialCount);
+            staggerReveal(initialThumbs, 150);
+
+            // IntersectionObserver for scroll-triggered reveal
+            const scrollObserver = new IntersectionObserver((entries) => {
+                // Collect all newly intersecting thumbs
+                const newlyVisible = [];
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting && !entry.target.classList.contains('grid-thumb-visible')) {
+                        newlyVisible.push(entry.target);
+                        scrollObserver.unobserve(entry.target);
+                    }
+                });
+                if (newlyVisible.length > 0) {
+                    staggerReveal(newlyVisible, 0);
+                }
+            }, { threshold: 0.15 });
+
+            // Observe all grid thumbs (including hidden ones for when they get revealed)
+            gridThumbs.forEach((thumb) => {
+                // Don't observe the initial batch (they're already being stagger-revealed)
+                if (!initialThumbs.includes(thumb)) {
+                    scrollObserver.observe(thumb);
+                }
+            });
+
+            // Load More: reveal hidden thumbs with stagger animation
+            loadMoreBtn.addEventListener('click', () => {
+                const nextShow = Math.min(shown + 4, gridThumbs.length);
+                const newThumbs = [];
+                for (let i = shown; i < nextShow; i++) {
+                    gridThumbs[i].classList.remove('grid-thumb-hidden');
+                    newThumbs.push(gridThumbs[i]);
+                    // Re-observe in case they need scroll-triggered reveal
+                    scrollObserver.observe(gridThumbs[i]);
+                }
+                shown = nextShow;
+                if (shown >= gridThumbs.length) {
+                    loadMoreBtn.style.display = 'none';
+                }
+                // Immediately reveal ones that are already in viewport
+                requestAnimationFrame(() => {
+                    const inView = [];
+                    const notInView = [];
+                    newThumbs.forEach((thumb) => {
+                        const rect = thumb.getBoundingClientRect();
+                        if (rect.top < window.innerHeight && rect.bottom > 0) {
+                            inView.push(thumb);
+                            scrollObserver.unobserve(thumb);
+                        }
+                    });
+                    if (inView.length > 0) {
+                        staggerReveal(inView, 0);
+                    }
+                });
+            });
+        } else {
+            // Desktop: no stagger animation, just load-more logic
+            loadMoreBtn.addEventListener('click', () => {
+                const nextShow = Math.min(shown + 4, gridThumbs.length);
+                for (let i = shown; i < nextShow; i++) {
+                    gridThumbs[i].classList.remove('grid-thumb-hidden');
+                }
+                shown = nextShow;
+                if (shown >= gridThumbs.length) {
+                    loadMoreBtn.style.display = 'none';
+                }
+            });
+        }
     }
 });

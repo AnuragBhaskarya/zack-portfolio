@@ -1393,6 +1393,17 @@ footer {
         display: grid;
     }
 
+    .grid-thumb {
+        opacity: 0;
+        transform: translateY(18px);
+        transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .grid-thumb.grid-thumb-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
     .load-more-btn {
         display: block;
     }
