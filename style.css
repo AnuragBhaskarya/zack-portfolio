@@ -425,7 +425,8 @@ main {
 }
 
 .hero-title {
-    font-size: clamp(2.5rem, 6vw, 4.2rem);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
     margin-bottom: 20px;
 }
 
@@ -564,7 +565,7 @@ main {
 
 /* ===== PORTFOLIO MARQUEE ===== */
 .portfolio {
-    padding: 60px 0;
+    padding: 35px 0;
     margin: 16px;
     border-radius: 40px;
     background: rgba(255, 255, 255, 0.6);
