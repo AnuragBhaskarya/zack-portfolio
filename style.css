@@ -1027,7 +1027,7 @@ footer {
 
 .portfolio {
     animation: fadeSlideUp 0.8s ease-out both;
-    animation-delay: 1.6s;
+    animation-delay: 0.5s;
 }
 
 .hero-content .badge { animation-delay: 0.6s; }
