@@ -505,7 +505,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (text) text.classList.add('animate');
             }, 150); 
         }
-    }, 1800); 
+    }, 1500); 
 
     // --- FAQ Banner Animations ---
     const faqBannerContainer = document.querySelector('.faq-banner-container');
