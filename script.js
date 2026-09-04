@@ -249,6 +249,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     if (!isHovered) {
                         x += baseSpeed * deltaScale;
+                    } else {
+                        x += (baseSpeed * 0.15) * deltaScale;
                     }
                     
                     x = wrapOffset(x);
@@ -330,42 +332,97 @@ document.addEventListener('DOMContentLoaded', () => {
     const sliderTrack = document.getElementById('sliderTrack');
     const prevBtn = document.querySelector('.prev-btn');
     const nextBtn = document.querySelector('.next-btn');
-    const cards = document.querySelectorAll('.testimonial-card');
+    const originalCards = Array.from(document.querySelectorAll('.testimonial-card'));
+    const numCards = originalCards.length;
     
-    let currentIndex = 0;
+    // 1. Clone cards for infinite loop
+    originalCards.forEach(card => {
+        const clone = card.cloneNode(true);
+        sliderTrack.appendChild(clone);
+    });
+    // Clone to start (reverse to maintain order when using insertBefore)
+    originalCards.slice().reverse().forEach(card => {
+        const clone = card.cloneNode(true);
+        sliderTrack.insertBefore(clone, sliderTrack.firstChild);
+    });
     
-    function updateSliderPosition() {
-        if (cards.length === 0) return;
-        
-        // Calculate the width of one card + gap
-        const cardWidth = cards[0].offsetWidth;
+    const allCards = document.querySelectorAll('.testimonial-card');
+    
+    let currentIndex = numCards; // Start at the first original card
+    let cachedCardWidth = 0;
+    let cachedGap = 0;
+
+    function calculateSliderMetrics() {
+        if (allCards.length === 0) return;
+        cachedCardWidth = allCards[0].offsetWidth;
         const style = window.getComputedStyle(sliderTrack);
-        const gap = parseFloat(style.gap) || 0;
-        
-        const moveDistance = (cardWidth + gap) * currentIndex;
-        sliderTrack.style.transform = `translateX(-${moveDistance}px)`;
+        cachedGap = parseFloat(style.gap) || 0;
     }
 
-    nextBtn.addEventListener('click', () => {
-        // Calculate max index based on view width
-        const trackWidth = sliderTrack.scrollWidth;
-        const containerWidth = sliderTrack.parentElement.offsetWidth;
-        // Simple logic: move right until the end
-        if (currentIndex < cards.length - 1) {
-            currentIndex++;
-            updateSliderPosition();
+    // Initial calculation
+    calculateSliderMetrics();
+    
+    function updateSliderPosition(animate = true) {
+        if (allCards.length === 0) return;
+        
+        if (!animate) {
+            sliderTrack.style.transition = 'none';
+        } else {
+            sliderTrack.style.transition = '';
         }
+        
+        const moveDistance = (cachedCardWidth + cachedGap) * currentIndex;
+        sliderTrack.style.transform = `translateX(-${moveDistance}px)`;
+        
+        // Force reflow if we disabled transition, so it applies instantly
+        if (!animate) {
+            sliderTrack.offsetHeight; 
+            sliderTrack.style.transition = ''; 
+        }
+    }
+
+    // Initial positioning without animation
+    updateSliderPosition(false);
+
+    let isAnimating = false;
+
+    function lockAnimation() {
+        isAnimating = true;
+        setTimeout(() => {
+            isAnimating = false;
+        }, 500); // matches the 0.5s CSS transition
+    }
+
+    // Seamless jump after transition ends
+    sliderTrack.addEventListener('transitionend', () => {
+        if (currentIndex >= numCards * 2) {
+            currentIndex -= numCards;
+            updateSliderPosition(false);
+        } else if (currentIndex < numCards) {
+            currentIndex += numCards;
+            updateSliderPosition(false);
+        }
+    });
+
+    nextBtn.addEventListener('click', () => {
+        if (isAnimating) return;
+        currentIndex++;
+        updateSliderPosition(true);
+        lockAnimation();
     });
 
     prevBtn.addEventListener('click', () => {
-        if (currentIndex > 0) {
-            currentIndex--;
-            updateSliderPosition();
-        }
+        if (isAnimating) return;
+        currentIndex--;
+        updateSliderPosition(true);
+        lockAnimation();
     });
 
     // Update on window resize to keep it aligned
-    window.addEventListener('resize', updateSliderPosition);
+    window.addEventListener('resize', () => {
+        calculateSliderMetrics();
+        updateSliderPosition(false); // Snap to position on resize
+    });
 
     // --- Intersection Observer for Lazy Animations ---
     const observerOptions = {
@@ -384,7 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, observerOptions);
 
     // Select elements to lazily animate (excluding hero section which has keyframes)
-    const lazyElements = document.querySelectorAll('section:not(.hero) .badge, .faq-container, .section-title, .testimonials-slider, .footer-col');
+    const lazyElements = document.querySelectorAll('section:not(.hero) .badge, .faq-banner-container, .section-title, .accordion-item, .footer-col');
     
     lazyElements.forEach(el => {
         el.classList.add('lazy-anim');
@@ -396,4 +453,125 @@ document.addEventListener('DOMContentLoaded', () => {
     footerCols.forEach((col, i) => {
         col.style.transitionDelay = `${i * 0.15}s`;
     });
+
+    // Only add lazy load animation to the originally visible first 3 testimonial cards
+    const lazyTestimonialCards = document.querySelectorAll('.testimonial-card');
+    // We added numCards clones at the beginning, so original cards start at index numCards
+    lazyTestimonialCards.forEach((card, i) => {
+        if (i >= numCards && i < numCards + 3) {
+            card.classList.add('lazy-anim');
+            card.style.transitionDelay = `${(i - numCards) * 0.15}s`;
+            animObserver.observe(card);
+        }
+    });
+
+
+    // --- Handwriting Animations ---
+    const handwrittenElements = document.querySelectorAll('.handwritten-annotation, .faq-handwritten');
+    
+    handwrittenElements.forEach(container => {
+        const textSpan = container.querySelector('span');
+        const arrow = container.querySelector('svg, i');
+        
+        if (textSpan) {
+            const text = textSpan.textContent;
+            textSpan.textContent = '';
+            textSpan.classList.add('handwriting-text');
+            
+            let delayCount = 0;
+            for (let i = 0; i < text.length; i++) {
+                const charSpan = document.createElement('span');
+                charSpan.textContent = text[i] === ' ' ? '\u00A0' : text[i];
+                if (text[i] !== ' ') {
+                    charSpan.style.animationDelay = `${delayCount * 0.05}s`;
+                    delayCount++;
+                }
+                textSpan.appendChild(charSpan);
+            }
+        }
+        
+        if (arrow) {
+            arrow.classList.add('handwriting-arrow');
+        }
+    });
+
+    setTimeout(() => {
+        const heroHandwritten = document.querySelector('.hero-cta .handwritten-annotation');
+        if (heroHandwritten) {
+            const arrow = heroHandwritten.querySelector('.handwriting-arrow');
+            const text = heroHandwritten.querySelector('.handwriting-text');
+            if (arrow) arrow.classList.add('animate');
+            setTimeout(() => {
+                if (text) text.classList.add('animate');
+            }, 150); 
+        }
+    }, 1800); 
+
+    // --- FAQ Banner Animations ---
+    const faqBannerContainer = document.querySelector('.faq-banner-container');
+    if (faqBannerContainer) {
+        const orangeSpan = faqBannerContainer.querySelector('.orange-banner span');
+        const whiteSpan = faqBannerContainer.querySelector('.white-banner span');
+        
+        const splitText = (span, baseDelay) => {
+            if (!span) return;
+            const text = span.textContent;
+            span.textContent = '';
+            let delayCount = 0;
+            for (let i = 0; i < text.length; i++) {
+                const charSpan = document.createElement('span');
+                charSpan.className = 'banner-char';
+                charSpan.textContent = text[i] === ' ' ? '\u00A0' : text[i];
+                if (text[i] !== ' ') {
+                    // Calculate precise delay: base + stagger
+                    charSpan.style.animationDelay = `${baseDelay + (delayCount * 0.04)}s`;
+                    delayCount++;
+                }
+                span.appendChild(charSpan);
+            }
+        };
+
+        // Orange banner bg wipe takes 0.4s, start text at 0.2s
+        splitText(orangeSpan, 0.2);
+        // Orange text finishes around 1.1s. Start white bg wipe at 1.1s, start text at 1.3s
+        splitText(whiteSpan, 1.3);
+
+        const bannerObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('start-anim');
+                    observer.unobserve(entry.target);
+                    
+                    // Trigger "Let's clear things up" after banners finish (approx 2300ms)
+                    setTimeout(() => {
+                        const faqHandwritten = document.querySelector('.faq-handwritten');
+                        if (faqHandwritten) {
+                            const arrow = faqHandwritten.querySelector('.handwriting-arrow');
+                            const text = faqHandwritten.querySelector('.handwriting-text');
+                            if (arrow) arrow.classList.add('animate');
+                            setTimeout(() => {
+                                if (text) text.classList.add('animate');
+                            }, 150);
+                        }
+                    }, 2300);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        bannerObserver.observe(faqBannerContainer);
+    }
+
+    const hwObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const arrow = entry.target.querySelector('.handwriting-arrow');
+                const text = entry.target.querySelector('.handwriting-text');
+                if (arrow) arrow.classList.add('animate');
+                setTimeout(() => {
+                    if (text) text.classList.add('animate');
+                }, 150);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
 });
