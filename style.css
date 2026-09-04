@@ -1227,8 +1227,7 @@ img,
     -moz-user-select: none !important;
     -ms-user-select: none !important;
     user-select: none !important;
-    -webkit-user-drag: none !important;     /* Disables dragging image to save */
-    user-drag: none !important;
+    -webkit-user-drag: none !important;     /* Disables dragging image to save in WebKit/Blink */
 }
 
 .portfolio img,
