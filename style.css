@@ -1263,8 +1263,9 @@ img,
         display: none !important;
     }
 
-    .logo-icon {
-        display: none;
+    .logo-icon,
+    .logo-icon-img {
+        display: none !important;
     }
 
     /* Keep hero text slide-up animation like desktop, with smaller distance */
