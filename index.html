@@ -1,663 +1,613 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZackGFX - Thumbnail Designer</title>
-    
-    <!-- Favicon Links (Circular Logo Hosted on Catbox) -->
-    <link rel="shortcut icon" href="https://files.catbox.moe/xk63r6.ico">
-    <link rel="icon" type="image/x-icon" href="https://files.catbox.moe/xk63r6.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://files.catbox.moe/3lpreg.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://files.catbox.moe/b5aemi.png">
-    <link rel="icon" type="image/png" sizes="64x64" href="https://files.catbox.moe/qkob8f.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://files.catbox.moe/1z0zdx.png">
-
-    <!-- SEO & Social Media Meta Tags -->
-    <meta name="description" content="Design is thinking made visual. ZackGFX - Professional Thumbnail Artist and Strategist for YouTubers.">
-    
-    <!-- Open Graph / Facebook / Discord / WhatsApp -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://zackgfx.pages.dev">
-    <meta property="og:title" content="ZackGFX - Thumbnail Designer & Strategist">
-    <meta property="og:description" content="Design is thinking made visual. I design the click moment your content deserves. Trusted by 300+ YouTubers.">
-    <meta property="og:image" content="https://files.catbox.moe/qofw3f.jpg">
-    <meta property="og:image:secure_url" content="https://files.catbox.moe/qofw3f.jpg">
-    <meta property="og:image:type" content="image/jpeg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="ZackGFX Social Media Banner">
-
-    <!-- Twitter / X Cards -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://zackgfx.pages.dev">
-    <meta name="twitter:title" content="ZackGFX - Thumbnail Designer & Strategist">
-    <meta name="twitter:description" content="Design is thinking made visual. I design the click moment your content deserves. Trusted by 300+ YouTubers.">
-    <meta name="twitter:image" content="https://files.catbox.moe/nezhj9.jpg">
-
-    <!-- Google Fonts: Inter and Caveat -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Inter:wght@400;500;600;700;800&family=Nunito:wght@900&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ZackGFX - Thumbnail Designer</title>
+<!-- Favicon Links (Circular Logo Hosted on Catbox) -->
+<link href="https://files.catbox.moe/xk63r6.ico" rel="shortcut icon"/>
+<link href="https://files.catbox.moe/xk63r6.ico" rel="icon" type="image/x-icon"/>
+<link href="https://files.catbox.moe/3lpreg.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="https://files.catbox.moe/b5aemi.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="https://files.catbox.moe/qkob8f.png" rel="icon" sizes="64x64" type="image/png"/>
+<link href="https://files.catbox.moe/1z0zdx.png" rel="apple-touch-icon" sizes="180x180"/>
+<!-- SEO & Social Media Meta Tags -->
+<meta content="Design is thinking made visual. ZackGFX - Professional Thumbnail Artist and Strategist for YouTubers." name="description"/>
+<!-- Open Graph / Facebook / Discord / WhatsApp -->
+<meta content="website" property="og:type"/>
+<meta content="https://zackgfx.pages.dev" property="og:url"/>
+<meta content="ZackGFX - Thumbnail Designer &amp; Strategist" property="og:title"/>
+<meta content="Design is thinking made visual. I design the click moment your content deserves. Trusted by 300+ YouTubers." property="og:description"/>
+<meta content="https://files.catbox.moe/qofw3f.jpg" property="og:image"/>
+<meta content="https://files.catbox.moe/qofw3f.jpg" property="og:image:secure_url"/>
+<meta content="image/jpeg" property="og:image:type"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="ZackGFX Social Media Banner" property="og:image:alt"/>
+<!-- Twitter / X Cards -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://zackgfx.pages.dev" name="twitter:url"/>
+<meta content="ZackGFX - Thumbnail Designer &amp; Strategist" name="twitter:title"/>
+<meta content="Design is thinking made visual. I design the click moment your content deserves. Trusted by 300+ YouTubers." name="twitter:description"/>
+<meta content="https://files.catbox.moe/nezhj9.jpg" name="twitter:image"/>
+<!-- Google Fonts: Inter and Caveat -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&amp;family=Inter:wght@400;500;600;700;800&amp;family=Nunito:wght@900&amp;display=swap" rel="stylesheet"/>
+<!-- FontAwesome for Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="style.css" rel="stylesheet"/>
 </head>
 <body>
+<!-- Floating Navigation Bar -->
+<header class="header">
+<div class="nav-container">
+<div class="logo">
+<img alt="ZackGFX Logo" class="logo-icon-img" height="28" src="https://files.catbox.moe/1z0zdx.png" width="28"/>
+<span class="logo-text"><span class="text-dark">Zack</span><span class="text-accent">GFX</span></span>
+</div>
+<div class="menu-toggle" id="menuToggle">
+<div class="divider"></div>
+<i class="fa-solid fa-bars"></i>
+</div>
+<a class="btn btn-dark nav-btn" href="https://www.instagram.com/zackgfx._/" target="_blank">Get started</a>
+</div>
+<!-- Mobile Dropdown Menu -->
+<nav class="mobile-nav" id="mobileNav">
+<ul>
+<li><a class="active" href="#home">Home</a></li>
+<li><a href="#portfolio">Portfolio</a></li>
+<li><a href="#faq">FAQ</a></li>
+<li><a href="https://www.instagram.com/zackgfx._/" target="_blank">Contact</a></li>
+</ul>
+</nav>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="hero" id="home">
+<!-- Left Background Circular Paths & Icons -->
+<div class="hero-bg-container left-bg" id="hero-tracks-left">
+<div class="circle-track track-3">
+<div class="track-bg-outer"></div>
+<div class="track-bg-inner"></div>
+<div class="icon-node" style="--start-deg: 0deg; --duration: 120s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#001E36" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#31A8FF" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Ps</text></svg></div></div><div class="icon-node" style="--start-deg: 45deg; --duration: 120s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M21 17l-1 1a3.5 3.5 0 0 1-5 0l-9-9 4-4 9 9a3.5 3.5 0 0 1 0 5z"></path><line x1="10" x2="14" y1="14" y2="10"></line><line x1="3" x2="6" y1="21" y2="18"></line><path d="M16 2l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z"></path></svg></div></div><div class="icon-node" style="--start-deg: 90deg; --duration: 120s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M18 11l-5-5L3 16v5h5l10-10z"></path><path d="M14 6l4 4"></path></svg></div></div><div class="icon-node" style="--start-deg: 135deg; --duration: 120s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-dasharray="3 3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="18" rx="2" width="18" x="3" y="3"></rect></svg></div></div><div class="icon-node" style="--start-deg: 180deg; --duration: 120s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#001E36" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#31A8FF" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Ps</text></svg></div></div><div class="icon-node" style="--start-deg: 225deg; --duration: 120s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M21 17l-1 1a3.5 3.5 0 0 1-5 0l-9-9 4-4 9 9a3.5 3.5 0 0 1 0 5z"></path><line x1="10" x2="14" y1="14" y2="10"></line><line x1="3" x2="6" y1="21" y2="18"></line><path d="M16 2l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z"></path></svg></div></div><div class="icon-node" style="--start-deg: 270deg; --duration: 120s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M18 11l-5-5L3 16v5h5l10-10z"></path><path d="M14 6l4 4"></path></svg></div></div><div class="icon-node" style="--start-deg: 315deg; --duration: 120s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-dasharray="3 3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="18" rx="2" width="18" x="3" y="3"></rect></svg></div></div>
+</div>
+<div class="circle-track track-2">
+<div class="track-bg-outer"></div>
+<div class="track-bg-inner"></div>
+<div class="icon-node" style="--start-deg: 15deg; --duration: 90s; --dir: reverse;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#00005B" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#EA77FF" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Pr</text></svg></div></div><div class="icon-node" style="--start-deg: 60deg; --duration: 90s; --dir: reverse;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="14" rx="2" width="20" x="2" y="6"></rect><path d="M2 6L6 2h4l-4 4"></path><path d="M10 6L14 2h4l-4 4"></path></svg></div></div><div class="icon-node" style="--start-deg: 105deg; --duration: 90s; --dir: reverse;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><line x1="20" x2="8.12" y1="4" y2="15.88"></line><line x1="14.47" x2="20" y1="14.48" y2="20"></line><line x1="8.12" x2="12" y1="8.12" y2="12"></line></svg></div></div><div class="icon-node" style="--start-deg: 150deg; --duration: 90s; --dir: reverse;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div></div><div class="icon-node" style="--start-deg: 195deg; --duration: 90s; --dir: reverse;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#00005B" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#EA77FF" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Pr</text></svg></div></div><div class="icon-node" style="--start-deg: 240deg; --duration: 90s; --dir: reverse;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="14" rx="2" width="20" x="2" y="6"></rect><path d="M2 6L6 2h4l-4 4"></path><path d="M10 6L14 2h4l-4 4"></path></svg></div></div><div class="icon-node" style="--start-deg: 285deg; --duration: 90s; --dir: reverse;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><line x1="20" x2="8.12" y1="4" y2="15.88"></line><line x1="14.47" x2="20" y1="14.48" y2="20"></line><line x1="8.12" x2="12" y1="8.12" y2="12"></line></svg></div></div><div class="icon-node" style="--start-deg: 330deg; --duration: 90s; --dir: reverse;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div></div>
+</div>
+<div class="circle-track track-1">
+<div class="track-bg-outer"></div>
+<div class="track-bg-inner"></div>
+<div class="icon-node" style="--start-deg: 30deg; --duration: 60s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#00005B" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#9999FF" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Ae</text></svg></div></div><div class="icon-node" style="--start-deg: 75deg; --duration: 60s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M12 2l2.4 5.6L20 10l-5.6 2.4L12 18l-2.4-5.6L4 10l5.6-2.4z"></path></svg></div></div><div class="icon-node" style="--start-deg: 120deg; --duration: 60s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 12 12 17 22 12"></polyline><polyline points="2 17 12 22 22 17"></polyline></svg></div></div><div class="icon-node" style="--start-deg: 165deg; --duration: 60s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></div></div><div class="icon-node" style="--start-deg: 210deg; --duration: 60s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#00005B" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#9999FF" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Ae</text></svg></div></div><div class="icon-node" style="--start-deg: 255deg; --duration: 60s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M12 2l2.4 5.6L20 10l-5.6 2.4L12 18l-2.4-5.6L4 10l5.6-2.4z"></path></svg></div></div><div class="icon-node" style="--start-deg: 300deg; --duration: 60s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 12 12 17 22 12"></polyline><polyline points="2 17 12 22 22 17"></polyline></svg></div></div><div class="icon-node" style="--start-deg: 345deg; --duration: 60s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></div></div>
+</div></div>
+<div class="circle-track track-2">
+<div class="track-bg-outer"></div>
+<div class="track-bg-inner"></div>
+<div class="icon-node" style="--start-deg: 30deg; --duration: 90s; --dir: reverse;">
+<div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#00005B" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#EA77FF" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Pr</text></svg></div>
+</div>
+<div class="icon-node" style="--start-deg: 120deg; --duration: 90s; --dir: reverse;">
+<div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="13.5" cy="6.5" fill="#ff4d29" r=".5" stroke="none"></circle><circle cx="17.5" cy="10.5" fill="#ff4d29" r=".5" stroke="none"></circle><circle cx="8.5" cy="7.5" fill="#ff4d29" r=".5" stroke="none"></circle><circle cx="6.5" cy="12.5" fill="#ff4d29" r=".5" stroke="none"></circle><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c1.66 0 3-1.34 3-3 0-.35-.07-.69-.21-1-.45-.96-.05-2 1.05-2H18c3.31 0 6-2.69 6-6 0-4.42-5.37-8-12-8z"></path></svg></div>
+</div>
+<div class="icon-node" style="--start-deg: 210deg; --duration: 90s; --dir: reverse;">
+<div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#330000" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#FF9A00" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Ai</text></svg></div>
+</div>
+<div class="icon-node" style="--start-deg: 300deg; --duration: 90s; --dir: reverse;">
+<div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M6.13 1L6 16a2 2 0 0 0 2 2h15"></path><path d="M1 6.13L16 6a2 2 0 0 1 2 2v15"></path></svg></div>
+</div>
+</div>
+<div class="circle-track track-1">
+<div class="track-bg-outer"></div>
+<div class="track-bg-inner"></div>
+<div class="icon-node" style="--start-deg: 60deg; --duration: 60s;">
+<div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#00005B" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#9999FF" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Ae</text></svg></div>
+</div>
+<div class="icon-node" style="--start-deg: 150deg; --duration: 60s;">
+<div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 12 12 17 22 12"></polyline><polyline points="2 17 12 22 22 17"></polyline></svg></div>
+</div>
+<div class="icon-node" style="--start-deg: 240deg; --duration: 60s;">
+<div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#001D26" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#26C4EC" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Lr</text></svg></div>
+</div>
+<div class="icon-node" style="--start-deg: 330deg; --duration: 60s;">
+<div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M12 2l2.4 5.6L20 10l-5.6 2.4L12 18l-2.4-5.6L4 10l5.6-2.4z"></path></svg></div>
+</div>
+</div>
 
+<!-- Right Background Circular Paths & Icons -->
+<div class="hero-bg-container right-bg" id="hero-tracks-right">
+<div class="circle-track track-3">
+<div class="track-bg-outer"></div>
+<div class="track-bg-inner"></div>
+<div class="icon-node" style="--start-deg: 15deg; --duration: 120s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#330000" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#FF9A00" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Ai</text></svg></div></div><div class="icon-node" style="--start-deg: 60deg; --duration: 120s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><circle cx="11" cy="11" r="2"></circle></svg></div></div><div class="icon-node" style="--start-deg: 105deg; --duration: 120s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="13.5" cy="6.5" fill="#ff4d29" r=".5" stroke="none"></circle><circle cx="17.5" cy="10.5" fill="#ff4d29" r=".5" stroke="none"></circle><circle cx="8.5" cy="7.5" fill="#ff4d29" r=".5" stroke="none"></circle><circle cx="6.5" cy="12.5" fill="#ff4d29" r=".5" stroke="none"></circle><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c1.66 0 3-1.34 3-3 0-.35-.07-.69-.21-1-.45-.96-.05-2 1.05-2H18c3.31 0 6-2.69 6-6 0-4.42-5.37-8-12-8z"></path></svg></div></div><div class="icon-node" style="--start-deg: 150deg; --duration: 120s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></div></div><div class="icon-node" style="--start-deg: 195deg; --duration: 120s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#330000" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#FF9A00" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Ai</text></svg></div></div><div class="icon-node" style="--start-deg: 240deg; --duration: 120s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><circle cx="11" cy="11" r="2"></circle></svg></div></div><div class="icon-node" style="--start-deg: 285deg; --duration: 120s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="13.5" cy="6.5" fill="#ff4d29" r=".5" stroke="none"></circle><circle cx="17.5" cy="10.5" fill="#ff4d29" r=".5" stroke="none"></circle><circle cx="8.5" cy="7.5" fill="#ff4d29" r=".5" stroke="none"></circle><circle cx="6.5" cy="12.5" fill="#ff4d29" r=".5" stroke="none"></circle><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c1.66 0 3-1.34 3-3 0-.35-.07-.69-.21-1-.45-.96-.05-2 1.05-2H18c3.31 0 6-2.69 6-6 0-4.42-5.37-8-12-8z"></path></svg></div></div><div class="icon-node" style="--start-deg: 330deg; --duration: 120s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></div></div>
+</div>
+<div class="circle-track track-2">
+<div class="track-bg-outer"></div>
+<div class="track-bg-inner"></div>
+<div class="icon-node" style="--start-deg: 30deg; --duration: 90s;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#001D26" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#26C4EC" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Lr</text></svg></div></div><div class="icon-node" style="--start-deg: 75deg; --duration: 90s;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg></div></div><div class="icon-node" style="--start-deg: 120deg; --duration: 90s;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><line x1="4" x2="4" y1="21" y2="14"></line><line x1="4" x2="4" y1="10" y2="3"></line><line x1="12" x2="12" y1="21" y2="12"></line><line x1="12" x2="12" y1="8" y2="3"></line><line x1="20" x2="20" y1="21" y2="16"></line><line x1="20" x2="20" y1="12" y2="3"></line><line x1="1" x2="7" y1="14" y2="14"></line><line x1="9" x2="15" y1="8" y2="8"></line><line x1="17" x2="23" y1="16" y2="16"></line></svg></div></div><div class="icon-node" style="--start-deg: 165deg; --duration: 90s;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="14.31" x2="20.05" y1="8" y2="17.94"></line><line x1="9.69" x2="21.17" y1="8" y2="8"></line><line x1="7.38" x2="13.12" y1="12" y2="2.06"></line><line x1="9.69" x2="3.95" y1="16" y2="6.06"></line><line x1="14.31" x2="2.83" y1="16" y2="16"></line><line x1="16.62" x2="10.88" y1="12" y2="21.94"></line></svg></div></div><div class="icon-node" style="--start-deg: 210deg; --duration: 90s;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#001D26" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#26C4EC" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Lr</text></svg></div></div><div class="icon-node" style="--start-deg: 255deg; --duration: 90s;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg></div></div><div class="icon-node" style="--start-deg: 300deg; --duration: 90s;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><line x1="4" x2="4" y1="21" y2="14"></line><line x1="4" x2="4" y1="10" y2="3"></line><line x1="12" x2="12" y1="21" y2="12"></line><line x1="12" x2="12" y1="8" y2="3"></line><line x1="20" x2="20" y1="21" y2="16"></line><line x1="20" x2="20" y1="12" y2="3"></line><line x1="1" x2="7" y1="14" y2="14"></line><line x1="9" x2="15" y1="8" y2="8"></line><line x1="17" x2="23" y1="16" y2="16"></line></svg></div></div><div class="icon-node" style="--start-deg: 345deg; --duration: 90s;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="14.31" x2="20.05" y1="8" y2="17.94"></line><line x1="9.69" x2="21.17" y1="8" y2="8"></line><line x1="7.38" x2="13.12" y1="12" y2="2.06"></line><line x1="9.69" x2="3.95" y1="16" y2="6.06"></line><line x1="14.31" x2="2.83" y1="16" y2="16"></line><line x1="16.62" x2="10.88" y1="12" y2="21.94"></line></svg></div></div>
+</div>
+<div class="circle-track track-1">
+<div class="track-bg-outer"></div>
+<div class="track-bg-inner"></div>
+<div class="icon-node" style="--start-deg: 0deg; --duration: 60s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#1E002B" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#0ACF83" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Fi</text></svg></div></div><div class="icon-node" style="--start-deg: 45deg; --duration: 60s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" x2="15" y1="20" y2="20"></line><line x1="12" x2="12" y1="4" y2="20"></line></svg></div></div><div class="icon-node" style="--start-deg: 90deg; --duration: 60s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M6.13 1L6 16a2 2 0 0 0 2 2h15"></path><path d="M1 6.13L16 6a2 2 0 0 1 2 2v15"></path></svg></div></div><div class="icon-node" style="--start-deg: 135deg; --duration: 60s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></div></div><div class="icon-node" style="--start-deg: 180deg; --duration: 60s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#1E002B" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#0ACF83" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Fi</text></svg></div></div><div class="icon-node" style="--start-deg: 225deg; --duration: 60s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" x2="15" y1="20" y2="20"></line><line x1="12" x2="12" y1="4" y2="20"></line></svg></div></div><div class="icon-node" style="--start-deg: 270deg; --duration: 60s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M6.13 1L6 16a2 2 0 0 0 2 2h15"></path><path d="M1 6.13L16 6a2 2 0 0 1 2 2v15"></path></svg></div></div><div class="icon-node" style="--start-deg: 315deg; --duration: 60s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></div></div>
+</div></div>
+<div class="circle-track track-2">
+<div class="track-bg-outer"></div>
+<div class="track-bg-inner"></div>
+<div class="icon-node" style="--start-deg: 45deg; --duration: 90s;">
+<div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#00005B" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#EA77FF" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Pr</text></svg></div>
+</div>
+<div class="icon-node" style="--start-deg: 135deg; --duration: 90s;">
+<div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="13.5" cy="6.5" fill="#ff4d29" r=".5" stroke="none"></circle><circle cx="17.5" cy="10.5" fill="#ff4d29" r=".5" stroke="none"></circle><circle cx="8.5" cy="7.5" fill="#ff4d29" r=".5" stroke="none"></circle><circle cx="6.5" cy="12.5" fill="#ff4d29" r=".5" stroke="none"></circle><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c1.66 0 3-1.34 3-3 0-.35-.07-.69-.21-1-.45-.96-.05-2 1.05-2H18c3.31 0 6-2.69 6-6 0-4.42-5.37-8-12-8z"></path></svg></div>
+</div>
+<div class="icon-node" style="--start-deg: 225deg; --duration: 90s;">
+<div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#330000" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#FF9A00" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Ai</text></svg></div>
+</div>
+<div class="icon-node" style="--start-deg: 315deg; --duration: 90s;">
+<div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M6.13 1L6 16a2 2 0 0 0 2 2h15"></path><path d="M1 6.13L16 6a2 2 0 0 1 2 2v15"></path></svg></div>
+</div>
+</div>
+<div class="circle-track track-1">
+<div class="track-bg-outer"></div>
+<div class="track-bg-inner"></div>
+<div class="icon-node" style="--start-deg: 75deg; --duration: 60s; --dir: reverse;">
+<div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#00005B" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#9999FF" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Ae</text></svg></div>
+</div>
+<div class="icon-node" style="--start-deg: 165deg; --duration: 60s; --dir: reverse;">
+<div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 12 12 17 22 12"></polyline><polyline points="2 17 12 22 22 17"></polyline></svg></div>
+</div>
+<div class="icon-node" style="--start-deg: 255deg; --duration: 60s; --dir: reverse;">
+<div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#001D26" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#26C4EC" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Lr</text></svg></div>
+</div>
+<div class="icon-node" style="--start-deg: 345deg; --duration: 60s; --dir: reverse;">
+<div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M12 2l2.4 5.6L20 10l-5.6 2.4L12 18l-2.4-5.6L4 10l5.6-2.4z"></path></svg></div>
+</div>
+</div>
 
-    <!-- Floating Navigation Bar -->
-    <header class="header">
-        <div class="nav-container">
-            <div class="logo">
-                <img src="https://files.catbox.moe/1z0zdx.png" alt="ZackGFX Logo" class="logo-icon-img" width="28" height="28">
-                <span class="logo-text"><span class="text-dark">Zack</span><span class="text-accent">GFX</span></span>
-            </div>
-            
-            <div class="menu-toggle" id="menuToggle">
-                <div class="divider"></div>
-                <i class="fa-solid fa-bars"></i>
-            </div>
-            
-            <a href="https://www.instagram.com/zackgfx._/" target="_blank" class="btn btn-dark nav-btn">Get started</a>
-        </div>
-        
-        <!-- Mobile Dropdown Menu -->
-        <nav class="mobile-nav" id="mobileNav">
-            <ul>
-                <li><a href="#home" class="active">Home</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#faq">FAQ</a></li>
-                <li><a href="https://www.instagram.com/zackgfx._/" target="_blank">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        <!-- Hero Section -->
-        <section class="hero" id="home">
-            <!-- Left Background Circular Paths & Icons -->
-            <div class="hero-bg-container left-bg" id="hero-tracks-left">
-                <div class="circle-track track-3">
-                    <div class="track-bg-outer"></div>
-                    <div class="track-bg-inner"></div>
-                    <div class="icon-node" style="--start-deg: 0deg; --duration: 120s;">
-                        <div class="icon-asset icon-asset-right"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="none"><rect width="24" height="24" rx="4" fill="#001E36"/><text x="50%" y="50%" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#31A8FF" text-anchor="middle" dominant-baseline="central">Ps</text></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 90deg; --duration: 120s;">
-                        <div class="icon-asset icon-asset-right"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 180deg; --duration: 120s;">
-                        <div class="icon-asset icon-asset-right"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="none"><rect width="24" height="24" rx="4" fill="#001E36"/><text x="50%" y="50%" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#31A8FF" text-anchor="middle" dominant-baseline="central">Ps</text></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 270deg; --duration: 120s;">
-                        <div class="icon-asset icon-asset-right"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="#ff4d29" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 17l-1 1a3.5 3.5 0 0 1-5 0l-9-9 4-4 9 9a3.5 3.5 0 0 1 0 5z"/><line x1="10" y1="14" x2="14" y2="10"/><line x1="3" y1="21" x2="6" y2="18"/><path d="M16 2l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z"/></svg></div>
-                    </div>
-                </div>
-                <div class="circle-track track-2">
-                    <div class="track-bg-outer"></div>
-                    <div class="track-bg-inner"></div>
-                    <div class="icon-node" style="--start-deg: 30deg; --duration: 90s; --dir: reverse;">
-                        <div class="icon-asset icon-asset-right"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="none"><rect width="24" height="24" rx="4" fill="#00005B"/><text x="50%" y="50%" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#EA77FF" text-anchor="middle" dominant-baseline="central">Pr</text></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 120deg; --duration: 90s; --dir: reverse;">
-                        <div class="icon-asset icon-asset-right"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="#ff4d29" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="#ff4d29" stroke="none"/><circle cx="17.5" cy="10.5" r=".5" fill="#ff4d29" stroke="none"/><circle cx="8.5" cy="7.5" r=".5" fill="#ff4d29" stroke="none"/><circle cx="6.5" cy="12.5" r=".5" fill="#ff4d29" stroke="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c1.66 0 3-1.34 3-3 0-.35-.07-.69-.21-1-.45-.96-.05-2 1.05-2H18c3.31 0 6-2.69 6-6 0-4.42-5.37-8-12-8z"/></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 210deg; --duration: 90s; --dir: reverse;">
-                        <div class="icon-asset icon-asset-right"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="none"><rect width="24" height="24" rx="4" fill="#330000"/><text x="50%" y="50%" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#FF9A00" text-anchor="middle" dominant-baseline="central">Ai</text></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 300deg; --duration: 90s; --dir: reverse;">
-                        <div class="icon-asset icon-asset-right"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.13 1L6 16a2 2 0 0 0 2 2h15"/><path d="M1 6.13L16 6a2 2 0 0 1 2 2v15"/></svg></div>
-                    </div>
-                </div>
-                <div class="circle-track track-1">
-                    <div class="track-bg-outer"></div>
-                    <div class="track-bg-inner"></div>
-                    <div class="icon-node" style="--start-deg: 60deg; --duration: 60s;">
-                        <div class="icon-asset icon-asset-right"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="none"><rect width="24" height="24" rx="4" fill="#00005B"/><text x="50%" y="50%" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#9999FF" text-anchor="middle" dominant-baseline="central">Ae</text></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 150deg; --duration: 60s;">
-                        <div class="icon-asset icon-asset-right"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 12 12 17 22 12"/><polyline points="2 17 12 22 22 17"/></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 240deg; --duration: 60s;">
-                        <div class="icon-asset icon-asset-right"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="none"><rect width="24" height="24" rx="4" fill="#001D26"/><text x="50%" y="50%" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#26C4EC" text-anchor="middle" dominant-baseline="central">Lr</text></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 330deg; --duration: 60s;">
-                        <div class="icon-asset icon-asset-right"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="#ff4d29" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 5.6L20 10l-5.6 2.4L12 18l-2.4-5.6L4 10l5.6-2.4z"/></svg></div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Right Background Circular Paths & Icons -->
-            <div class="hero-bg-container right-bg" id="hero-tracks-right">
-                <div class="circle-track track-3">
-                    <div class="track-bg-outer"></div>
-                    <div class="track-bg-inner"></div>
-                    <div class="icon-node" style="--start-deg: 15deg; --duration: 120s; --dir: reverse;">
-                        <div class="icon-asset icon-asset-left"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="none"><rect width="24" height="24" rx="4" fill="#001E36"/><text x="50%" y="50%" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#31A8FF" text-anchor="middle" dominant-baseline="central">Ps</text></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 105deg; --duration: 120s; --dir: reverse;">
-                        <div class="icon-asset icon-asset-left"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 195deg; --duration: 120s; --dir: reverse;">
-                        <div class="icon-asset icon-asset-left"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="none"><rect width="24" height="24" rx="4" fill="#001E36"/><text x="50%" y="50%" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#31A8FF" text-anchor="middle" dominant-baseline="central">Ps</text></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 285deg; --duration: 120s; --dir: reverse;">
-                        <div class="icon-asset icon-asset-left"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="#ff4d29" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 17l-1 1a3.5 3.5 0 0 1-5 0l-9-9 4-4 9 9a3.5 3.5 0 0 1 0 5z"/><line x1="10" y1="14" x2="14" y2="10"/><line x1="3" y1="21" x2="6" y2="18"/><path d="M16 2l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z"/></svg></div>
-                    </div>
-                </div>
-                <div class="circle-track track-2">
-                    <div class="track-bg-outer"></div>
-                    <div class="track-bg-inner"></div>
-                    <div class="icon-node" style="--start-deg: 45deg; --duration: 90s;">
-                        <div class="icon-asset icon-asset-left"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="none"><rect width="24" height="24" rx="4" fill="#00005B"/><text x="50%" y="50%" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#EA77FF" text-anchor="middle" dominant-baseline="central">Pr</text></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 135deg; --duration: 90s;">
-                        <div class="icon-asset icon-asset-left"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="#ff4d29" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="#ff4d29" stroke="none"/><circle cx="17.5" cy="10.5" r=".5" fill="#ff4d29" stroke="none"/><circle cx="8.5" cy="7.5" r=".5" fill="#ff4d29" stroke="none"/><circle cx="6.5" cy="12.5" r=".5" fill="#ff4d29" stroke="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c1.66 0 3-1.34 3-3 0-.35-.07-.69-.21-1-.45-.96-.05-2 1.05-2H18c3.31 0 6-2.69 6-6 0-4.42-5.37-8-12-8z"/></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 225deg; --duration: 90s;">
-                        <div class="icon-asset icon-asset-left"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="none"><rect width="24" height="24" rx="4" fill="#330000"/><text x="50%" y="50%" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#FF9A00" text-anchor="middle" dominant-baseline="central">Ai</text></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 315deg; --duration: 90s;">
-                        <div class="icon-asset icon-asset-left"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.13 1L6 16a2 2 0 0 0 2 2h15"/><path d="M1 6.13L16 6a2 2 0 0 1 2 2v15"/></svg></div>
-                    </div>
-                </div>
-                <div class="circle-track track-1">
-                    <div class="track-bg-outer"></div>
-                    <div class="track-bg-inner"></div>
-                    <div class="icon-node" style="--start-deg: 75deg; --duration: 60s; --dir: reverse;">
-                        <div class="icon-asset icon-asset-left"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="none"><rect width="24" height="24" rx="4" fill="#00005B"/><text x="50%" y="50%" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#9999FF" text-anchor="middle" dominant-baseline="central">Ae</text></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 165deg; --duration: 60s; --dir: reverse;">
-                        <div class="icon-asset icon-asset-left"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 12 12 17 22 12"/><polyline points="2 17 12 22 22 17"/></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 255deg; --duration: 60s; --dir: reverse;">
-                        <div class="icon-asset icon-asset-left"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="none"><rect width="24" height="24" rx="4" fill="#001D26"/><text x="50%" y="50%" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#26C4EC" text-anchor="middle" dominant-baseline="central">Lr</text></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 345deg; --duration: 60s; --dir: reverse;">
-                        <div class="icon-asset icon-asset-left"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="#ff4d29" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 5.6L20 10l-5.6 2.4L12 18l-2.4-5.6L4 10l5.6-2.4z"/></svg></div>
-                    </div>
-                </div>
-            </div>
 <div class="hero-content">
-                <div class="badge">› THUMBNAIL DESIGNER ‹</div>
-                
-                <h1 class="hero-title">
-                    <span class="text-dark">Design is</span> <span class="text-accent">thinking</span><br>
-                    <span class="text-dark">Made</span> <span class="text-accent">visuals.</span>
-                </h1>
-                
-                <p class="hero-subtitle">
-                    Hello there, I'm a Thumbnail Artist and Strategist.<br>
+<div class="badge">› THUMBNAIL DESIGNER ‹</div>
+<h1 class="hero-title">
+<span class="text-dark">Design is</span> <span class="text-accent">thinking</span><br/>
+<span class="text-dark">Made</span> <span class="text-accent">visuals.</span>
+</h1>
+<p class="hero-subtitle">
+                    Hello there, I'm a Thumbnail Artist and Strategist.<br/>
                     I Design the Click moment your Content deserves.
                 </p>
-                
-                <div class="hero-cta">
-                    <div class="handwritten-annotation">
-                        <span>Order now</span>
-                        <svg viewBox="0 0 50 50" width="30" height="30" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-top: -7px; margin-left: 17px;">
-                            <path d="M 10,10 Q 30,10 40,35" />
-                            <polyline points="25,30 40,35 35,20" />
-                        </svg>
-                    </div>
-                    <a href="https://www.instagram.com/zackgfx._/" target="_blank" class="btn btn-accent btn-lg">Discuss your ideas</a>
-                </div>
-                
-                <div class="trust-badge">
-                    <div class="avatars">
-                        <div class="avatar" style="background-image: url('https://i.pravatar.cc/100?img=11')"></div>
-                        <div class="avatar" style="background-image: url('https://i.pravatar.cc/100?img=33')"></div>
-                        <div class="avatar" style="background-image: url('https://i.pravatar.cc/100?img=59')"></div>
-                    </div>
-                    <span>Trusted by 300+ YouTubers</span>
-                </div>
-            </div>
-        </section>
+<div class="hero-cta">
+<div class="handwritten-annotation">
+<span>Order now</span>
+<svg fill="none" height="30" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" style="margin-top: -7px; margin-left: 17px;" viewbox="0 0 50 50" width="30">
+<path d="M 10,10 Q 30,10 40,35"></path>
+<polyline points="25,30 40,35 35,20"></polyline>
+</svg>
+</div>
+<a class="btn btn-accent btn-lg" href="https://www.instagram.com/zackgfx._/" target="_blank">Discuss your ideas</a>
+</div>
+<div class="trust-badge">
+<div class="avatars">
+<div class="avatar" style="background-image: url('https://i.pravatar.cc/100?img=11')"></div>
+<div class="avatar" style="background-image: url('https://i.pravatar.cc/100?img=33')"></div>
+<div class="avatar" style="background-image: url('https://i.pravatar.cc/100?img=59')"></div>
+</div>
+<span>Trusted by 300+ YouTubers</span>
+</div>
+</div>
+</section>
+<!-- Portfolio Marquee Section -->
+<section class="portfolio" id="portfolio">
+<!-- Left Background Circular Paths & Icons -->
+<div class="hero-bg-container left-bg" id="portfolio-tracks-left">
+<div class="circle-track track-3">
+<div class="track-bg-outer"></div>
+<div class="track-bg-inner"></div>
+<div class="icon-node" style="--start-deg: 0deg; --duration: 120s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#001E36" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#31A8FF" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Ps</text></svg></div></div><div class="icon-node" style="--start-deg: 45deg; --duration: 120s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M21 17l-1 1a3.5 3.5 0 0 1-5 0l-9-9 4-4 9 9a3.5 3.5 0 0 1 0 5z"></path><line x1="10" x2="14" y1="14" y2="10"></line><line x1="3" x2="6" y1="21" y2="18"></line><path d="M16 2l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z"></path></svg></div></div><div class="icon-node" style="--start-deg: 90deg; --duration: 120s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M18 11l-5-5L3 16v5h5l10-10z"></path><path d="M14 6l4 4"></path></svg></div></div><div class="icon-node" style="--start-deg: 135deg; --duration: 120s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-dasharray="3 3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="18" rx="2" width="18" x="3" y="3"></rect></svg></div></div><div class="icon-node" style="--start-deg: 180deg; --duration: 120s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#001E36" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#31A8FF" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Ps</text></svg></div></div><div class="icon-node" style="--start-deg: 225deg; --duration: 120s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M21 17l-1 1a3.5 3.5 0 0 1-5 0l-9-9 4-4 9 9a3.5 3.5 0 0 1 0 5z"></path><line x1="10" x2="14" y1="14" y2="10"></line><line x1="3" x2="6" y1="21" y2="18"></line><path d="M16 2l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z"></path></svg></div></div><div class="icon-node" style="--start-deg: 270deg; --duration: 120s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M18 11l-5-5L3 16v5h5l10-10z"></path><path d="M14 6l4 4"></path></svg></div></div><div class="icon-node" style="--start-deg: 315deg; --duration: 120s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-dasharray="3 3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="18" rx="2" width="18" x="3" y="3"></rect></svg></div></div>
+</div>
+<div class="circle-track track-2">
+<div class="track-bg-outer"></div>
+<div class="track-bg-inner"></div>
+<div class="icon-node" style="--start-deg: 15deg; --duration: 90s; --dir: reverse;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#00005B" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#EA77FF" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Pr</text></svg></div></div><div class="icon-node" style="--start-deg: 60deg; --duration: 90s; --dir: reverse;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="14" rx="2" width="20" x="2" y="6"></rect><path d="M2 6L6 2h4l-4 4"></path><path d="M10 6L14 2h4l-4 4"></path></svg></div></div><div class="icon-node" style="--start-deg: 105deg; --duration: 90s; --dir: reverse;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><line x1="20" x2="8.12" y1="4" y2="15.88"></line><line x1="14.47" x2="20" y1="14.48" y2="20"></line><line x1="8.12" x2="12" y1="8.12" y2="12"></line></svg></div></div><div class="icon-node" style="--start-deg: 150deg; --duration: 90s; --dir: reverse;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div></div><div class="icon-node" style="--start-deg: 195deg; --duration: 90s; --dir: reverse;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#00005B" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#EA77FF" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Pr</text></svg></div></div><div class="icon-node" style="--start-deg: 240deg; --duration: 90s; --dir: reverse;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="14" rx="2" width="20" x="2" y="6"></rect><path d="M2 6L6 2h4l-4 4"></path><path d="M10 6L14 2h4l-4 4"></path></svg></div></div><div class="icon-node" style="--start-deg: 285deg; --duration: 90s; --dir: reverse;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><line x1="20" x2="8.12" y1="4" y2="15.88"></line><line x1="14.47" x2="20" y1="14.48" y2="20"></line><line x1="8.12" x2="12" y1="8.12" y2="12"></line></svg></div></div><div class="icon-node" style="--start-deg: 330deg; --duration: 90s; --dir: reverse;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div></div>
+</div>
+<div class="circle-track track-1">
+<div class="track-bg-outer"></div>
+<div class="track-bg-inner"></div>
+<div class="icon-node" style="--start-deg: 30deg; --duration: 60s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#00005B" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#9999FF" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Ae</text></svg></div></div><div class="icon-node" style="--start-deg: 75deg; --duration: 60s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M12 2l2.4 5.6L20 10l-5.6 2.4L12 18l-2.4-5.6L4 10l5.6-2.4z"></path></svg></div></div><div class="icon-node" style="--start-deg: 120deg; --duration: 60s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 12 12 17 22 12"></polyline><polyline points="2 17 12 22 22 17"></polyline></svg></div></div><div class="icon-node" style="--start-deg: 165deg; --duration: 60s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></div></div><div class="icon-node" style="--start-deg: 210deg; --duration: 60s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#00005B" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#9999FF" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Ae</text></svg></div></div><div class="icon-node" style="--start-deg: 255deg; --duration: 60s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M12 2l2.4 5.6L20 10l-5.6 2.4L12 18l-2.4-5.6L4 10l5.6-2.4z"></path></svg></div></div><div class="icon-node" style="--start-deg: 300deg; --duration: 60s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 12 12 17 22 12"></polyline><polyline points="2 17 12 22 22 17"></polyline></svg></div></div><div class="icon-node" style="--start-deg: 345deg; --duration: 60s;"><div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></div></div>
+</div></div>
+<div class="circle-track track-2">
+<div class="track-bg-outer"></div>
+<div class="track-bg-inner"></div>
+<div class="icon-node" style="--start-deg: 30deg; --duration: 90s; --dir: reverse;">
+<div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#00005B" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#EA77FF" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Pr</text></svg></div>
+</div>
+<div class="icon-node" style="--start-deg: 120deg; --duration: 90s; --dir: reverse;">
+<div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="13.5" cy="6.5" fill="#ff4d29" r=".5" stroke="none"></circle><circle cx="17.5" cy="10.5" fill="#ff4d29" r=".5" stroke="none"></circle><circle cx="8.5" cy="7.5" fill="#ff4d29" r=".5" stroke="none"></circle><circle cx="6.5" cy="12.5" fill="#ff4d29" r=".5" stroke="none"></circle><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c1.66 0 3-1.34 3-3 0-.35-.07-.69-.21-1-.45-.96-.05-2 1.05-2H18c3.31 0 6-2.69 6-6 0-4.42-5.37-8-12-8z"></path></svg></div>
+</div>
+<div class="icon-node" style="--start-deg: 210deg; --duration: 90s; --dir: reverse;">
+<div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#330000" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#FF9A00" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Ai</text></svg></div>
+</div>
+<div class="icon-node" style="--start-deg: 300deg; --duration: 90s; --dir: reverse;">
+<div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M6.13 1L6 16a2 2 0 0 0 2 2h15"></path><path d="M1 6.13L16 6a2 2 0 0 1 2 2v15"></path></svg></div>
+</div>
+</div>
+<div class="circle-track track-1">
+<div class="track-bg-outer"></div>
+<div class="track-bg-inner"></div>
+<div class="icon-node" style="--start-deg: 60deg; --duration: 60s;">
+<div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#00005B" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#9999FF" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Ae</text></svg></div>
+</div>
+<div class="icon-node" style="--start-deg: 150deg; --duration: 60s;">
+<div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 12 12 17 22 12"></polyline><polyline points="2 17 12 22 22 17"></polyline></svg></div>
+</div>
+<div class="icon-node" style="--start-deg: 240deg; --duration: 60s;">
+<div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#001D26" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#26C4EC" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Lr</text></svg></div>
+</div>
+<div class="icon-node" style="--start-deg: 330deg; --duration: 60s;">
+<div class="icon-asset icon-asset-right"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M12 2l2.4 5.6L20 10l-5.6 2.4L12 18l-2.4-5.6L4 10l5.6-2.4z"></path></svg></div>
+</div>
+</div>
 
-        <!-- Portfolio Marquee Section -->
-        <section class="portfolio" id="portfolio">
-            <!-- Left Background Circular Paths & Icons -->
-            <div class="hero-bg-container left-bg" id="portfolio-tracks-left">
-                <div class="circle-track track-3">
-                    <div class="track-bg-outer"></div>
-                    <div class="track-bg-inner"></div>
-                    <div class="icon-node" style="--start-deg: 0deg; --duration: 120s;">
-                        <div class="icon-asset icon-asset-right"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="none"><rect width="24" height="24" rx="4" fill="#001E36"/><text x="50%" y="50%" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#31A8FF" text-anchor="middle" dominant-baseline="central">Ps</text></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 90deg; --duration: 120s;">
-                        <div class="icon-asset icon-asset-right"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 180deg; --duration: 120s;">
-                        <div class="icon-asset icon-asset-right"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="none"><rect width="24" height="24" rx="4" fill="#001E36"/><text x="50%" y="50%" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#31A8FF" text-anchor="middle" dominant-baseline="central">Ps</text></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 270deg; --duration: 120s;">
-                        <div class="icon-asset icon-asset-right"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="#ff4d29" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 17l-1 1a3.5 3.5 0 0 1-5 0l-9-9 4-4 9 9a3.5 3.5 0 0 1 0 5z"/><line x1="10" y1="14" x2="14" y2="10"/><line x1="3" y1="21" x2="6" y2="18"/><path d="M16 2l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z"/></svg></div>
-                    </div>
-                </div>
-                <div class="circle-track track-2">
-                    <div class="track-bg-outer"></div>
-                    <div class="track-bg-inner"></div>
-                    <div class="icon-node" style="--start-deg: 30deg; --duration: 90s; --dir: reverse;">
-                        <div class="icon-asset icon-asset-right"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="none"><rect width="24" height="24" rx="4" fill="#00005B"/><text x="50%" y="50%" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#EA77FF" text-anchor="middle" dominant-baseline="central">Pr</text></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 120deg; --duration: 90s; --dir: reverse;">
-                        <div class="icon-asset icon-asset-right"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="#ff4d29" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="#ff4d29" stroke="none"/><circle cx="17.5" cy="10.5" r=".5" fill="#ff4d29" stroke="none"/><circle cx="8.5" cy="7.5" r=".5" fill="#ff4d29" stroke="none"/><circle cx="6.5" cy="12.5" r=".5" fill="#ff4d29" stroke="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c1.66 0 3-1.34 3-3 0-.35-.07-.69-.21-1-.45-.96-.05-2 1.05-2H18c3.31 0 6-2.69 6-6 0-4.42-5.37-8-12-8z"/></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 210deg; --duration: 90s; --dir: reverse;">
-                        <div class="icon-asset icon-asset-right"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="none"><rect width="24" height="24" rx="4" fill="#330000"/><text x="50%" y="50%" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#FF9A00" text-anchor="middle" dominant-baseline="central">Ai</text></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 300deg; --duration: 90s; --dir: reverse;">
-                        <div class="icon-asset icon-asset-right"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.13 1L6 16a2 2 0 0 0 2 2h15"/><path d="M1 6.13L16 6a2 2 0 0 1 2 2v15"/></svg></div>
-                    </div>
-                </div>
-                <div class="circle-track track-1">
-                    <div class="track-bg-outer"></div>
-                    <div class="track-bg-inner"></div>
-                    <div class="icon-node" style="--start-deg: 60deg; --duration: 60s;">
-                        <div class="icon-asset icon-asset-right"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="none"><rect width="24" height="24" rx="4" fill="#00005B"/><text x="50%" y="50%" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#9999FF" text-anchor="middle" dominant-baseline="central">Ae</text></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 150deg; --duration: 60s;">
-                        <div class="icon-asset icon-asset-right"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 12 12 17 22 12"/><polyline points="2 17 12 22 22 17"/></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 240deg; --duration: 60s;">
-                        <div class="icon-asset icon-asset-right"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="none"><rect width="24" height="24" rx="4" fill="#001D26"/><text x="50%" y="50%" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#26C4EC" text-anchor="middle" dominant-baseline="central">Lr</text></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 330deg; --duration: 60s;">
-                        <div class="icon-asset icon-asset-right"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="#ff4d29" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 5.6L20 10l-5.6 2.4L12 18l-2.4-5.6L4 10l5.6-2.4z"/></svg></div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Right Background Circular Paths & Icons -->
-            <div class="hero-bg-container right-bg" id="portfolio-tracks-right">
-                <div class="circle-track track-3">
-                    <div class="track-bg-outer"></div>
-                    <div class="track-bg-inner"></div>
-                    <div class="icon-node" style="--start-deg: 15deg; --duration: 120s; --dir: reverse;">
-                        <div class="icon-asset icon-asset-left"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="none"><rect width="24" height="24" rx="4" fill="#001E36"/><text x="50%" y="50%" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#31A8FF" text-anchor="middle" dominant-baseline="central">Ps</text></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 105deg; --duration: 120s; --dir: reverse;">
-                        <div class="icon-asset icon-asset-left"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 195deg; --duration: 120s; --dir: reverse;">
-                        <div class="icon-asset icon-asset-left"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="none"><rect width="24" height="24" rx="4" fill="#001E36"/><text x="50%" y="50%" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#31A8FF" text-anchor="middle" dominant-baseline="central">Ps</text></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 285deg; --duration: 120s; --dir: reverse;">
-                        <div class="icon-asset icon-asset-left"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="#ff4d29" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 17l-1 1a3.5 3.5 0 0 1-5 0l-9-9 4-4 9 9a3.5 3.5 0 0 1 0 5z"/><line x1="10" y1="14" x2="14" y2="10"/><line x1="3" y1="21" x2="6" y2="18"/><path d="M16 2l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z"/></svg></div>
-                    </div>
-                </div>
-                <div class="circle-track track-2">
-                    <div class="track-bg-outer"></div>
-                    <div class="track-bg-inner"></div>
-                    <div class="icon-node" style="--start-deg: 45deg; --duration: 90s;">
-                        <div class="icon-asset icon-asset-left"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="none"><rect width="24" height="24" rx="4" fill="#00005B"/><text x="50%" y="50%" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#EA77FF" text-anchor="middle" dominant-baseline="central">Pr</text></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 135deg; --duration: 90s;">
-                        <div class="icon-asset icon-asset-left"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="#ff4d29" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="#ff4d29" stroke="none"/><circle cx="17.5" cy="10.5" r=".5" fill="#ff4d29" stroke="none"/><circle cx="8.5" cy="7.5" r=".5" fill="#ff4d29" stroke="none"/><circle cx="6.5" cy="12.5" r=".5" fill="#ff4d29" stroke="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c1.66 0 3-1.34 3-3 0-.35-.07-.69-.21-1-.45-.96-.05-2 1.05-2H18c3.31 0 6-2.69 6-6 0-4.42-5.37-8-12-8z"/></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 225deg; --duration: 90s;">
-                        <div class="icon-asset icon-asset-left"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="none"><rect width="24" height="24" rx="4" fill="#330000"/><text x="50%" y="50%" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#FF9A00" text-anchor="middle" dominant-baseline="central">Ai</text></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 315deg; --duration: 90s;">
-                        <div class="icon-asset icon-asset-left"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.13 1L6 16a2 2 0 0 0 2 2h15"/><path d="M1 6.13L16 6a2 2 0 0 1 2 2v15"/></svg></div>
-                    </div>
-                </div>
-                <div class="circle-track track-1">
-                    <div class="track-bg-outer"></div>
-                    <div class="track-bg-inner"></div>
-                    <div class="icon-node" style="--start-deg: 75deg; --duration: 60s; --dir: reverse;">
-                        <div class="icon-asset icon-asset-left"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="none"><rect width="24" height="24" rx="4" fill="#00005B"/><text x="50%" y="50%" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#9999FF" text-anchor="middle" dominant-baseline="central">Ae</text></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 165deg; --duration: 60s; --dir: reverse;">
-                        <div class="icon-asset icon-asset-left"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 12 12 17 22 12"/><polyline points="2 17 12 22 22 17"/></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 255deg; --duration: 60s; --dir: reverse;">
-                        <div class="icon-asset icon-asset-left"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="none"><rect width="24" height="24" rx="4" fill="#001D26"/><text x="50%" y="50%" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#26C4EC" text-anchor="middle" dominant-baseline="central">Lr</text></svg></div>
-                    </div>
-                    <div class="icon-node" style="--start-deg: 345deg; --duration: 60s; --dir: reverse;">
-                        <div class="icon-asset icon-asset-left"><svg class="icon-img" viewBox="0 0 24 24" fill="none" stroke="#ff4d29" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 5.6L20 10l-5.6 2.4L12 18l-2.4-5.6L4 10l5.6-2.4z"/></svg></div>
-                    </div>
-                </div>
-            </div>
+<!-- Right Background Circular Paths & Icons -->
+<div class="hero-bg-container right-bg" id="portfolio-tracks-right">
+<div class="circle-track track-3">
+<div class="track-bg-outer"></div>
+<div class="track-bg-inner"></div>
+<div class="icon-node" style="--start-deg: 15deg; --duration: 120s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#330000" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#FF9A00" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Ai</text></svg></div></div><div class="icon-node" style="--start-deg: 60deg; --duration: 120s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><circle cx="11" cy="11" r="2"></circle></svg></div></div><div class="icon-node" style="--start-deg: 105deg; --duration: 120s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="13.5" cy="6.5" fill="#ff4d29" r=".5" stroke="none"></circle><circle cx="17.5" cy="10.5" fill="#ff4d29" r=".5" stroke="none"></circle><circle cx="8.5" cy="7.5" fill="#ff4d29" r=".5" stroke="none"></circle><circle cx="6.5" cy="12.5" fill="#ff4d29" r=".5" stroke="none"></circle><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c1.66 0 3-1.34 3-3 0-.35-.07-.69-.21-1-.45-.96-.05-2 1.05-2H18c3.31 0 6-2.69 6-6 0-4.42-5.37-8-12-8z"></path></svg></div></div><div class="icon-node" style="--start-deg: 150deg; --duration: 120s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></div></div><div class="icon-node" style="--start-deg: 195deg; --duration: 120s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#330000" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#FF9A00" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Ai</text></svg></div></div><div class="icon-node" style="--start-deg: 240deg; --duration: 120s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><circle cx="11" cy="11" r="2"></circle></svg></div></div><div class="icon-node" style="--start-deg: 285deg; --duration: 120s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="13.5" cy="6.5" fill="#ff4d29" r=".5" stroke="none"></circle><circle cx="17.5" cy="10.5" fill="#ff4d29" r=".5" stroke="none"></circle><circle cx="8.5" cy="7.5" fill="#ff4d29" r=".5" stroke="none"></circle><circle cx="6.5" cy="12.5" fill="#ff4d29" r=".5" stroke="none"></circle><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c1.66 0 3-1.34 3-3 0-.35-.07-.69-.21-1-.45-.96-.05-2 1.05-2H18c3.31 0 6-2.69 6-6 0-4.42-5.37-8-12-8z"></path></svg></div></div><div class="icon-node" style="--start-deg: 330deg; --duration: 120s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></div></div>
+</div>
+<div class="circle-track track-2">
+<div class="track-bg-outer"></div>
+<div class="track-bg-inner"></div>
+<div class="icon-node" style="--start-deg: 30deg; --duration: 90s;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#001D26" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#26C4EC" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Lr</text></svg></div></div><div class="icon-node" style="--start-deg: 75deg; --duration: 90s;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg></div></div><div class="icon-node" style="--start-deg: 120deg; --duration: 90s;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><line x1="4" x2="4" y1="21" y2="14"></line><line x1="4" x2="4" y1="10" y2="3"></line><line x1="12" x2="12" y1="21" y2="12"></line><line x1="12" x2="12" y1="8" y2="3"></line><line x1="20" x2="20" y1="21" y2="16"></line><line x1="20" x2="20" y1="12" y2="3"></line><line x1="1" x2="7" y1="14" y2="14"></line><line x1="9" x2="15" y1="8" y2="8"></line><line x1="17" x2="23" y1="16" y2="16"></line></svg></div></div><div class="icon-node" style="--start-deg: 165deg; --duration: 90s;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="14.31" x2="20.05" y1="8" y2="17.94"></line><line x1="9.69" x2="21.17" y1="8" y2="8"></line><line x1="7.38" x2="13.12" y1="12" y2="2.06"></line><line x1="9.69" x2="3.95" y1="16" y2="6.06"></line><line x1="14.31" x2="2.83" y1="16" y2="16"></line><line x1="16.62" x2="10.88" y1="12" y2="21.94"></line></svg></div></div><div class="icon-node" style="--start-deg: 210deg; --duration: 90s;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#001D26" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#26C4EC" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Lr</text></svg></div></div><div class="icon-node" style="--start-deg: 255deg; --duration: 90s;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg></div></div><div class="icon-node" style="--start-deg: 300deg; --duration: 90s;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><line x1="4" x2="4" y1="21" y2="14"></line><line x1="4" x2="4" y1="10" y2="3"></line><line x1="12" x2="12" y1="21" y2="12"></line><line x1="12" x2="12" y1="8" y2="3"></line><line x1="20" x2="20" y1="21" y2="16"></line><line x1="20" x2="20" y1="12" y2="3"></line><line x1="1" x2="7" y1="14" y2="14"></line><line x1="9" x2="15" y1="8" y2="8"></line><line x1="17" x2="23" y1="16" y2="16"></line></svg></div></div><div class="icon-node" style="--start-deg: 345deg; --duration: 90s;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="14.31" x2="20.05" y1="8" y2="17.94"></line><line x1="9.69" x2="21.17" y1="8" y2="8"></line><line x1="7.38" x2="13.12" y1="12" y2="2.06"></line><line x1="9.69" x2="3.95" y1="16" y2="6.06"></line><line x1="14.31" x2="2.83" y1="16" y2="16"></line><line x1="16.62" x2="10.88" y1="12" y2="21.94"></line></svg></div></div>
+</div>
+<div class="circle-track track-1">
+<div class="track-bg-outer"></div>
+<div class="track-bg-inner"></div>
+<div class="icon-node" style="--start-deg: 0deg; --duration: 60s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#1E002B" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#0ACF83" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Fi</text></svg></div></div><div class="icon-node" style="--start-deg: 45deg; --duration: 60s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" x2="15" y1="20" y2="20"></line><line x1="12" x2="12" y1="4" y2="20"></line></svg></div></div><div class="icon-node" style="--start-deg: 90deg; --duration: 60s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M6.13 1L6 16a2 2 0 0 0 2 2h15"></path><path d="M1 6.13L16 6a2 2 0 0 1 2 2v15"></path></svg></div></div><div class="icon-node" style="--start-deg: 135deg; --duration: 60s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></div></div><div class="icon-node" style="--start-deg: 180deg; --duration: 60s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#1E002B" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#0ACF83" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Fi</text></svg></div></div><div class="icon-node" style="--start-deg: 225deg; --duration: 60s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" x2="15" y1="20" y2="20"></line><line x1="12" x2="12" y1="4" y2="20"></line></svg></div></div><div class="icon-node" style="--start-deg: 270deg; --duration: 60s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M6.13 1L6 16a2 2 0 0 0 2 2h15"></path><path d="M1 6.13L16 6a2 2 0 0 1 2 2v15"></path></svg></div></div><div class="icon-node" style="--start-deg: 315deg; --duration: 60s; --dir: reverse;"><div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></div></div>
+</div></div>
+<div class="circle-track track-2">
+<div class="track-bg-outer"></div>
+<div class="track-bg-inner"></div>
+<div class="icon-node" style="--start-deg: 45deg; --duration: 90s;">
+<div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#00005B" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#EA77FF" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Pr</text></svg></div>
+</div>
+<div class="icon-node" style="--start-deg: 135deg; --duration: 90s;">
+<div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="13.5" cy="6.5" fill="#ff4d29" r=".5" stroke="none"></circle><circle cx="17.5" cy="10.5" fill="#ff4d29" r=".5" stroke="none"></circle><circle cx="8.5" cy="7.5" fill="#ff4d29" r=".5" stroke="none"></circle><circle cx="6.5" cy="12.5" fill="#ff4d29" r=".5" stroke="none"></circle><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c1.66 0 3-1.34 3-3 0-.35-.07-.69-.21-1-.45-.96-.05-2 1.05-2H18c3.31 0 6-2.69 6-6 0-4.42-5.37-8-12-8z"></path></svg></div>
+</div>
+<div class="icon-node" style="--start-deg: 225deg; --duration: 90s;">
+<div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#330000" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#FF9A00" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Ai</text></svg></div>
+</div>
+<div class="icon-node" style="--start-deg: 315deg; --duration: 90s;">
+<div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M6.13 1L6 16a2 2 0 0 0 2 2h15"></path><path d="M1 6.13L16 6a2 2 0 0 1 2 2v15"></path></svg></div>
+</div>
+</div>
+<div class="circle-track track-1">
+<div class="track-bg-outer"></div>
+<div class="track-bg-inner"></div>
+<div class="icon-node" style="--start-deg: 75deg; --duration: 60s; --dir: reverse;">
+<div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#00005B" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#9999FF" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Ae</text></svg></div>
+</div>
+<div class="icon-node" style="--start-deg: 165deg; --duration: 60s; --dir: reverse;">
+<div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 12 12 17 22 12"></polyline><polyline points="2 17 12 22 22 17"></polyline></svg></div>
+</div>
+<div class="icon-node" style="--start-deg: 255deg; --duration: 60s; --dir: reverse;">
+<div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="none" viewbox="0 0 24 24"><rect fill="#001D26" height="24" rx="4" width="24"></rect><text dominant-baseline="central" fill="#26C4EC" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" x="50%" y="50%">Lr</text></svg></div>
+</div>
+<div class="icon-node" style="--start-deg: 345deg; --duration: 60s; --dir: reverse;">
+<div class="icon-asset icon-asset-left"><svg class="icon-img" fill="none" stroke="#ff4d29" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M12 2l2.4 5.6L20 10l-5.6 2.4L12 18l-2.4-5.6L4 10l5.6-2.4z"></path></svg></div>
+</div>
+</div>
+
 <div class="marquee-container">
-                <!-- Row 1 (Left to Right) -->
-                <div class="marquee-row-wrapper">
-                    <div class="marquee-track left">
-                        <div class="marquee-group">
-                            <img src="https://picsum.photos/400/225?random=1" alt="Thumbnail" class="thumb-card">
-                            <img src="https://picsum.photos/400/225?random=2" alt="Thumbnail" class="thumb-card">
-                            <img src="https://picsum.photos/400/225?random=3" alt="Thumbnail" class="thumb-card">
-                            <img src="https://picsum.photos/400/225?random=4" alt="Thumbnail" class="thumb-card">
-                        </div>
-                        <div class="marquee-group">
-                            <img src="https://picsum.photos/400/225?random=1" alt="Thumbnail" class="thumb-card">
-                            <img src="https://picsum.photos/400/225?random=2" alt="Thumbnail" class="thumb-card">
-                            <img src="https://picsum.photos/400/225?random=3" alt="Thumbnail" class="thumb-card">
-                            <img src="https://picsum.photos/400/225?random=4" alt="Thumbnail" class="thumb-card">
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Row 2 (Right to Left) -->
-                <div class="marquee-row-wrapper">
-                    <div class="marquee-track right">
-                        <div class="marquee-group">
-                            <img src="https://picsum.photos/400/225?random=5" alt="Thumbnail" class="thumb-card">
-                            <img src="https://picsum.photos/400/225?random=6" alt="Thumbnail" class="thumb-card">
-                            <img src="https://picsum.photos/400/225?random=7" alt="Thumbnail" class="thumb-card">
-                            <img src="https://picsum.photos/400/225?random=8" alt="Thumbnail" class="thumb-card">
-                        </div>
-                        <div class="marquee-group">
-                            <img src="https://picsum.photos/400/225?random=5" alt="Thumbnail" class="thumb-card">
-                            <img src="https://picsum.photos/400/225?random=6" alt="Thumbnail" class="thumb-card">
-                            <img src="https://picsum.photos/400/225?random=7" alt="Thumbnail" class="thumb-card">
-                            <img src="https://picsum.photos/400/225?random=8" alt="Thumbnail" class="thumb-card">
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Row 3 (Left to Right) -->
-                <div class="marquee-row-wrapper">
-                    <div class="marquee-track left">
-                        <div class="marquee-group">
-                            <img src="https://picsum.photos/400/225?random=9" alt="Thumbnail" class="thumb-card">
-                            <img src="https://picsum.photos/400/225?random=10" alt="Thumbnail" class="thumb-card">
-                            <img src="https://picsum.photos/400/225?random=11" alt="Thumbnail" class="thumb-card">
-                            <img src="https://picsum.photos/400/225?random=12" alt="Thumbnail" class="thumb-card">
-                        </div>
-                        <div class="marquee-group">
-                            <img src="https://picsum.photos/400/225?random=9" alt="Thumbnail" class="thumb-card">
-                            <img src="https://picsum.photos/400/225?random=10" alt="Thumbnail" class="thumb-card">
-                            <img src="https://picsum.photos/400/225?random=11" alt="Thumbnail" class="thumb-card">
-                            <img src="https://picsum.photos/400/225?random=12" alt="Thumbnail" class="thumb-card">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Mobile Portfolio Grid -->
-            <h2 class="portfolio-heading">Portfolio</h2>
-            <div class="portfolio-grid" id="portfolioGrid">
-                <img src="https://picsum.photos/400/225?random=101" alt="Thumbnail" class="grid-thumb" loading="lazy">
-                <img src="https://picsum.photos/400/225?random=102" alt="Thumbnail" class="grid-thumb" loading="lazy">
-                <img src="https://picsum.photos/400/225?random=103" alt="Thumbnail" class="grid-thumb" loading="lazy">
-                <img src="https://picsum.photos/400/225?random=104" alt="Thumbnail" class="grid-thumb" loading="lazy">
-                <img src="https://picsum.photos/400/225?random=105" alt="Thumbnail" class="grid-thumb" loading="lazy">
-                <img src="https://picsum.photos/400/225?random=106" alt="Thumbnail" class="grid-thumb" loading="lazy">
-                <img src="https://picsum.photos/400/225?random=107" alt="Thumbnail" class="grid-thumb" loading="lazy">
-                <img src="https://picsum.photos/400/225?random=108" alt="Thumbnail" class="grid-thumb" loading="lazy">
-                <img src="https://picsum.photos/400/225?random=109" alt="Thumbnail" class="grid-thumb" loading="lazy">
-                <img src="https://picsum.photos/400/225?random=110" alt="Thumbnail" class="grid-thumb" loading="lazy">
-                <img src="https://picsum.photos/400/225?random=111" alt="Thumbnail" class="grid-thumb" loading="lazy">
-                <img src="https://picsum.photos/400/225?random=112" alt="Thumbnail" class="grid-thumb" loading="lazy">
-                <img src="https://picsum.photos/400/225?random=113" alt="Thumbnail" class="grid-thumb" loading="lazy">
-                <img src="https://picsum.photos/400/225?random=114" alt="Thumbnail" class="grid-thumb" loading="lazy">
-                <img src="https://picsum.photos/400/225?random=115" alt="Thumbnail" class="grid-thumb" loading="lazy">
-                <img src="https://picsum.photos/400/225?random=116" alt="Thumbnail" class="grid-thumb" loading="lazy">
-                <img src="https://picsum.photos/400/225?random=117" alt="Thumbnail" class="grid-thumb" loading="lazy">
-                <img src="https://picsum.photos/400/225?random=118" alt="Thumbnail" class="grid-thumb" loading="lazy">
-                <img src="https://picsum.photos/400/225?random=119" alt="Thumbnail" class="grid-thumb" loading="lazy">
-                <img src="https://picsum.photos/400/225?random=120" alt="Thumbnail" class="grid-thumb" loading="lazy">
-            </div>
-            <button class="btn btn-accent load-more-btn" id="loadMoreBtn">Load More</button>
-        </section>
-
-        <!-- FAQ Section -->
-        <section class="faq" id="faq">
-            <div class="faq-banner-container">
-                <div class="faq-banner orange-banner">
-                    <span>GOT QUESTIONS?</span>
-                </div>
-                <div class="faq-banner white-banner">
-                    <span>WE'VE GOT ANSWERS!</span>
-                </div>
-            </div>
-            
-            <div class="faq-container">
-                <div class="faq-handwritten">
-                    <span>Let's clear things up</span>
-                    <i class="fa-solid fa-arrow-turn-down"></i>
-                </div>
-                
-                <div class="accordion">
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <h3>1. What is your typical turnaround time?</h3>
-                            <div class="icon-toggle"><i class="fa-solid fa-plus"></i></div>
-                        </div>
-                        <div class="accordion-content">
-                            <p>Typically, we deliver the first concepts within 24 to 48 hours depending on the complexity of the request.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <h3>2. What do you need from me to get started?</h3>
-                            <div class="icon-toggle"><i class="fa-solid fa-plus"></i></div>
-                        </div>
-                        <div class="accordion-content">
-                            <p>We need your video title, raw assets (if any), preferred style references, and a brief description of the video topic.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <h3>3. Do you offer a bulk discount for multiple thumbnails?</h3>
-                            <div class="icon-toggle"><i class="fa-solid fa-plus"></i></div>
-                        </div>
-                        <div class="accordion-content">
-                            <p>Yes, we offer special packages for creators looking for consistent design work over a series of videos.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <h3>4. What services do you offer as a graphic designer?</h3>
-                            <div class="icon-toggle"><i class="fa-solid fa-plus"></i></div>
-                        </div>
-                        <div class="accordion-content">
-                            <p>While specializing in thumbnails, we also design channel banners, stream overlays, and full branding packages.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <h3>5. How do I send you my ideas or references?</h3>
-                            <div class="icon-toggle"><i class="fa-solid fa-plus"></i></div>
-                        </div>
-                        <div class="accordion-content">
-                            <p>You can share them via our secure client portal, email, or a shared Google Drive/Dropbox folder.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <h3>6. How many revisions are included?</h3>
-                            <div class="icon-toggle"><i class="fa-solid fa-plus"></i></div>
-                        </div>
-                        <div class="accordion-content">
-                            <p>We typically include up to 3 rounds of minor revisions to ensure you are completely satisfied with the final result.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="faq-sub-cta">
-                    <div class="avatar-stack">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Avatar">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Avatar">
-                        <img src="https://randomuser.me/api/portraits/men/55.jpg" alt="Avatar">
-                    </div>
-                    <h4>Still have questions?</h4>
-                    <a href="https://www.instagram.com/zackgfx._/" target="_blank" class="btn btn-accent">Let's talk</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Testimonials Section -->
-        <section class="testimonials">
-            <div class="badge">› TESTIMONIALS ‹</div>
-            
-            <div class="testimonials-header">
-                <h2 class="section-title">What clients say</h2>
-                <div class="slider-controls">
-                    <button class="slider-btn prev-btn"><i class="fa-solid fa-chevron-left"></i></button>
-                    <button class="slider-btn next-btn"><i class="fa-solid fa-chevron-right"></i></button>
-                </div>
-            </div>
-            
-            <div class="testimonials-slider">
-                <div class="slider-track" id="sliderTrack">
-                    <!-- Card 1 -->
-                    <div class="testimonial-card">
-                        <p class="quote">"Absolutely mind-blowing work. The CTR on my recent videos has skyrocketed since we started working together. Highly recommended!"</p>
-                        <div class="testimonial-footer">
-                            <div class="client-info">
-                                <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Client" class="client-avatar">
-                                <div>
-                                    <h5 class="client-name">Nxtreme Plays</h5>
-                                    <span class="client-role">— Youtuber</span>
-                                </div>
-                            </div>
-                            <div class="rating">
-                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Card 2 -->
-                    <div class="testimonial-card">
-                        <p class="quote">"The best thumbnail designer I have ever worked with. Fast, professional, and really understands the psychology of what makes people click."</p>
-                        <div class="testimonial-footer">
-                            <div class="client-info">
-                                <img src="https://randomuser.me/api/portraits/women/24.jpg" alt="Client" class="client-avatar">
-                                <div>
-                                    <h5 class="client-name">Kaash plays</h5>
-                                    <span class="client-role">— Youtuber</span>
-                                </div>
-                            </div>
-                            <div class="rating">
-                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Card 3 -->
-                    <div class="testimonial-card">
-                        <p class="quote">"Consistently delivers top-tier visuals. Never missed a deadline and the quality just keeps getting better. A vital part of our growth."</p>
-                        <div class="testimonial-footer">
-                            <div class="client-info">
-                                <img src="https://randomuser.me/api/portraits/men/41.jpg" alt="Client" class="client-avatar">
-                                <div>
-                                    <h5 class="client-name">Tech Reviewer</h5>
-                                    <span class="client-role">— Youtuber</span>
-                                </div>
-                            </div>
-                            <div class="rating">
-                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Card 4 -->
-                    <div class="testimonial-card">
-                        <p class="quote">"Our viewer retention went up by 30% after we revamped our thumbnails with Zack. The ROI is just insane."</p>
-                        <div class="testimonial-footer">
-                            <div class="client-info">
-                                <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Client" class="client-avatar">
-                                <div>
-                                    <h5 class="client-name">Finance Daily</h5>
-                                    <span class="client-role">— Youtuber</span>
-                                </div>
-                            </div>
-                            <div class="rating">
-                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Card 5 -->
-                    <div class="testimonial-card">
-                        <p class="quote">"Super responsive, highly creative, and perfectly captured the vibe of our gaming channel. We won't use anyone else."</p>
-                        <div class="testimonial-footer">
-                            <div class="client-info">
-                                <img src="https://randomuser.me/api/portraits/men/79.jpg" alt="Client" class="client-avatar">
-                                <div>
-                                    <h5 class="client-name">Retro Gamers</h5>
-                                    <span class="client-role">— Youtuber</span>
-                                </div>
-                            </div>
-                            <div class="rating">
-                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Card 6 -->
-                    <div class="testimonial-card">
-                        <p class="quote">"Zack has a rare talent for compressing a complex video concept into a single, highly clickable image. Absolute legend."</p>
-                        <div class="testimonial-footer">
-                            <div class="client-info">
-                                <img src="https://randomuser.me/api/portraits/men/33.jpg" alt="Client" class="client-avatar">
-                                <div>
-                                    <h5 class="client-name">Coding Master</h5>
-                                    <span class="client-role">— Youtuber</span>
-                                </div>
-                            </div>
-                            <div class="rating">
-                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer Section -->
-    <footer id="contact">
-        <div class="footer-container">
-            <div class="footer-col brand-col">
-                <div class="logo">
-                    <div class="logo-icon"></div>
-                    <span class="logo-text"><span class="text-dark">Zack</span><span class="text-accent">GFX</span></span>
-                </div>
-                <p class="footer-subtitle">Thumbnail Artist and Strategist.</p>
-            </div>
-            
-            <div class="footer-col links-col">
-                <h4 class="footer-heading">QUICK LINKS</h4>
-                <ul>
-                    <li><a href="#home" class="active-link">Home</a></li>
-                    <li><a href="https://www.instagram.com/zackgfx._/" target="_blank">Contact us</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-col contact-col">
-                <h4 class="footer-heading">GET IN TOUCH</h4>
-                <a href="mailto:zackgfx@gmail.com" class="email-link">zackgfx@gmail.com</a>
-                
-                <h4 class="footer-heading mt-4">FOLLOW US ON</h4>
-                <div class="social-links">
-                    <a href="#" class="social-icon"><i class="fa-brands fa-discord"></i></a>
-                    <a href="https://www.instagram.com/zackgfx._/" target="_blank" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" class="social-icon"><i class="fa-brands fa-behance"></i></a>
-                    <a href="#" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="copyright">
-            <p>&copy; 2026 ZackGFX. All rights reserved</p>
-        </div>
-    </footer>
-
-    <!-- Lenis Smooth Scrolling -->
-    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-    
-    <!-- Custom Script -->
-    <script src="script.js"></script>
+<!-- Row 1 (Left to Right) -->
+<div class="marquee-row-wrapper">
+<div class="marquee-track left">
+<div class="marquee-group">
+<img alt="Thumbnail" class="thumb-card" src="https://picsum.photos/400/225?random=1"/>
+<img alt="Thumbnail" class="thumb-card" src="https://picsum.photos/400/225?random=2"/>
+<img alt="Thumbnail" class="thumb-card" src="https://picsum.photos/400/225?random=3"/>
+<img alt="Thumbnail" class="thumb-card" src="https://picsum.photos/400/225?random=4"/>
+</div>
+<div class="marquee-group">
+<img alt="Thumbnail" class="thumb-card" src="https://picsum.photos/400/225?random=1"/>
+<img alt="Thumbnail" class="thumb-card" src="https://picsum.photos/400/225?random=2"/>
+<img alt="Thumbnail" class="thumb-card" src="https://picsum.photos/400/225?random=3"/>
+<img alt="Thumbnail" class="thumb-card" src="https://picsum.photos/400/225?random=4"/>
+</div>
+</div>
+</div>
+<!-- Row 2 (Right to Left) -->
+<div class="marquee-row-wrapper">
+<div class="marquee-track right">
+<div class="marquee-group">
+<img alt="Thumbnail" class="thumb-card" src="https://picsum.photos/400/225?random=5"/>
+<img alt="Thumbnail" class="thumb-card" src="https://picsum.photos/400/225?random=6"/>
+<img alt="Thumbnail" class="thumb-card" src="https://picsum.photos/400/225?random=7"/>
+<img alt="Thumbnail" class="thumb-card" src="https://picsum.photos/400/225?random=8"/>
+</div>
+<div class="marquee-group">
+<img alt="Thumbnail" class="thumb-card" src="https://picsum.photos/400/225?random=5"/>
+<img alt="Thumbnail" class="thumb-card" src="https://picsum.photos/400/225?random=6"/>
+<img alt="Thumbnail" class="thumb-card" src="https://picsum.photos/400/225?random=7"/>
+<img alt="Thumbnail" class="thumb-card" src="https://picsum.photos/400/225?random=8"/>
+</div>
+</div>
+</div>
+<!-- Row 3 (Left to Right) -->
+<div class="marquee-row-wrapper">
+<div class="marquee-track left">
+<div class="marquee-group">
+<img alt="Thumbnail" class="thumb-card" src="https://picsum.photos/400/225?random=9"/>
+<img alt="Thumbnail" class="thumb-card" src="https://picsum.photos/400/225?random=10"/>
+<img alt="Thumbnail" class="thumb-card" src="https://picsum.photos/400/225?random=11"/>
+<img alt="Thumbnail" class="thumb-card" src="https://picsum.photos/400/225?random=12"/>
+</div>
+<div class="marquee-group">
+<img alt="Thumbnail" class="thumb-card" src="https://picsum.photos/400/225?random=9"/>
+<img alt="Thumbnail" class="thumb-card" src="https://picsum.photos/400/225?random=10"/>
+<img alt="Thumbnail" class="thumb-card" src="https://picsum.photos/400/225?random=11"/>
+<img alt="Thumbnail" class="thumb-card" src="https://picsum.photos/400/225?random=12"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Mobile Portfolio Grid -->
+<h2 class="portfolio-heading">Portfolio</h2>
+<div class="portfolio-grid" id="portfolioGrid">
+<img alt="Thumbnail" class="grid-thumb" loading="lazy" src="https://picsum.photos/400/225?random=101"/>
+<img alt="Thumbnail" class="grid-thumb" loading="lazy" src="https://picsum.photos/400/225?random=102"/>
+<img alt="Thumbnail" class="grid-thumb" loading="lazy" src="https://picsum.photos/400/225?random=103"/>
+<img alt="Thumbnail" class="grid-thumb" loading="lazy" src="https://picsum.photos/400/225?random=104"/>
+<img alt="Thumbnail" class="grid-thumb" loading="lazy" src="https://picsum.photos/400/225?random=105"/>
+<img alt="Thumbnail" class="grid-thumb" loading="lazy" src="https://picsum.photos/400/225?random=106"/>
+<img alt="Thumbnail" class="grid-thumb" loading="lazy" src="https://picsum.photos/400/225?random=107"/>
+<img alt="Thumbnail" class="grid-thumb" loading="lazy" src="https://picsum.photos/400/225?random=108"/>
+<img alt="Thumbnail" class="grid-thumb" loading="lazy" src="https://picsum.photos/400/225?random=109"/>
+<img alt="Thumbnail" class="grid-thumb" loading="lazy" src="https://picsum.photos/400/225?random=110"/>
+<img alt="Thumbnail" class="grid-thumb" loading="lazy" src="https://picsum.photos/400/225?random=111"/>
+<img alt="Thumbnail" class="grid-thumb" loading="lazy" src="https://picsum.photos/400/225?random=112"/>
+<img alt="Thumbnail" class="grid-thumb" loading="lazy" src="https://picsum.photos/400/225?random=113"/>
+<img alt="Thumbnail" class="grid-thumb" loading="lazy" src="https://picsum.photos/400/225?random=114"/>
+<img alt="Thumbnail" class="grid-thumb" loading="lazy" src="https://picsum.photos/400/225?random=115"/>
+<img alt="Thumbnail" class="grid-thumb" loading="lazy" src="https://picsum.photos/400/225?random=116"/>
+<img alt="Thumbnail" class="grid-thumb" loading="lazy" src="https://picsum.photos/400/225?random=117"/>
+<img alt="Thumbnail" class="grid-thumb" loading="lazy" src="https://picsum.photos/400/225?random=118"/>
+<img alt="Thumbnail" class="grid-thumb" loading="lazy" src="https://picsum.photos/400/225?random=119"/>
+<img alt="Thumbnail" class="grid-thumb" loading="lazy" src="https://picsum.photos/400/225?random=120"/>
+</div>
+<button class="btn btn-accent load-more-btn" id="loadMoreBtn">Load More</button>
+</section>
+<!-- FAQ Section -->
+<section class="faq" id="faq">
+<div class="faq-banner-container">
+<div class="faq-banner orange-banner">
+<span>GOT QUESTIONS?</span>
+</div>
+<div class="faq-banner white-banner">
+<span>WE'VE GOT ANSWERS!</span>
+</div>
+</div>
+<div class="faq-container">
+<div class="faq-handwritten">
+<span>Let's clear things up</span>
+<i class="fa-solid fa-arrow-turn-down"></i>
+</div>
+<div class="accordion">
+<div class="accordion-item">
+<div class="accordion-header">
+<h3>1. What is your typical turnaround time?</h3>
+<div class="icon-toggle"><i class="fa-solid fa-plus"></i></div>
+</div>
+<div class="accordion-content">
+<p>Typically, we deliver the first concepts within 24 to 48 hours depending on the complexity of the request.</p>
+</div>
+</div>
+<div class="accordion-item">
+<div class="accordion-header">
+<h3>2. What do you need from me to get started?</h3>
+<div class="icon-toggle"><i class="fa-solid fa-plus"></i></div>
+</div>
+<div class="accordion-content">
+<p>We need your video title, raw assets (if any), preferred style references, and a brief description of the video topic.</p>
+</div>
+</div>
+<div class="accordion-item">
+<div class="accordion-header">
+<h3>3. Do you offer a bulk discount for multiple thumbnails?</h3>
+<div class="icon-toggle"><i class="fa-solid fa-plus"></i></div>
+</div>
+<div class="accordion-content">
+<p>Yes, we offer special packages for creators looking for consistent design work over a series of videos.</p>
+</div>
+</div>
+<div class="accordion-item">
+<div class="accordion-header">
+<h3>4. What services do you offer as a graphic designer?</h3>
+<div class="icon-toggle"><i class="fa-solid fa-plus"></i></div>
+</div>
+<div class="accordion-content">
+<p>While specializing in thumbnails, we also design channel banners, stream overlays, and full branding packages.</p>
+</div>
+</div>
+<div class="accordion-item">
+<div class="accordion-header">
+<h3>5. How do I send you my ideas or references?</h3>
+<div class="icon-toggle"><i class="fa-solid fa-plus"></i></div>
+</div>
+<div class="accordion-content">
+<p>You can share them via our secure client portal, email, or a shared Google Drive/Dropbox folder.</p>
+</div>
+</div>
+<div class="accordion-item">
+<div class="accordion-header">
+<h3>6. How many revisions are included?</h3>
+<div class="icon-toggle"><i class="fa-solid fa-plus"></i></div>
+</div>
+<div class="accordion-content">
+<p>We typically include up to 3 rounds of minor revisions to ensure you are completely satisfied with the final result.</p>
+</div>
+</div>
+</div>
+<div class="faq-sub-cta">
+<div class="avatar-stack">
+<img alt="Avatar" src="https://randomuser.me/api/portraits/men/32.jpg"/>
+<img alt="Avatar" src="https://randomuser.me/api/portraits/women/44.jpg"/>
+<img alt="Avatar" src="https://randomuser.me/api/portraits/men/55.jpg"/>
+</div>
+<h4>Still have questions?</h4>
+<a class="btn btn-accent" href="https://www.instagram.com/zackgfx._/" target="_blank">Let's talk</a>
+</div>
+</div>
+</section>
+<!-- Testimonials Section -->
+<section class="testimonials">
+<div class="badge">› TESTIMONIALS ‹</div>
+<div class="testimonials-header">
+<h2 class="section-title">What clients say</h2>
+<div class="slider-controls">
+<button class="slider-btn prev-btn"><i class="fa-solid fa-chevron-left"></i></button>
+<button class="slider-btn next-btn"><i class="fa-solid fa-chevron-right"></i></button>
+</div>
+</div>
+<div class="testimonials-slider">
+<div class="slider-track" id="sliderTrack">
+<!-- Card 1 -->
+<div class="testimonial-card">
+<p class="quote">"Absolutely mind-blowing work. The CTR on my recent videos has skyrocketed since we started working together. Highly recommended!"</p>
+<div class="testimonial-footer">
+<div class="client-info">
+<img alt="Client" class="client-avatar" src="https://randomuser.me/api/portraits/men/22.jpg"/>
+<div>
+<h5 class="client-name">Nxtreme Plays</h5>
+<span class="client-role">— Youtuber</span>
+</div>
+</div>
+<div class="rating">
+<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="testimonial-card">
+<p class="quote">"The best thumbnail designer I have ever worked with. Fast, professional, and really understands the psychology of what makes people click."</p>
+<div class="testimonial-footer">
+<div class="client-info">
+<img alt="Client" class="client-avatar" src="https://randomuser.me/api/portraits/women/24.jpg"/>
+<div>
+<h5 class="client-name">Kaash plays</h5>
+<span class="client-role">— Youtuber</span>
+</div>
+</div>
+<div class="rating">
+<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="testimonial-card">
+<p class="quote">"Consistently delivers top-tier visuals. Never missed a deadline and the quality just keeps getting better. A vital part of our growth."</p>
+<div class="testimonial-footer">
+<div class="client-info">
+<img alt="Client" class="client-avatar" src="https://randomuser.me/api/portraits/men/41.jpg"/>
+<div>
+<h5 class="client-name">Tech Reviewer</h5>
+<span class="client-role">— Youtuber</span>
+</div>
+</div>
+<div class="rating">
+<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="testimonial-card">
+<p class="quote">"Our viewer retention went up by 30% after we revamped our thumbnails with Zack. The ROI is just insane."</p>
+<div class="testimonial-footer">
+<div class="client-info">
+<img alt="Client" class="client-avatar" src="https://randomuser.me/api/portraits/women/68.jpg"/>
+<div>
+<h5 class="client-name">Finance Daily</h5>
+<span class="client-role">— Youtuber</span>
+</div>
+</div>
+<div class="rating">
+<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+</div>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="testimonial-card">
+<p class="quote">"Super responsive, highly creative, and perfectly captured the vibe of our gaming channel. We won't use anyone else."</p>
+<div class="testimonial-footer">
+<div class="client-info">
+<img alt="Client" class="client-avatar" src="https://randomuser.me/api/portraits/men/79.jpg"/>
+<div>
+<h5 class="client-name">Retro Gamers</h5>
+<span class="client-role">— Youtuber</span>
+</div>
+</div>
+<div class="rating">
+<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+</div>
+</div>
+</div>
+<!-- Card 6 -->
+<div class="testimonial-card">
+<p class="quote">"Zack has a rare talent for compressing a complex video concept into a single, highly clickable image. Absolute legend."</p>
+<div class="testimonial-footer">
+<div class="client-info">
+<img alt="Client" class="client-avatar" src="https://randomuser.me/api/portraits/men/33.jpg"/>
+<div>
+<h5 class="client-name">Coding Master</h5>
+<span class="client-role">— Youtuber</span>
+</div>
+</div>
+<div class="rating">
+<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Section -->
+<footer id="contact">
+<div class="footer-container">
+<div class="footer-col brand-col">
+<div class="logo">
+<div class="logo-icon"></div>
+<span class="logo-text"><span class="text-dark">Zack</span><span class="text-accent">GFX</span></span>
+</div>
+<p class="footer-subtitle">Thumbnail Artist and Strategist.</p>
+</div>
+<div class="footer-col links-col">
+<h4 class="footer-heading">QUICK LINKS</h4>
+<ul>
+<li><a class="active-link" href="#home">Home</a></li>
+<li><a href="https://www.instagram.com/zackgfx._/" target="_blank">Contact us</a></li>
+</ul>
+</div>
+<div class="footer-col contact-col">
+<h4 class="footer-heading">GET IN TOUCH</h4>
+<a class="email-link" href="mailto:zackgfx@gmail.com">zackgfx@gmail.com</a>
+<h4 class="footer-heading mt-4">FOLLOW US ON</h4>
+<div class="social-links">
+<a class="social-icon" href="#"><i class="fa-brands fa-discord"></i></a>
+<a class="social-icon" href="https://www.instagram.com/zackgfx._/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+<a class="social-icon" href="#"><i class="fa-brands fa-behance"></i></a>
+<a class="social-icon" href="#"><i class="fa-brands fa-x-twitter"></i></a>
+</div>
+</div>
+</div>
+<div class="copyright">
+<p>© 2026 ZackGFX. All rights reserved</p>
+</div>
+</footer>
+<!-- Lenis Smooth Scrolling -->
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<!-- Custom Script -->
+<script src="script.js"></script>
 </body>
 </html>
