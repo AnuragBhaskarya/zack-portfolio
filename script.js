@@ -348,4 +348,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Update on window resize to keep it aligned
     window.addEventListener('resize', updateSliderPosition);
+
+    // --- Intersection Observer for Lazy Animations ---
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px 0px -10% 0px',
+        threshold: 0.1
+    };
+
+    const animObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Select elements to lazily animate (excluding hero section which has keyframes)
+    const lazyElements = document.querySelectorAll('section:not(.hero) .badge, .portfolio, .faq-container, .section-title, .testimonials-slider, .footer-col');
+    
+    lazyElements.forEach(el => {
+        el.classList.add('lazy-anim');
+        animObserver.observe(el);
+    });
+
+    // Add slight stagger to footer columns
+    const footerCols = document.querySelectorAll('.footer-col');
+    footerCols.forEach((col, i) => {
+        col.style.transitionDelay = `${i * 0.15}s`;
+    });
 });
