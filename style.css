@@ -1010,7 +1010,9 @@ footer {
 }
 
 #hero-tracks-left .circle-track,
-#hero-tracks-right .circle-track {
+#hero-tracks-right .circle-track,
+#portfolio-tracks-left .circle-track,
+#portfolio-tracks-right .circle-track {
     animation: bounceInTrack 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
@@ -1020,6 +1022,13 @@ footer {
 #hero-tracks-right .track-1 { animation-delay: 0.2s; }
 #hero-tracks-right .track-2 { animation-delay: 0.35s; }
 #hero-tracks-right .track-3 { animation-delay: 0.5s; }
+
+#portfolio-tracks-left .track-1 { animation-delay: 0.6s; }
+#portfolio-tracks-left .track-2 { animation-delay: 0.75s; }
+#portfolio-tracks-left .track-3 { animation-delay: 0.9s; }
+#portfolio-tracks-right .track-1 { animation-delay: 0.7s; }
+#portfolio-tracks-right .track-2 { animation-delay: 0.85s; }
+#portfolio-tracks-right .track-3 { animation-delay: 1.0s; }
 
 .hero-content > * {
     animation: fadeSlideUp 0.8s ease-out both;
