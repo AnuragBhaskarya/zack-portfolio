@@ -1050,3 +1050,13 @@ footer {
     opacity: 1;
     transform: translateY(0);
 }
+
+@keyframes fadeSlideDown {
+    0% { transform: translate(-50%, -40px); opacity: 0; }
+    100% { transform: translate(-50%, 0); opacity: 1; }
+}
+
+.header {
+    animation: fadeSlideDown 0.8s ease-out both;
+    animation-delay: 0.2s;
+}
