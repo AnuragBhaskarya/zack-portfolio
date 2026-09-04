@@ -533,8 +533,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Orange banner bg wipe takes 0.4s, start text at 0.2s
         splitText(orangeSpan, 0.2);
-        // Orange text finishes around 1.1s. Start white bg wipe at 1.1s, start text at 1.3s
-        splitText(whiteSpan, 1.3);
+        // Orange text finishes around 1.1s. Start white bg wipe at 0.8s, start text at 1.0s
+        splitText(whiteSpan, 1.0);
 
         const bannerObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
@@ -542,7 +542,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     entry.target.classList.add('start-anim');
                     observer.unobserve(entry.target);
                     
-                    // Trigger "Let's clear things up" after banners finish (approx 2300ms)
+                    // Trigger "Let's clear things up" after banners finish (approx 2000ms)
                     setTimeout(() => {
                         const faqHandwritten = document.querySelector('.faq-handwritten');
                         if (faqHandwritten) {
@@ -553,7 +553,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 if (text) text.classList.add('animate');
                             }, 150);
                         }
-                    }, 2300);
+                    }, 2000);
                 }
             });
         }, { threshold: 0.5 });
