@@ -45,6 +45,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // Use setTimeout to ensure layout is done
     setTimeout(alignTracks, 50);
 
+    // --- Defer Portfolio Track Animations Until Near Viewport ---
+    const portfolio = document.getElementById('portfolio');
+    if (portfolio) {
+        const trackObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    portfolio.querySelectorAll('.tracks-deferred').forEach(el => {
+                        el.classList.add('tracks-active');
+                    });
+                    // Also run alignTracks once portfolio becomes visible
+                    alignTracks();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { rootMargin: '300px 0px', threshold: 0 });
+        trackObserver.observe(portfolio);
+    }
+
     // --- High-Performance Interactive Marquee Logic (from moviescracked) ---
     function initInteractiveMarquees() {
         const isHoverDevice = window.matchMedia('(hover: hover) and (pointer: fine)').matches;

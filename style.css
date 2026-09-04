@@ -237,8 +237,8 @@ ul {
     margin: 16px;
     border-radius: 40px;
     background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.8);
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
 }
@@ -270,6 +270,7 @@ main {
     width: 0;
     height: 0;
     z-index: 0;
+    contain: layout style;
 }
 
 .hero>*:not(.hero-bg-container),
@@ -292,6 +293,7 @@ main {
     left: 0;
     transform: translate(-50%, -50%);
     border-radius: 50%;
+    contain: layout style;
 }
 
 .track-1 {
@@ -369,6 +371,17 @@ main {
     /* Center of the circle track */
     z-index: 2;
     animation: orbit var(--duration) linear infinite var(--dir, normal);
+    will-change: transform;
+}
+
+/* PERF: Portfolio tracks start paused, activated by IntersectionObserver */
+.tracks-deferred .icon-node,
+.tracks-deferred .circle-track {
+    animation-play-state: paused;
+}
+.tracks-deferred.tracks-active .icon-node,
+.tracks-deferred.tracks-active .circle-track {
+    animation-play-state: running;
 }
 
 @keyframes orbit {
@@ -569,11 +582,12 @@ main {
     margin: 16px;
     border-radius: 40px;
     background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.8);
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
     overflow: hidden;
+    position: relative;
 }
 
 .marquee-container {
@@ -681,6 +695,8 @@ main {
     margin: 0 auto;
     text-align: center;
     position: relative;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 1200px;
 }
 
 .faq .section-title {
@@ -799,6 +815,8 @@ main {
     padding: 100px 20px;
     max-width: 1200px;
     margin: 0 auto;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 600px;
 }
 
 .testimonials-header {
