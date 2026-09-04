@@ -1106,7 +1106,12 @@ footer {
 /* ===== ANIMATIONS ===== */
 @keyframes bounceInTrack {
     0% { transform: translate(-50%, -50%) scale(0.3); opacity: 0; }
-    60% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
+    45% { transform: translate(-50%, -50%) scale(1.03); opacity: 1; }
+    60% { transform: translate(-50%, -50%) scale(0.975); opacity: 1; }
+    72% { transform: translate(-50%, -50%) scale(1.015); opacity: 1; }
+    82% { transform: translate(-50%, -50%) scale(0.99); opacity: 1; }
+    90% { transform: translate(-50%, -50%) scale(1.005); opacity: 1; }
+    96% { transform: translate(-50%, -50%) scale(0.998); opacity: 1; }
     100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
 }
 
@@ -1119,15 +1124,15 @@ footer {
 #hero-tracks-right .circle-track,
 #portfolio-tracks-left .circle-track,
 #portfolio-tracks-right .circle-track {
-    animation: bounceInTrack 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation: bounceInTrack 1.2s ease-in-out both;
 }
 
 #hero-tracks-left .track-1, #portfolio-tracks-left .track-1 { animation-delay: 0.1s; }
-#hero-tracks-left .track-2, #portfolio-tracks-left .track-2 { animation-delay: 0.25s; }
-#hero-tracks-left .track-3, #portfolio-tracks-left .track-3 { animation-delay: 0.4s; }
-#hero-tracks-right .track-1, #portfolio-tracks-right .track-1 { animation-delay: 0.2s; }
-#hero-tracks-right .track-2, #portfolio-tracks-right .track-2 { animation-delay: 0.35s; }
-#hero-tracks-right .track-3, #portfolio-tracks-right .track-3 { animation-delay: 0.5s; }
+#hero-tracks-left .track-2, #portfolio-tracks-left .track-2 { animation-delay: 0.15s; }
+#hero-tracks-left .track-3, #portfolio-tracks-left .track-3 { animation-delay: 0.2s; }
+#hero-tracks-right .track-1, #portfolio-tracks-right .track-1 { animation-delay: 0.13s; }
+#hero-tracks-right .track-2, #portfolio-tracks-right .track-2 { animation-delay: 0.18s; }
+#hero-tracks-right .track-3, #portfolio-tracks-right .track-3 { animation-delay: 0.23s; }
 
 .hero-content > * {
     animation: fadeSlideUp 0.8s ease-out both;
