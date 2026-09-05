@@ -258,6 +258,17 @@ body::before {
         padding-top: 10px;
         border-top: 1px solid rgba(255,255,255,0.2);
     }
+    
+    /* Keep thumbnail actions inline */
+    #thumbnailsList .list-item {
+        flex-direction: row;
+        align-items: center;
+    }
+    #thumbnailsList .item-actions {
+        width: auto;
+        border-top: none;
+        padding-top: 0;
+    }
     .modal-content {
         width: 90%;
         padding: 25px;
