@@ -1051,13 +1051,34 @@ main {
 }
 
 /* Float positions for Step 03 (2 chat bubbles) */
-.hiw-card:nth-child(3) .hiw-float-1 { left: 5%; top: 55%; }
-.hiw-card:nth-child(3) .hiw-float-2 { left: 10%; top: 15%; }
+.hiw-card:nth-child(3) .hiw-float-1 { right: 5%; bottom: 15%; top: auto; left: auto; }
+.hiw-card:nth-child(3) .hiw-float-2 { left: 5%; top: 15%; }
+
+/* --- Step 4 Visual Controls (Adjust these values to change size, rotation, and position) --- */
+:root {
+    /* Global Scale for Step 4 chips */
+    --step4-chip-scale: 0.9;
+
+    /* Chip 1: Final_Cut_v2.mp4 */
+    --step4-chip1-left: 33%;
+    --step4-chip1-top: -27%;
+    --step4-chip1-rotate: 9deg;
+
+    /* Chip 2: Thumbnail.png */
+    --step4-chip2-left: -5%;
+    --step4-chip2-top: 18%;
+    --step4-chip2-rotate: -21deg;
+
+    /* Chip 3: Publish Button */
+    --step4-chip3-left: 42%;
+    --step4-chip3-top: 46%;
+    --step4-chip3-rotate: -13deg;
+}
 
 /* Float positions for Step 04 (3 file chips) */
-.hiw-card:nth-child(4) .hiw-float-1 { left: 2%; top: 10%; }
-.hiw-card:nth-child(4) .hiw-float-2 { left: 5%; top: 48%; }
-.hiw-card:nth-child(4) .hiw-float-3 { right: 5%; top: 55%; }
+.hiw-card:nth-child(4) .hiw-float-1 { left: var(--step4-chip1-left); top: var(--step4-chip1-top); z-index: 1; }
+.hiw-card:nth-child(4) .hiw-float-2 { left: var(--step4-chip2-left); top: var(--step4-chip2-top); z-index: 2; }
+.hiw-card:nth-child(4) .hiw-float-3 { left: var(--step4-chip3-left); top: var(--step4-chip3-top); z-index: 3; right: auto; bottom: auto; }
 
 /* --- Animation Keyframes & In-View Triggers --- */
 .hiw-card.hiw-in-view .hiw-float-1 {
@@ -1122,94 +1143,179 @@ main {
 .hiw-card.hiw-anim[data-hiw-delay="3"].hiw-card-visible { animation-delay: 0.36s; }
 
 /* --- Chat Bubbles (Step 03) --- */
+.hiw-chat-row {
+    position: absolute;
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    opacity: 1; /* Wrapper is always visible, children animate in */
+}
+
 .hiw-chat-bubble {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 8px 14px;
-    border-radius: 12px;
-    font-size: 0.72rem;
+    padding: 10px 16px;
+    border-radius: 20px;
+    font-size: 0.95rem;
     font-weight: 600;
     white-space: nowrap;
-    position: absolute;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     border: 1px solid rgba(0, 0, 0, 0.05);
-    opacity: 0;
-    transform: scale(0.5) translateY(20px);
+    opacity: 0; /* Hidden initially */
+}
+
+.chat-pfp {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    opacity: 0; /* Hidden initially */
+    transform: scale(0);
+}
+
+.chat-left .chat-pfp { border: 1px solid rgba(0,0,0,0.1); }
+.chat-right .chat-pfp { border: 1.5px solid rgba(255,255,255,0.4); }
+
+.chat-left .hiw-chat-bubble { 
+    border-bottom-left-radius: 4px; 
+    transform-origin: left bottom;
+}
+.chat-right .hiw-chat-bubble { 
+    border-bottom-right-radius: 4px; 
+    transform-origin: right bottom;
 }
 
 .hiw-chat-green {
     background: linear-gradient(135deg, #a3ff12, #78e600);
     color: #1a1a1a;
     border: none;
-    transform: scale(0.5) translateY(20px) rotate(-3deg);
-}
-.hiw-card.hiw-in-view .hiw-chat-green {
-    animation: hiwPopInGreen 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both,
-               hiwFloatGreen 4s ease-in-out 0.65s infinite;
-}
-
-@keyframes hiwPopInGreen {
-    0% { opacity: 0; transform: scale(0.3) translateY(25px) rotate(-3deg); }
-    100% { opacity: 1; transform: scale(1) translateY(0) rotate(-3deg); }
-}
-@keyframes hiwFloatGreen {
-    0%, 100% { transform: translateY(0) rotate(-3deg); }
-    50% { transform: translateY(-8px) rotate(-3deg); }
 }
 
 .hiw-chat-white {
     background: #ffffff;
     color: #333;
-    transform: scale(0.5) translateY(20px) rotate(2deg);
-}
-.hiw-card.hiw-in-view .hiw-chat-white {
-    animation: hiwPopInWhite 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both,
-               hiwFloatWhite 4.5s ease-in-out 0.8s infinite;
 }
 
-@keyframes hiwPopInWhite {
-    0% { opacity: 0; transform: scale(0.3) translateY(25px) rotate(2deg); }
-    100% { opacity: 1; transform: scale(1) translateY(0) rotate(2deg); }
+/* The rows continuously float */
+.hiw-card.hiw-in-view .chat-left {
+    animation: hiwFloatLeft 4.5s ease-in-out 0s infinite;
 }
-@keyframes hiwFloatWhite {
+.hiw-card.hiw-in-view .chat-right {
+    animation: hiwFloatRight 4s ease-in-out 0s infinite;
+}
+
+/* Staggered Pop Animations */
+.hiw-card.hiw-in-view .chat-left .chat-pfp {
+    animation: hiwPfpPop 0.5s cubic-bezier(0.34, 1.8, 0.64, 1) 0.15s both;
+}
+.hiw-card.hiw-in-view .chat-left .hiw-chat-bubble {
+    animation: hiwBubblePopLeft 0.5s cubic-bezier(0.34, 1.8, 0.64, 1) 0.4s both;
+}
+.hiw-card.hiw-in-view .chat-right .chat-pfp {
+    animation: hiwPfpPop 0.5s cubic-bezier(0.34, 1.8, 0.64, 1) 0.9s both;
+}
+.hiw-card.hiw-in-view .chat-right .hiw-chat-bubble {
+    animation: hiwBubblePopRight 0.5s cubic-bezier(0.34, 1.8, 0.64, 1) 1.15s both;
+}
+
+@keyframes hiwPfpPop {
+    0% { opacity: 0; transform: scale(0); }
+    100% { opacity: 1; transform: scale(1); }
+}
+@keyframes hiwBubblePopLeft {
+    0% { opacity: 0; transform: scale(0) rotate(15deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+@keyframes hiwBubblePopRight {
+    0% { opacity: 0; transform: scale(0) rotate(-15deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+@keyframes hiwFloatLeft {
     0%, 100% { transform: translateY(0) rotate(2deg); }
     50% { transform: translateY(-8px) rotate(2deg); }
+}
+@keyframes hiwFloatRight {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-8px) rotate(-3deg); }
 }
 
 /* --- File Chips (Step 04) --- */
 .hiw-file-chip {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 8px 14px;
+    gap: 12px;
+    padding: 14px 26px;
     background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    border-radius: 10px;
-    font-size: 0.7rem;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    border-radius: 16px;
+    font-size: 1.15rem;
     font-weight: 600;
     color: var(--dark);
     white-space: nowrap;
     position: absolute;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
     opacity: 0;
-    transform: scale(0.5) translateY(20px);
+}
+.hiw-file-chip svg {
+    width: 22px;
+    height: 22px;
 }
 
 .hiw-publish-chip {
     display: inline-flex;
     align-items: center;
-    padding: 8px 20px;
+    padding: 16px 36px;
     background: linear-gradient(135deg, #a3ff12, #6ddb00);
-    border-radius: 10px;
-    font-size: 0.75rem;
-    font-weight: 700;
+    border-radius: 16px;
+    font-size: 1.25rem;
+    font-weight: 800;
     color: #1a1a1a;
     white-space: nowrap;
     position: absolute;
-    box-shadow: 0 6px 16px rgba(120, 230, 0, 0.3);
+    box-shadow: 0 15px 35px rgba(120, 230, 0, 0.4);
     opacity: 0;
-    transform: scale(0.5) translateY(20px);
+}
+
+/* Animations for Step 4 */
+.hiw-card.hiw-in-view .hiw-float-1.hiw-file-chip {
+    animation: hiwPopInChip1 0.5s cubic-bezier(0.34, 1.8, 0.64, 1) 0.15s both,
+               hiwFloatChip1 4s ease-in-out 0.65s infinite;
+}
+.hiw-card.hiw-in-view .hiw-float-2.hiw-file-chip {
+    animation: hiwPopInChip2 0.5s cubic-bezier(0.34, 1.8, 0.64, 1) 0.3s both,
+               hiwFloatChip2 4.5s ease-in-out 0.8s infinite;
+}
+.hiw-card.hiw-in-view .hiw-float-3.hiw-publish-chip {
+    animation: hiwPopInChip3 0.5s cubic-bezier(0.34, 1.8, 0.64, 1) 0.45s both,
+               hiwFloatChip3 5s ease-in-out 0.95s infinite;
+}
+
+@keyframes hiwPopInChip1 {
+    0% { opacity: 0; transform: scale(0.3) translateY(25px) rotate(0deg); }
+    100% { opacity: 1; transform: scale(var(--step4-chip-scale)) translateY(0) rotate(var(--step4-chip1-rotate)); }
+}
+@keyframes hiwFloatChip1 {
+    0%, 100% { transform: scale(var(--step4-chip-scale)) translateY(0) rotate(var(--step4-chip1-rotate)); }
+    50% { transform: scale(var(--step4-chip-scale)) translateY(-8px) rotate(var(--step4-chip1-rotate)); }
+}
+
+@keyframes hiwPopInChip2 {
+    0% { opacity: 0; transform: scale(0.3) translateY(25px) rotate(0deg); }
+    100% { opacity: 1; transform: scale(var(--step4-chip-scale)) translateY(0) rotate(var(--step4-chip2-rotate)); }
+}
+@keyframes hiwFloatChip2 {
+    0%, 100% { transform: scale(var(--step4-chip-scale)) translateY(0) rotate(var(--step4-chip2-rotate)); }
+    50% { transform: scale(var(--step4-chip-scale)) translateY(-8px) rotate(var(--step4-chip2-rotate)); }
+}
+
+@keyframes hiwPopInChip3 {
+    0% { opacity: 0; transform: scale(0.3) translateY(25px) rotate(0deg); }
+    100% { opacity: 1; transform: scale(var(--step4-chip-scale)) translateY(0) rotate(var(--step4-chip3-rotate)); }
+}
+@keyframes hiwFloatChip3 {
+    0%, 100% { transform: scale(var(--step4-chip-scale)) translateY(0) rotate(var(--step4-chip3-rotate)); }
+    50% { transform: scale(var(--step4-chip-scale)) translateY(-8px) rotate(var(--step4-chip3-rotate)); }
 }
 
 /* --- Desktop min-width overrides --- */
