@@ -1,0 +1,8 @@
+name = "zackgfx"
+pages_build_output_dir = "."
+compatibility_date = "2024-03-20"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "zackgfx-db"
+database_id = "807f5523-e7e4-410a-8aea-34856607c120"

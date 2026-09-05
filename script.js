@@ -16,10 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
         lenis.raf(time);
         requestAnimationFrame(raf);
     }
-
     requestAnimationFrame(raf);
 
-    // --- Force Page to Always Load/Refresh at Top (0,0) ---
     if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';
     }
@@ -32,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
         window.scrollTo(0, 0);
     });
 
-    // --- Smooth Scroll for Anchor Links via Lenis ---
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', (e) => {
             const targetId = anchor.getAttribute('href');
@@ -47,51 +44,501 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- Align Duplicate Tracks in Portfolio ---
+    // Mobile Menu
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileNav = document.getElementById('mobileNav');
+    const menuIcon = menuToggle.querySelector('i');
+    let isMenuOpen = false;
+
+    menuToggle.addEventListener('click', () => {
+        isMenuOpen = !isMenuOpen;
+        if (isMenuOpen) {
+            mobileNav.classList.add('active');
+            menuIcon.classList.remove('fa-bars');
+            menuIcon.classList.add('fa-xmark');
+        } else {
+            mobileNav.classList.remove('active');
+            menuIcon.classList.remove('fa-xmark');
+            menuIcon.classList.add('fa-bars');
+        }
+    });
+
+    mobileNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            isMenuOpen = false;
+            mobileNav.classList.remove('active');
+            menuIcon.classList.remove('fa-xmark');
+            menuIcon.classList.add('fa-bars');
+        });
+    });
+
+    // Static Animations (Independent of dynamic data)
+    initStaticAnimations();
+
+    // Load Dynamic Data
+    loadDynamicContent();
+
+    async function loadDynamicContent() {
+        try {
+            const response = await fetch('/api/public/content');
+            if (!response.ok) throw new Error('Failed to fetch content');
+            const data = await response.json();
+            
+            renderThumbnails(data.thumbnails);
+            renderFAQs(data.faqs);
+            renderReviews(data.reviews);
+            
+            // Initialize components depending on dynamic data
+            initInteractiveMarquees();
+            alignTracks(); // Trigger track alignment
+            initAccordion();
+            initSlider();
+            initMobileGrid();
+            observeLazyElements();
+        } catch (err) {
+            console.error("Error loading dynamic content:", err);
+            // Fallback or handle error
+        }
+    }
+
+    function renderThumbnails(thumbnails) {
+        if (!thumbnails || thumbnails.length === 0) return;
+
+        // Populate Mobile Grid
+        const grid = document.getElementById('portfolioGrid');
+        if (grid) {
+            grid.innerHTML = '';
+            thumbnails.forEach(t => {
+                const img = document.createElement('img');
+                img.src = t.image_base64;
+                img.alt = 'Thumbnail';
+                img.className = 'grid-thumb';
+                img.loading = 'lazy';
+                grid.appendChild(img);
+            });
+        }
+
+        // Populate Marquees
+        // Distribute thumbnails evenly across 3 tracks
+        const track1 = document.getElementById('marqueeTrack1');
+        const track2 = document.getElementById('marqueeTrack2');
+        const track3 = document.getElementById('marqueeTrack3');
+        
+        if (track1 && track2 && track3) {
+            const third = Math.ceil(thumbnails.length / 3);
+            const p1 = thumbnails.slice(0, third);
+            const p2 = thumbnails.slice(third, third * 2);
+            const p3 = thumbnails.slice(third * 2);
+
+            const buildGroup = (arr) => arr.map(t => `<img src="${t.image_base64}" alt="Thumbnail" class="thumb-card">`).join('');
+            
+            track1.innerHTML = `<div class="marquee-group">${buildGroup(p1)}</div><div class="marquee-group">${buildGroup(p1)}</div>`;
+            track2.innerHTML = `<div class="marquee-group">${buildGroup(p2)}</div><div class="marquee-group">${buildGroup(p2)}</div>`;
+            track3.innerHTML = `<div class="marquee-group">${buildGroup(p3)}</div><div class="marquee-group">${buildGroup(p3)}</div>`;
+        }
+    }
+
+    function renderFAQs(faqs) {
+        const acc = document.getElementById('faqAccordion');
+        if (!acc || !faqs || faqs.length === 0) return;
+        acc.innerHTML = '';
+        faqs.forEach((faq, index) => {
+            acc.innerHTML += `
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>${index + 1}. ${faq.question}</h3>
+                        <div class="icon-toggle"><i class="fa-solid fa-plus"></i></div>
+                    </div>
+                    <div class="accordion-content">
+                        <p>${faq.answer}</p>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    function renderReviews(reviews) {
+        const track = document.getElementById('sliderTrack');
+        if (!track || !reviews || reviews.length === 0) return;
+        track.innerHTML = '';
+        reviews.forEach(r => {
+            const stars = Array(r.rating).fill('<i class="fa-solid fa-star"></i>').join('');
+            track.innerHTML += `
+                <div class="testimonial-card">
+                    <p class="quote">"${r.quote}"</p>
+                    <div class="testimonial-footer">
+                        <div class="client-info">
+                            <img src="${r.avatar_base64 || 'https://files.catbox.moe/1z0zdx.png'}" alt="Client" class="client-avatar">
+                            <div>
+                                <h5 class="client-name">${r.client_name}</h5>
+                                <span class="client-role">— ${r.role}</span>
+                            </div>
+                        </div>
+                        <div class="rating">${stars}</div>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    function initAccordion() {
+        const accordionItems = document.querySelectorAll('.accordion-item');
+        accordionItems.forEach(item => {
+            const header = item.querySelector('.accordion-header');
+            header.addEventListener('click', () => {
+                accordionItems.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                item.classList.toggle('active');
+            });
+        });
+    }
+
+    function initSlider() {
+        const sliderTrack = document.getElementById('sliderTrack');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+        const originalCards = Array.from(document.querySelectorAll('.testimonial-card'));
+        if (originalCards.length === 0) return;
+        
+        const numCards = originalCards.length;
+        
+        originalCards.forEach(card => {
+            sliderTrack.appendChild(card.cloneNode(true));
+        });
+        originalCards.slice().reverse().forEach(card => {
+            sliderTrack.insertBefore(card.cloneNode(true), sliderTrack.firstChild);
+        });
+        
+        const allCards = document.querySelectorAll('.testimonial-card');
+        let currentIndex = numCards;
+        let cachedCardWidth = 0;
+        let cachedGap = 0;
+
+        function calculateSliderMetrics() {
+            cachedCardWidth = allCards[0].offsetWidth;
+            const style = window.getComputedStyle(sliderTrack);
+            cachedGap = parseFloat(style.gap) || 0;
+        }
+        calculateSliderMetrics();
+        
+        function updateSliderPosition(animate = true) {
+            if (!animate) sliderTrack.style.transition = 'none';
+            else sliderTrack.style.transition = '';
+            
+            const moveDistance = (cachedCardWidth + cachedGap) * currentIndex;
+            sliderTrack.style.transform = `translateX(-${moveDistance}px)`;
+            
+            if (!animate) {
+                sliderTrack.offsetHeight; 
+                sliderTrack.style.transition = ''; 
+            }
+        }
+        updateSliderPosition(false);
+
+        let isAnimating = false;
+        function lockAnimation() {
+            isAnimating = true;
+            setTimeout(() => { isAnimating = false; }, 500);
+        }
+
+        sliderTrack.addEventListener('transitionend', () => {
+            if (currentIndex >= numCards * 2) {
+                currentIndex -= numCards;
+                updateSliderPosition(false);
+            } else if (currentIndex < numCards) {
+                currentIndex += numCards;
+                updateSliderPosition(false);
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (isAnimating) return;
+            currentIndex++;
+            updateSliderPosition(true);
+            lockAnimation();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (isAnimating) return;
+            currentIndex--;
+            updateSliderPosition(true);
+            lockAnimation();
+        });
+
+        window.addEventListener('resize', () => {
+            calculateSliderMetrics();
+            updateSliderPosition(false);
+        });
+    }
+
+    function initMobileGrid() {
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        const portfolioGrid = document.getElementById('portfolioGrid');
+        if (!loadMoreBtn || !portfolioGrid) return;
+
+        const gridThumbs = portfolioGrid.querySelectorAll('.grid-thumb');
+        const initialCount = 12;
+        let shown = initialCount;
+
+        gridThumbs.forEach((thumb, i) => {
+            if (i >= initialCount) thumb.classList.add('grid-thumb-hidden');
+        });
+
+        if (shown >= gridThumbs.length) {
+            loadMoreBtn.style.display = 'none';
+        } else {
+            loadMoreBtn.style.display = 'inline-flex';
+        }
+
+        function whenImageLoaded(img, callback) {
+            if (img.complete && img.naturalWidth > 0) callback();
+            else {
+                const handleDone = () => {
+                    img.removeEventListener('load', handleDone);
+                    img.removeEventListener('error', handleDone);
+                    callback();
+                };
+                img.addEventListener('load', handleDone);
+                img.addEventListener('error', handleDone);
+            }
+        }
+
+        function staggerReveal(thumbs, baseDelay) {
+            let delay = baseDelay || 0;
+            const ITEM_DELAY = 120;
+            const ordered = [];
+            for (let i = 0; i < thumbs.length; i += 2) {
+                ordered.push(thumbs[i]);
+                if (i + 1 < thumbs.length) ordered.push(thumbs[i + 1]);
+            }
+            ordered.forEach((thumb) => {
+                setTimeout(() => {
+                    whenImageLoaded(thumb, () => {
+                        requestAnimationFrame(() => {
+                            thumb.classList.add('grid-thumb-visible');
+                        });
+                    });
+                }, delay);
+                delay += ITEM_DELAY;
+            });
+        }
+
+        const initialThumbs = Array.from(gridThumbs).slice(0, initialCount);
+        staggerReveal(initialThumbs, 150);
+
+        const scrollObserver = new IntersectionObserver((entries) => {
+            const newlyVisible = [];
+            entries.forEach((entry) => {
+                if (entry.isIntersecting && !entry.target.classList.contains('grid-thumb-visible')) {
+                    newlyVisible.push(entry.target);
+                    scrollObserver.unobserve(entry.target);
+                }
+            });
+            if (newlyVisible.length > 0) staggerReveal(newlyVisible, 0);
+        }, { threshold: 0.15 });
+
+        gridThumbs.forEach((thumb) => {
+            if (!initialThumbs.includes(thumb)) scrollObserver.observe(thumb);
+        });
+
+        // Use clone to remove old event listeners if loadDynamicContent is called multiple times
+        const newBtn = loadMoreBtn.cloneNode(true);
+        loadMoreBtn.parentNode.replaceChild(newBtn, loadMoreBtn);
+
+        newBtn.addEventListener('click', () => {
+            const nextShow = Math.min(shown + 6, gridThumbs.length);
+            const newThumbs = [];
+            for (let i = shown; i < nextShow; i++) {
+                gridThumbs[i].classList.remove('grid-thumb-hidden');
+                newThumbs.push(gridThumbs[i]);
+                scrollObserver.observe(gridThumbs[i]);
+            }
+            shown = nextShow;
+            if (shown >= gridThumbs.length) newBtn.style.display = 'none';
+            requestAnimationFrame(() => {
+                const inView = [];
+                newThumbs.forEach((thumb) => {
+                    const rect = thumb.getBoundingClientRect();
+                    if (rect.top < window.innerHeight && rect.bottom > 0) {
+                        inView.push(thumb);
+                        scrollObserver.unobserve(thumb);
+                    }
+                });
+                if (inView.length > 0) staggerReveal(inView, 0);
+            });
+        });
+    }
+
+    function observeLazyElements() {
+        const observerOptions = { rootMargin: '0px 0px -10% 0px', threshold: 0.1 };
+        const animObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        const lazyElements = document.querySelectorAll('section:not(.hero) .badge, .faq-banner-container, .section-title, .accordion-item, .footer-col');
+        lazyElements.forEach(el => {
+            el.classList.add('lazy-anim');
+            animObserver.observe(el);
+        });
+
+        const lazyTestimonialCards = document.querySelectorAll('.testimonial-card');
+        const numOriginalCards = lazyTestimonialCards.length / 3; // roughly since cloned
+        lazyTestimonialCards.forEach((card, i) => {
+            if (i >= numOriginalCards && i < numOriginalCards + 3) {
+                card.classList.add('lazy-anim');
+                card.style.transitionDelay = `${(i - numOriginalCards) * 0.15}s`;
+                animObserver.observe(card);
+            }
+        });
+    }
+
     function alignTracks() {
         const hero = document.querySelector('.hero');
         const portfolio = document.querySelector('.portfolio');
-        
         const portLeft = document.getElementById('portfolio-tracks-left');
         const portRight = document.getElementById('portfolio-tracks-right');
         
         if (hero && portfolio && portLeft && portRight) {
-            // Calculate distance between top of hero and top of portfolio
-            // Since they are both in the same offsetParent (<main>), we can just subtract offsetTops
             const offsetDiff = hero.offsetTop - portfolio.offsetTop;
-            
-            // The original tracks are at top: 350px relative to hero.
-            // To match, the portfolio tracks must be shifted by offsetDiff.
             const newTop = 350 + offsetDiff;
-            
             portLeft.style.top = `${newTop}px`;
             portRight.style.top = `${newTop}px`;
         }
     }
-    
-    window.addEventListener('resize', alignTracks);
-    // Use setTimeout to ensure layout is done
-    setTimeout(alignTracks, 50);
 
-    // --- Defer Portfolio Track Animations Until Near Viewport ---
-    const portfolio = document.getElementById('portfolio');
-    if (portfolio) {
-        const trackObserver = new IntersectionObserver((entries, observer) => {
+    function initStaticAnimations() {
+        window.addEventListener('resize', alignTracks);
+        setTimeout(alignTracks, 50);
+
+        const portfolio = document.getElementById('portfolio');
+        if (portfolio) {
+            const trackObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        portfolio.querySelectorAll('.tracks-deferred').forEach(el => {
+                            el.classList.add('tracks-active');
+                        });
+                        alignTracks();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { rootMargin: '300px 0px', threshold: 0 });
+            trackObserver.observe(portfolio);
+        }
+
+        const handwrittenElements = document.querySelectorAll('.handwritten-annotation, .faq-handwritten');
+        handwrittenElements.forEach(container => {
+            const textSpan = container.querySelector('span');
+            const arrow = container.querySelector('svg, i');
+            if (textSpan) {
+                const text = textSpan.textContent;
+                textSpan.textContent = '';
+                textSpan.classList.add('handwriting-text');
+                let delayCount = 0;
+                for (let i = 0; i < text.length; i++) {
+                    const charSpan = document.createElement('span');
+                    charSpan.textContent = text[i] === ' ' ? ' ' : text[i];
+                    if (text[i] !== ' ') {
+                        charSpan.style.animationDelay = `${delayCount * 0.05}s`;
+                        delayCount++;
+                    }
+                    textSpan.appendChild(charSpan);
+                }
+            }
+            if (arrow) arrow.classList.add('handwriting-arrow');
+        });
+
+        setTimeout(() => {
+            const heroHandwritten = document.querySelector('.hero-cta .handwritten-annotation');
+            if (heroHandwritten) {
+                const arrow = heroHandwritten.querySelector('.handwriting-arrow');
+                const text = heroHandwritten.querySelector('.handwriting-text');
+                if (arrow) arrow.classList.add('animate');
+                setTimeout(() => { if (text) text.classList.add('animate'); }, 150); 
+            }
+        }, 1600); 
+
+        const hiwCards = document.querySelectorAll('.hiw-card.hiw-anim');
+        if (hiwCards.length > 0) {
+            const hiwObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('hiw-in-view');
+                        entry.target.classList.add('hiw-card-visible');
+                    } else {
+                        entry.target.classList.remove('hiw-in-view');
+                    }
+                });
+            }, { rootMargin: '0px 0px -5% 0px', threshold: 0.15 });
+            hiwCards.forEach(card => hiwObserver.observe(card));
+        }
+
+        const faqBannerContainers = document.querySelectorAll('.faq-banner-container');
+        faqBannerContainers.forEach(container => {
+            const orangeSpan = container.querySelector('.orange-banner span');
+            const whiteSpan = container.querySelector('.white-banner span');
+            
+            const splitText = (span, baseDelay) => {
+                if (!span) return;
+                const text = span.textContent;
+                span.textContent = '';
+                let delayCount = 0;
+                for (let i = 0; i < text.length; i++) {
+                    const charSpan = document.createElement('span');
+                    charSpan.className = 'banner-char';
+                    charSpan.textContent = text[i] === ' ' ? ' ' : text[i];
+                    if (text[i] !== ' ') {
+                        charSpan.style.animationDelay = `${baseDelay + (delayCount * 0.04)}s`;
+                        delayCount++;
+                    }
+                    span.appendChild(charSpan);
+                }
+            };
+
+            splitText(orangeSpan, 0.2);
+            splitText(whiteSpan, 1.0);
+
+            const bannerObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('start-anim');
+                        observer.unobserve(entry.target);
+                        setTimeout(() => {
+                            const faqHandwritten = entry.target.closest('.faq')?.querySelector('.faq-handwritten');
+                            if (faqHandwritten) {
+                                const arrow = faqHandwritten.querySelector('.handwriting-arrow');
+                                const text = faqHandwritten.querySelector('.handwriting-text');
+                                if (arrow) arrow.classList.add('animate');
+                                setTimeout(() => { if (text) text.classList.add('animate'); }, 150);
+                            }
+                        }, 2000);
+                    }
+                });
+            }, { threshold: 0.5 });
+            bannerObserver.observe(container);
+        });
+
+        const hwObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    portfolio.querySelectorAll('.tracks-deferred').forEach(el => {
-                        el.classList.add('tracks-active');
-                    });
-                    // Also run alignTracks once portfolio becomes visible
-                    alignTracks();
+                    const arrow = entry.target.querySelector('.handwriting-arrow');
+                    const text = entry.target.querySelector('.handwriting-text');
+                    if (arrow) arrow.classList.add('animate');
+                    setTimeout(() => { if (text) text.classList.add('animate'); }, 150);
                     observer.unobserve(entry.target);
                 }
             });
-        }, { rootMargin: '300px 0px', threshold: 0 });
-        trackObserver.observe(portfolio);
+        }, { threshold: 0.5 });
     }
 
-    // --- High-Performance Interactive Marquee Logic (from moviescracked) ---
     function initInteractiveMarquees() {
         const isHoverDevice = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
         const tracks = document.querySelectorAll('.marquee-track');
@@ -102,7 +549,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const isLeft = track.classList.contains('left');
             const baseSpeed = isLeft ? -0.8 : 0.8;
-            
             const wrapper = track.closest('.marquee-row-wrapper');
             
             let x = 0;
@@ -164,14 +610,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 startTranslate = x;
                 lastX = clientX;
                 lastTime = performance.now();
-                
                 window.addEventListener('mousemove', onMouseMoveWindow);
                 window.addEventListener('mouseup', onMouseUpWindow);
             }
 
             function onMove(clientX, clientY, e) {
                 if (!isDragging) return;
-                
                 if (clientY !== undefined && !isScrolling) {
                     const dy = Math.abs(clientY - startY);
                     const dx = Math.abs(clientX - startX);
@@ -181,19 +625,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         return;
                     }
                 }
-
                 if (isScrolling) return;
-
-                if (e && e.cancelable) {
-                    e.preventDefault();
-                }
-
+                if (e && e.cancelable) e.preventDefault();
+                
                 const dx = clientX - startX;
-                
-                if (Math.abs(dx) > 5) {
-                    hasMoved = true;
-                }
-                
+                if (Math.abs(dx) > 5) hasMoved = true;
                 x = wrapOffset(startTranslate + dx);
                 
                 const now = performance.now();
@@ -212,59 +648,41 @@ document.addEventListener('DOMContentLoaded', () => {
             function onEnd() {
                 if (!isDragging) return;
                 isDragging = false;
-                
                 if (hasMoved) {
                     window._marqueeJustDragged = true;
                     setTimeout(() => { window._marqueeJustDragged = false; }, 100);
                 }
-                
                 window.removeEventListener('mousemove', onMouseMoveWindow);
                 window.removeEventListener('mouseup', onMouseUpWindow);
             }
 
-            function onMouseMoveWindow(e) {
-                onMove(e.clientX, e.clientY, e);
-            }
-
-            function onMouseUpWindow() {
-                onEnd();
-            }
+            function onMouseMoveWindow(e) { onMove(e.clientX, e.clientY, e); }
+            function onMouseUpWindow() { onEnd(); }
 
             track.addEventListener('mousedown', (e) => {
                 if (e.button !== 0) return;
                 onStart(e.clientX, e.clientY);
             });
-
-            track.addEventListener('dragstart', (e) => {
-                e.preventDefault();
-            });
-
+            track.addEventListener('dragstart', (e) => e.preventDefault());
             track.addEventListener('touchstart', (e) => {
                 onStart(e.touches[0].clientX, e.touches[0].clientY);
             }, { passive: true });
-
             track.addEventListener('touchmove', (e) => {
                 onMove(e.touches[0].clientX, e.touches[0].clientY, e);
             }, { passive: false });
-
-            track.addEventListener('touchend', () => {
-                onEnd();
-            });
+            track.addEventListener('touchend', () => onEnd());
 
             let lastFrameTime = NaN;
-
             function tick(now) {
                 if (!alive) return;
                 if (++frameCount >= 60) {
                     frameCount = 0;
                     if (!track.isConnected) return;
                 }
-
                 if (!now) now = performance.now();
                 if (isNaN(lastFrameTime)) lastFrameTime = now;
                 const dt = now - lastFrameTime;
                 lastFrameTime = now;
-
                 const deltaScale = Math.min(100, dt) / 16.666;
 
                 if (!isDragging) {
@@ -274,15 +692,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         velocity = 0;
                     }
-
-                    if (!isHovered) {
-                        x += baseSpeed * deltaScale;
-                    } else {
-                        x += (baseSpeed * 0.15) * deltaScale;
-                    }
+                    if (!isHovered) x += baseSpeed * deltaScale;
+                    else x += (baseSpeed * 0.15) * deltaScale;
                     
                     x = wrapOffset(x);
-
                     if (x !== lastRenderedX) {
                         lastRenderedX = x;
                         track.style.transform = 'translate3d(' + x + 'px,0,0)';
@@ -290,7 +703,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     lastFrameTime = now;
                 }
-                
                 requestAnimationFrame(tick);
             }
 
@@ -298,458 +710,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!alive || !track.isConnected) return;
                 measureWrapDist();
                 tick();
-                
-                if (wrapper) {
-                    wrapper.classList.add('visible');
-                }
+                if (wrapper) wrapper.classList.add('visible');
             });
         });
     }
 
-    // Initialize the marquees
-    initInteractiveMarquees();
-
-    // --- Mobile Menu Toggle ---
-    const menuToggle = document.getElementById('menuToggle');
-    const mobileNav = document.getElementById('mobileNav');
-    const menuIcon = menuToggle.querySelector('i');
-    let isMenuOpen = false;
-
-    menuToggle.addEventListener('click', () => {
-        isMenuOpen = !isMenuOpen;
-        if (isMenuOpen) {
-            mobileNav.classList.add('active');
-            menuIcon.classList.remove('fa-bars');
-            menuIcon.classList.add('fa-xmark');
-        } else {
-            mobileNav.classList.remove('active');
-            menuIcon.classList.remove('fa-xmark');
-            menuIcon.classList.add('fa-bars');
-        }
-    });
-
-    // Close menu when a link is clicked
-    const navLinks = mobileNav.querySelectorAll('a');
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            isMenuOpen = false;
-            mobileNav.classList.remove('active');
-            menuIcon.classList.remove('fa-xmark');
-            menuIcon.classList.add('fa-bars');
-        });
-    });
-
-    // --- Accordion Logic (FAQ) ---
-    const accordionItems = document.querySelectorAll('.accordion-item');
-
-    accordionItems.forEach(item => {
-        const header = item.querySelector('.accordion-header');
-        header.addEventListener('click', () => {
-            // Close other items
-            accordionItems.forEach(otherItem => {
-                if (otherItem !== item && otherItem.classList.contains('active')) {
-                    otherItem.classList.remove('active');
-                }
-            });
-            // Toggle current item
-            item.classList.toggle('active');
-        });
-    });
-
-    // --- Testimonials Slider Logic ---
-    const sliderTrack = document.getElementById('sliderTrack');
-    const prevBtn = document.querySelector('.prev-btn');
-    const nextBtn = document.querySelector('.next-btn');
-    const originalCards = Array.from(document.querySelectorAll('.testimonial-card'));
-    const numCards = originalCards.length;
-    
-    // 1. Clone cards for infinite loop
-    originalCards.forEach(card => {
-        const clone = card.cloneNode(true);
-        sliderTrack.appendChild(clone);
-    });
-    // Clone to start (reverse to maintain order when using insertBefore)
-    originalCards.slice().reverse().forEach(card => {
-        const clone = card.cloneNode(true);
-        sliderTrack.insertBefore(clone, sliderTrack.firstChild);
-    });
-    
-    const allCards = document.querySelectorAll('.testimonial-card');
-    
-    let currentIndex = numCards; // Start at the first original card
-    let cachedCardWidth = 0;
-    let cachedGap = 0;
-
-    function calculateSliderMetrics() {
-        if (allCards.length === 0) return;
-        cachedCardWidth = allCards[0].offsetWidth;
-        const style = window.getComputedStyle(sliderTrack);
-        cachedGap = parseFloat(style.gap) || 0;
-    }
-
-    // Initial calculation
-    calculateSliderMetrics();
-    
-    function updateSliderPosition(animate = true) {
-        if (allCards.length === 0) return;
-        
-        if (!animate) {
-            sliderTrack.style.transition = 'none';
-        } else {
-            sliderTrack.style.transition = '';
-        }
-        
-        const moveDistance = (cachedCardWidth + cachedGap) * currentIndex;
-        sliderTrack.style.transform = `translateX(-${moveDistance}px)`;
-        
-        // Force reflow if we disabled transition, so it applies instantly
-        if (!animate) {
-            sliderTrack.offsetHeight; 
-            sliderTrack.style.transition = ''; 
-        }
-    }
-
-    // Initial positioning without animation
-    updateSliderPosition(false);
-
-    let isAnimating = false;
-
-    function lockAnimation() {
-        isAnimating = true;
-        setTimeout(() => {
-            isAnimating = false;
-        }, 500); // matches the 0.5s CSS transition
-    }
-
-    // Seamless jump after transition ends
-    sliderTrack.addEventListener('transitionend', () => {
-        if (currentIndex >= numCards * 2) {
-            currentIndex -= numCards;
-            updateSliderPosition(false);
-        } else if (currentIndex < numCards) {
-            currentIndex += numCards;
-            updateSliderPosition(false);
-        }
-    });
-
-    nextBtn.addEventListener('click', () => {
-        if (isAnimating) return;
-        currentIndex++;
-        updateSliderPosition(true);
-        lockAnimation();
-    });
-
-    prevBtn.addEventListener('click', () => {
-        if (isAnimating) return;
-        currentIndex--;
-        updateSliderPosition(true);
-        lockAnimation();
-    });
-
-    // Update on window resize to keep it aligned
-    window.addEventListener('resize', () => {
-        calculateSliderMetrics();
-        updateSliderPosition(false); // Snap to position on resize
-    });
-
-    // --- Intersection Observer for Lazy Animations ---
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px 0px -10% 0px',
-        threshold: 0.1
-    };
-
-    const animObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('in-view');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    // Select elements to lazily animate (excluding hero section which has keyframes)
-    const lazyElements = document.querySelectorAll('section:not(.hero) .badge, .faq-banner-container, .section-title, .accordion-item, .footer-col');
-    
-    lazyElements.forEach(el => {
-        el.classList.add('lazy-anim');
-        animObserver.observe(el);
-    });
-
-    // Add slight stagger to footer columns
-    const footerCols = document.querySelectorAll('.footer-col');
-    footerCols.forEach((col, i) => {
-        col.style.transitionDelay = `${i * 0.15}s`;
-    });
-
-    // Only add lazy load animation to the originally visible first 3 testimonial cards
-    const lazyTestimonialCards = document.querySelectorAll('.testimonial-card');
-    // We added numCards clones at the beginning, so original cards start at index numCards
-    lazyTestimonialCards.forEach((card, i) => {
-        if (i >= numCards && i < numCards + 3) {
-            card.classList.add('lazy-anim');
-            card.style.transitionDelay = `${(i - numCards) * 0.15}s`;
-            animObserver.observe(card);
-        }
-    });
-
-
-    // --- Handwriting Animations ---
-    const handwrittenElements = document.querySelectorAll('.handwritten-annotation, .faq-handwritten');
-    
-    handwrittenElements.forEach(container => {
-        const textSpan = container.querySelector('span');
-        const arrow = container.querySelector('svg, i');
-        
-        if (textSpan) {
-            const text = textSpan.textContent;
-            textSpan.textContent = '';
-            textSpan.classList.add('handwriting-text');
-            
-            let delayCount = 0;
-            for (let i = 0; i < text.length; i++) {
-                const charSpan = document.createElement('span');
-                charSpan.textContent = text[i] === ' ' ? '\u00A0' : text[i];
-                if (text[i] !== ' ') {
-                    charSpan.style.animationDelay = `${delayCount * 0.05}s`;
-                    delayCount++;
-                }
-                textSpan.appendChild(charSpan);
-            }
-        }
-        
-        if (arrow) {
-            arrow.classList.add('handwriting-arrow');
-        }
-    });
-
-    setTimeout(() => {
-        const heroHandwritten = document.querySelector('.hero-cta .handwritten-annotation');
-        if (heroHandwritten) {
-            const arrow = heroHandwritten.querySelector('.handwriting-arrow');
-            const text = heroHandwritten.querySelector('.handwriting-text');
-            if (arrow) arrow.classList.add('animate');
-            setTimeout(() => {
-                if (text) text.classList.add('animate');
-            }, 150); 
-        }
-    }, 1600); 
-
-    // --- How It Works Section: Repeating Viewport Animations ---
-    const hiwCards = document.querySelectorAll('.hiw-card.hiw-anim');
-    if (hiwCards.length > 0) {
-        const hiwObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('hiw-in-view');
-                    entry.target.classList.add('hiw-card-visible'); // Keeps card visible permanently
-                } else {
-                    // Remove hiw-in-view so inner elements reset and replay on scroll
-                    entry.target.classList.remove('hiw-in-view');
-                }
-            });
-        }, {
-            rootMargin: '0px 0px -5% 0px',
-            threshold: 0.15
-        });
-
-        hiwCards.forEach(card => {
-            hiwObserver.observe(card);
-        });
-    }
-
-    // --- FAQ Banner Animations ---
-    const faqBannerContainers = document.querySelectorAll('.faq-banner-container');
-    
-    faqBannerContainers.forEach(container => {
-        const orangeSpan = container.querySelector('.orange-banner span');
-        const whiteSpan = container.querySelector('.white-banner span');
-        
-        const splitText = (span, baseDelay) => {
-            if (!span) return;
-            const text = span.textContent;
-            span.textContent = '';
-            let delayCount = 0;
-            for (let i = 0; i < text.length; i++) {
-                const charSpan = document.createElement('span');
-                charSpan.className = 'banner-char';
-                charSpan.textContent = text[i] === ' ' ? '\u00A0' : text[i];
-                if (text[i] !== ' ') {
-                    // Calculate precise delay: base + stagger
-                    charSpan.style.animationDelay = `${baseDelay + (delayCount * 0.04)}s`;
-                    delayCount++;
-                }
-                span.appendChild(charSpan);
-            }
-        };
-
-        // Orange banner bg wipe takes 0.4s, start text at 0.2s
-        splitText(orangeSpan, 0.2);
-        // Orange text finishes around 1.1s. Start white bg wipe at 0.8s, start text at 1.0s
-        splitText(whiteSpan, 1.0);
-
-        const bannerObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('start-anim');
-                    observer.unobserve(entry.target);
-                    
-                    // Trigger "Let's clear things up" after banners finish (approx 2000ms)
-                    // Only apply to the FAQ section container specifically
-                    setTimeout(() => {
-                        const faqHandwritten = entry.target.closest('.faq')?.querySelector('.faq-handwritten');
-                        if (faqHandwritten) {
-                            const arrow = faqHandwritten.querySelector('.handwriting-arrow');
-                            const text = faqHandwritten.querySelector('.handwriting-text');
-                            if (arrow) arrow.classList.add('animate');
-                            setTimeout(() => {
-                                if (text) text.classList.add('animate');
-                            }, 150);
-                        }
-                    }, 2000);
-                }
-            });
-        }, { threshold: 0.5 });
-        
-        bannerObserver.observe(container);
-    });
-
-    const hwObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const arrow = entry.target.querySelector('.handwriting-arrow');
-                const text = entry.target.querySelector('.handwriting-text');
-                if (arrow) arrow.classList.add('animate');
-                setTimeout(() => {
-                    if (text) text.classList.add('animate');
-                }, 150);
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    // --- Load More Portfolio Grid (Mobile) ---
-    const loadMoreBtn = document.getElementById('loadMoreBtn');
-    const portfolioGrid = document.getElementById('portfolioGrid');
-
-    if (loadMoreBtn && portfolioGrid) {
-        const gridThumbs = portfolioGrid.querySelectorAll('.grid-thumb');
-        const initialCount = 12; // 6 rows × 2 columns
-        let shown = initialCount;
-        const isMobile = window.innerWidth <= 768;
-
-        // Hide thumbnails beyond initial count
-        gridThumbs.forEach((thumb, i) => {
-            if (i >= initialCount) {
-                thumb.classList.add('grid-thumb-hidden');
-            }
-        });
-
-        // Hide button if all items already shown
-        if (shown >= gridThumbs.length) {
-            loadMoreBtn.style.display = 'none';
-        }
-
-        // --- Staggered reveal ---
-            // Helper: execute callback when image finishes loading
-            function whenImageLoaded(img, callback) {
-                if (img.complete && img.naturalWidth > 0) {
-                    callback();
-                } else {
-                    const handleDone = () => {
-                        img.removeEventListener('load', handleDone);
-                        img.removeEventListener('error', handleDone);
-                        callback();
-                    };
-                    img.addEventListener('load', handleDone);
-                    img.addEventListener('error', handleDone);
-                }
-            }
-
-            // Stagger-reveal a set of thumbs: one by one after image actually loads
-            function staggerReveal(thumbs, baseDelay) {
-                let delay = baseDelay || 0;
-                const ITEM_DELAY = 120; // ms between each individual thumbnail queue
-
-                // Reorder so left column comes before right for each row
-                const ordered = [];
-                for (let i = 0; i < thumbs.length; i += 2) {
-                    ordered.push(thumbs[i]);
-                    if (i + 1 < thumbs.length) ordered.push(thumbs[i + 1]);
-                }
-
-                ordered.forEach((thumb) => {
-                    setTimeout(() => {
-                        whenImageLoaded(thumb, () => {
-                            requestAnimationFrame(() => {
-                                thumb.classList.add('grid-thumb-visible');
-                            });
-                        });
-                    }, delay);
-                    delay += ITEM_DELAY;
-                });
-            }
-
-            // Initial load: stagger the first visible batch
-            const initialThumbs = Array.from(gridThumbs).slice(0, initialCount);
-            staggerReveal(initialThumbs, 150);
-
-            // IntersectionObserver for scroll-triggered reveal
-            const scrollObserver = new IntersectionObserver((entries) => {
-                // Collect all newly intersecting thumbs
-                const newlyVisible = [];
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting && !entry.target.classList.contains('grid-thumb-visible')) {
-                        newlyVisible.push(entry.target);
-                        scrollObserver.unobserve(entry.target);
-                    }
-                });
-                if (newlyVisible.length > 0) {
-                    staggerReveal(newlyVisible, 0);
-                }
-            }, { threshold: 0.15 });
-
-            // Observe all grid thumbs (including hidden ones for when they get revealed)
-            gridThumbs.forEach((thumb) => {
-                // Don't observe the initial batch (they're already being stagger-revealed)
-                if (!initialThumbs.includes(thumb)) {
-                    scrollObserver.observe(thumb);
-                }
-            });
-
-            // Load More: reveal hidden thumbs with stagger animation
-            loadMoreBtn.addEventListener('click', () => {
-                const nextShow = Math.min(shown + 6, gridThumbs.length);
-                const newThumbs = [];
-                for (let i = shown; i < nextShow; i++) {
-                    gridThumbs[i].classList.remove('grid-thumb-hidden');
-                    newThumbs.push(gridThumbs[i]);
-                    // Re-observe in case they need scroll-triggered reveal
-                    scrollObserver.observe(gridThumbs[i]);
-                }
-                shown = nextShow;
-                if (shown >= gridThumbs.length) {
-                    loadMoreBtn.style.display = 'none';
-                }
-                // Immediately reveal ones that are already in viewport
-                requestAnimationFrame(() => {
-                    const inView = [];
-                    const notInView = [];
-                    newThumbs.forEach((thumb) => {
-                        const rect = thumb.getBoundingClientRect();
-                        if (rect.top < window.innerHeight && rect.bottom > 0) {
-                            inView.push(thumb);
-                            scrollObserver.unobserve(thumb);
-                        }
-                    });
-                    if (inView.length > 0) {
-                        staggerReveal(inView, 0);
-                    }
-                });
-            });
-    }
-
-    // --- Image Protection (Prevent Right-Click & Drag) ---
     document.addEventListener('contextmenu', (e) => {
         if (e.target.tagName === 'IMG' || e.target.closest('.portfolio') || e.target.closest('.portfolio-grid')) {
             e.preventDefault();

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZackGFX Admin Panel</title>
+    <link rel="stylesheet" href="admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- SortableJS for drag and drop -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+</head>
+<body>
+
+    <!-- Login Overlay -->
+    <div id="loginOverlay" class="login-overlay">
+        <div class="login-box">
+            <h2>Admin Login</h2>
+            <form id="loginForm">
+                <input type="password" id="password" placeholder="Enter Admin Password" required>
+                <button type="submit">Login</button>
+                <p id="loginError" class="error-msg"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="dashboard" class="dashboard hidden">
+        <header class="admin-header">
+            <h1>ZackGFX Dashboard</h1>
+            <button id="logoutBtn" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+        </header>
+        
+        <div class="admin-nav">
+            <button class="tab-btn active" data-tab="thumbnails">Thumbnails</button>
+            <button class="tab-btn" data-tab="faqs">FAQs</button>
+            <button class="tab-btn" data-tab="reviews">Reviews</button>
+        </div>
+
+        <main class="admin-content">
+            
+            <!-- Thumbnails Tab -->
+            <section id="thumbnails" class="tab-content active">
+                <div class="section-header">
+                    <h2>Manage Thumbnails</h2>
+                    <div class="upload-btn-wrapper">
+                        <label class="btn btn-primary" for="thumbnailUpload" style="cursor: pointer; margin-bottom: 0;"><i class="fa-solid fa-upload"></i> Upload Image</label>
+                        <input type="file" id="thumbnailUpload" accept="image/png, image/jpeg, image/webp" multiple style="display: none;">
+                    </div>
+                </div>
+                <p class="hint">Drag and drop to reorder. Images are automatically compressed before upload.</p>
+                <div class="list-container" id="thumbnailsList">
+                    <!-- Loaded dynamically -->
+                </div>
+            </section>
+
+            <!-- FAQs Tab -->
+            <section id="faqs" class="tab-content">
+                <div class="section-header">
+                    <h2>Manage FAQs</h2>
+                    <button class="btn btn-primary" id="addFaqBtn"><i class="fa-solid fa-plus"></i> Add FAQ</button>
+                </div>
+                <p class="hint">Drag and drop to reorder.</p>
+                <div class="list-container" id="faqsList">
+                    <!-- Loaded dynamically -->
+                </div>
+            </section>
+
+            <!-- Reviews Tab -->
+            <section id="reviews" class="tab-content">
+                <div class="section-header">
+                    <h2>Manage Reviews</h2>
+                    <button class="btn btn-primary" id="addReviewBtn"><i class="fa-solid fa-plus"></i> Add Review</button>
+                </div>
+                <p class="hint">Drag and drop to reorder.</p>
+                <div class="list-container" id="reviewsList">
+                    <!-- Loaded dynamically -->
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- FAQ Modal -->
+    <div id="faqModal" class="modal hidden">
+        <div class="modal-content">
+            <h3 id="faqModalTitle">Add FAQ</h3>
+            <form id="faqForm">
+                <input type="hidden" id="faqId">
+                <label>Question</label>
+                <input type="text" id="faqQuestion" required>
+                <label>Answer</label>
+                <textarea id="faqAnswer" rows="4" required></textarea>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Review Modal -->
+    <div id="reviewModal" class="modal hidden">
+        <div class="modal-content">
+            <h3 id="reviewModalTitle">Add Review</h3>
+            <form id="reviewForm">
+                <input type="hidden" id="reviewId">
+                <label>Client Name</label>
+                <input type="text" id="reviewName" required>
+                <label>Role</label>
+                <input type="text" id="reviewRole" placeholder="e.g. Youtuber" required>
+                <label>Quote</label>
+                <textarea id="reviewQuote" rows="3" required></textarea>
+                <label>Rating (1-5)</label>
+                <input type="number" id="reviewRating" min="1" max="5" value="5" required>
+                <label>Avatar (Optional)</label>
+                <input type="file" id="reviewAvatar" accept="image/*">
+                <img id="reviewAvatarPreview" src="" alt="" class="hidden" style="width: 50px; height: 50px; border-radius: 50%; margin-top: 10px;">
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Confirm Modal -->
+    <div id="confirmModal" class="modal hidden">
+        <div class="modal-content" style="width: 400px; text-align: center;">
+            <h3 id="confirmModalTitle">Are you sure?</h3>
+            <p id="confirmModalText" style="margin-bottom: 20px; color: var(--text-muted);"></p>
+            <div class="modal-actions" style="justify-content: center;">
+                <button type="button" class="btn btn-secondary" id="confirmModalCancel">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmModalConfirm">Yes, I'm sure</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
