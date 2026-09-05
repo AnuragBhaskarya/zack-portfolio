@@ -535,6 +535,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, 1600); 
 
+    // --- How It Works Section: Repeating Viewport Animations ---
+    const hiwCards = document.querySelectorAll('.hiw-card.hiw-anim');
+    if (hiwCards.length > 0) {
+        const hiwObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('hiw-in-view');
+                    entry.target.classList.add('hiw-card-visible'); // Keeps card visible permanently
+                } else {
+                    // Remove hiw-in-view so inner elements reset and replay on scroll
+                    entry.target.classList.remove('hiw-in-view');
+                }
+            });
+        }, {
+            rootMargin: '0px 0px -5% 0px',
+            threshold: 0.15
+        });
+
+        hiwCards.forEach(card => {
+            hiwObserver.observe(card);
+        });
+    }
+
     // --- FAQ Banner Animations ---
     const faqBannerContainer = document.querySelector('.faq-banner-container');
     if (faqBannerContainer) {
