@@ -1277,6 +1277,23 @@ footer {
     font-weight: 700;
 }
 
+/* Footer Card Animations */
+@keyframes floatWiggle {
+    0% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-3px) rotate(0.5deg); }
+    50% { transform: translateY(-6px) rotate(0deg); }
+    75% { transform: translateY(-3px) rotate(-0.5deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+}
+
+.links-col {
+    animation: floatWiggle 6s ease-in-out infinite;
+}
+
+.contact-col {
+    animation: floatWiggle 7.5s ease-in-out infinite 1s;
+}
+
 /* ===== ANIMATIONS ===== */
 @keyframes bounceInTrack {
     0% { transform: translate(-50%, -50%) scale(0.3); opacity: 0; }
