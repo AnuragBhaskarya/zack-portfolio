@@ -343,11 +343,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function initSortable(container, type) {
         Sortable.create(container, {
             handle: '.fa-grip-vertical',
-            animation: 200,
+            animation: 350,
+            easing: "cubic-bezier(0.25, 1, 0.5, 1)",
             ghostClass: 'sortable-ghost',
             dragClass: 'sortable-drag',
             forceFallback: true,
             fallbackClass: 'sortable-fallback',
+            fallbackOnBody: true,
+            swapThreshold: 0.65,
             onEnd: async () => {
                 // Get new order
                 const items = Array.from(container.children);

@@ -282,16 +282,20 @@ body::before {
 
 /* SortableJS Drag & Drop Effects */
 .sortable-ghost {
-    opacity: 0.3 !important;
-    background: #f4f4f4 !important;
-    border: 2px dashed var(--primary) !important;
+    opacity: 0.2 !important;
+    background: rgba(255, 255, 255, 0.2) !important;
+    border: 2px dashed rgba(0, 0, 0, 0.2) !important;
+    transform: scale(0.98);
 }
 .sortable-drag, .sortable-fallback {
     opacity: 1 !important;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3) !important;
-    transform: scale(1.02);
-    background: var(--panel-bg) !important;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.15) !important;
+    transform: scale(1.03) rotate(2deg) !important;
+    background: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(25px) !important;
+    -webkit-backdrop-filter: blur(25px) !important;
     cursor: grabbing !important;
+    z-index: 9999 !important;
 }
 
 /* Icon Button (Minimal) */
