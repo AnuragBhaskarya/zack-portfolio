@@ -25,29 +25,23 @@
 
     <!-- Main Dashboard -->
     <div id="dashboard" class="dashboard hidden">
-        <header class="admin-header">
-            <h1>ZackGFX Dashboard</h1>
-            <button id="logoutBtn" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
-        </header>
-        
         <div class="admin-nav">
             <button class="tab-btn active" data-tab="thumbnails">Thumbnails</button>
             <button class="tab-btn" data-tab="faqs">FAQs</button>
             <button class="tab-btn" data-tab="reviews">Reviews</button>
+            <button id="logoutBtn" class="logout-btn" style="margin-left: auto; background: none; border: none; font-size: 20px; color: var(--primary); cursor: pointer;"><i class="fa-solid fa-right-from-bracket"></i></button>
         </div>
 
         <main class="admin-content">
             
             <!-- Thumbnails Tab -->
             <section id="thumbnails" class="tab-content active">
-                <div class="section-header">
-                    <h2>Manage Thumbnails</h2>
+                <div class="section-header" style="justify-content: flex-end;">
                     <div class="upload-btn-wrapper">
                         <label class="btn btn-primary" for="thumbnailUpload" style="cursor: pointer; margin-bottom: 0;"><i class="fa-solid fa-upload"></i> Upload Image</label>
                         <input type="file" id="thumbnailUpload" accept="image/png, image/jpeg, image/webp" multiple style="display: none;">
                     </div>
                 </div>
-                <p class="hint">Drag and drop to reorder. Images are automatically compressed before upload.</p>
                 <div class="list-container" id="thumbnailsList">
                     <!-- Loaded dynamically -->
                 </div>
@@ -55,11 +49,9 @@
 
             <!-- FAQs Tab -->
             <section id="faqs" class="tab-content">
-                <div class="section-header">
-                    <h2>Manage FAQs</h2>
+                <div class="section-header" style="justify-content: flex-end;">
                     <button class="btn btn-primary" id="addFaqBtn"><i class="fa-solid fa-plus"></i> Add FAQ</button>
                 </div>
-                <p class="hint">Drag and drop to reorder.</p>
                 <div class="list-container" id="faqsList">
                     <!-- Loaded dynamically -->
                 </div>
@@ -67,11 +59,9 @@
 
             <!-- Reviews Tab -->
             <section id="reviews" class="tab-content">
-                <div class="section-header">
-                    <h2>Manage Reviews</h2>
+                <div class="section-header" style="justify-content: flex-end;">
                     <button class="btn btn-primary" id="addReviewBtn"><i class="fa-solid fa-plus"></i> Add Review</button>
                 </div>
-                <p class="hint">Drag and drop to reorder.</p>
                 <div class="list-container" id="reviewsList">
                     <!-- Loaded dynamically -->
                 </div>
