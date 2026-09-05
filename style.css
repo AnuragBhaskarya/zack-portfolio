@@ -1014,154 +1014,266 @@ main {
 
 /* ===== FOOTER ===== */
 footer {
-    background: var(--card-bg);
+    background: #ffffff;
     color: var(--dark);
-    padding: 60px 40px 40px;
+    padding: 20px;
     max-width: 1200px;
     width: calc(100% - 40px);
     margin: 80px auto 40px;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-soft);
+    border-radius: 24px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.03);
     position: relative;
-    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.04);
 }
 
 .footer-container {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 30px;
-    margin-bottom: 60px;
+    gap: 20px;
+    margin-bottom: 20px;
 }
 
 @media (min-width: 768px) {
     .footer-container {
-        grid-template-columns: 2fr 1fr 1fr;
+        grid-template-columns: 2.8fr 1fr 1.15fr;
     }
 }
 
 .footer-col {
-    background: #18191c;
-    color: white;
+    background: #f9f9fb;
+    color: var(--dark);
     padding: 40px;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-hover);
+    border-radius: 16px;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.03);
     display: flex;
     flex-direction: column;
+    position: relative;
+    overflow: hidden;
 }
 
-/* Ensure ZackGFX logo is white inside dark card */
+/* Reset ZackGFX logo to dark since card is light */
 .footer-col .text-dark {
-    color: white;
+    color: var(--dark);
+}
+
+.brand-col .logo {
+    margin-bottom: 15px;
+}
+
+/* Make logo icon match the red dot in image */
+.brand-col .logo-icon {
+    border-radius: 50%;
+    background: var(--accent);
 }
 
 .footer-subtitle {
-    color: rgba(255, 255, 255, 0.7);
-    margin-top: 15px;
+    color: #666;
+    margin-top: 5px;
+    font-size: 0.95rem;
+    font-weight: 500;
 }
 
-.footer-heading {
-    font-family: 'Nunito', sans-serif;
-    font-weight: 900;
-    font-size: 1.1rem;
-    color: white;
-    margin-bottom: 24px;
-    display: inline-block;
-    position: relative;
-    z-index: 1;
-    align-self: flex-start;
+.brand-divider {
+    width: 24px;
+    height: 2px;
+    background: #ddd;
+    margin: 25px 0;
 }
 
-.footer-heading::after {
+.brand-tags {
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    font-weight: 700;
+    color: #999;
+    text-transform: uppercase;
+}
+
+/* Abstract shapes for brand-col */
+.brand-bg-shapes {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 70%;
+    pointer-events: none;
+    z-index: 0;
+}
+.brand-bg-shapes::before,
+.brand-bg-shapes::after {
     content: '';
     position: absolute;
-    bottom: 2px;
-    left: 0;
-    width: 100%;
-    height: 8px;
-    background: var(--accent);
-    opacity: 0.5;
-    z-index: -1;
-    border-radius: 4px;
+    width: 300px;
+    height: 300px;
+    border-radius: 30px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%);
+    box-shadow: -10px 10px 30px rgba(0,0,0,0.02);
+    transform: rotate(20deg);
+}
+.brand-bg-shapes::before {
+    top: -20px;
+    right: 20px;
+    border: 1px solid rgba(255,255,255,0.8);
+    backdrop-filter: blur(5px);
+}
+.brand-bg-shapes::after {
+    top: 80px;
+    right: -40px;
+    background: linear-gradient(135deg, rgba(235, 73, 38, 0.15) 0%, rgba(255,255,255,0) 100%);
+    transform: rotate(35deg);
 }
 
+/* Ensure text stays on top of shapes */
+.brand-col > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Headings */
+.footer-heading {
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    color: #666;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+}
+
+/* Links */
 .links-col ul {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-}
-
-.links-col ul li {
-    font-weight: 600;
-}
-
-.active-link {
-    color: var(--accent);
+    gap: 10px;
+    list-style: none;
 }
 
 .links-col a {
-    color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--dark);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 0;
     transition: var(--transition);
 }
 
 .links-col a:hover {
     color: var(--accent);
-    padding-left: 8px;
+    padding-left: 5px;
 }
 
+.link-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.link-left i {
+    font-size: 1.1rem;
+    width: 20px;
+}
+
+.link-arrow {
+    font-size: 0.9rem;
+    opacity: 0.6;
+}
+
+/* Email Pill */
 .email-link {
-    font-weight: 700;
-    font-size: 1.2rem;
-    color: white;
-    display: inline-block;
-    border-bottom: 2px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    color: var(--dark);
+    font-weight: 600;
+    text-decoration: none;
     transition: var(--transition);
     align-self: flex-start;
 }
 
-.email-link:hover {
+.email-link .icon-box {
+    width: 45px;
+    height: 45px;
+    background: rgba(0,0,0,0.03);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    border: 1px solid rgba(0,0,0,0.04);
+    transition: var(--transition);
+}
+
+.email-link:hover .icon-box {
+    background: var(--accent);
+    color: white;
+}
+
+.email-link:hover .email-text {
     color: var(--accent);
-    border-bottom-color: var(--accent);
 }
 
-.mt-4 {
-    margin-top: 40px;
+/* Contact Divider */
+.contact-divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(0,0,0,0.06);
+    margin: 25px 0;
 }
 
+/* Social Links */
 .social-links {
     display: flex;
     gap: 15px;
 }
 
 .social-icon {
-    width: 48px;
-    height: 48px;
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
+    width: 45px;
+    height: 45px;
+    background: rgba(0,0,0,0.03);
+    color: var(--dark);
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
     transition: var(--transition);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0,0,0,0.04);
 }
 
 .social-icon:hover {
     background: var(--accent);
     color: white;
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(235, 73, 38, 0.3);
-    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(235, 73, 38, 0.2);
 }
 
+/* Copyright Pill */
 .copyright {
-    background: var(--bg-secondary);
-    padding: 24px;
-    border-radius: var(--radius-md);
-    text-align: center;
-    color: var(--text-muted);
+    background: #f9f9fb;
+    padding: 24px 35px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.03);
+}
+
+.copy-left p {
+    color: #666;
     font-size: 0.95rem;
-    border: 1px solid var(--border-color);
+    font-weight: 500;
+}
+
+.copy-right {
+    border-left: 1px solid rgba(0,0,0,0.1);
+    padding-left: 25px;
+}
+
+.copy-right p {
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    color: #666;
+    font-weight: 700;
 }
 
 /* ===== ANIMATIONS ===== */
