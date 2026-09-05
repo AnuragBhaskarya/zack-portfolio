@@ -371,6 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const ghost = item.cloneNode(true);
         ghost.className = 'list-item sort-ghost';
         ghost.style.width = rect.width + 'px';
+        ghost.style.height = rect.height + 'px';
         ghost.style.top = rect.top + 'px';
         ghost.style.left = rect.left + 'px';
         document.body.appendChild(ghost);
