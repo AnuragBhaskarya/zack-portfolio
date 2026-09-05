@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
         });
-        initSortable(list, 'reviews');
+        initDragEngine();
     }
 
     // --- Custom Confirm Modal ---
@@ -585,7 +585,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function initDragEngine() {
         const lists = [
             document.getElementById('thumbnailsList'),
-            document.getElementById('faqsList')
+            document.getElementById('faqsList'),
+            document.getElementById('reviewsList')
         ];
         lists.forEach(list => {
             if (!list) return;
