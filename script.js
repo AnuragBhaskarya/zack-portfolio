@@ -109,12 +109,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if (grid) {
             grid.innerHTML = '';
             thumbnails.forEach(t => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'thumb-wrapper';
+                
                 const img = document.createElement('img');
-                img.src = t.image_base64;
+                img.src = t.url || t.image_base64; // Handle both formats just in case
                 img.alt = 'Thumbnail';
                 img.className = 'grid-thumb';
                 img.loading = 'lazy';
-                grid.appendChild(img);
+                
+                wrapper.appendChild(img);
+                grid.appendChild(wrapper);
             });
         }
 
@@ -279,15 +284,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const portfolioGrid = document.getElementById('portfolioGrid');
         if (!loadMoreBtn || !portfolioGrid) return;
 
-        const gridThumbs = portfolioGrid.querySelectorAll('.grid-thumb');
+        const gridWrappers = portfolioGrid.querySelectorAll('.thumb-wrapper');
         const initialCount = 12;
         let shown = initialCount;
 
-        gridThumbs.forEach((thumb, i) => {
-            if (i >= initialCount) thumb.classList.add('grid-thumb-hidden');
+        gridWrappers.forEach((wrapper, i) => {
+            if (i >= initialCount) wrapper.classList.add('grid-thumb-hidden');
         });
 
-        if (shown >= gridThumbs.length) {
+        if (shown >= gridWrappers.length) {
             loadMoreBtn.style.display = 'none';
         } else {
             loadMoreBtn.style.display = '';
@@ -306,19 +311,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        function staggerReveal(thumbs, baseDelay) {
+        function staggerReveal(wrappers, baseDelay) {
             let delay = baseDelay || 0;
             const ITEM_DELAY = 120;
             const ordered = [];
-            for (let i = 0; i < thumbs.length; i += 2) {
-                ordered.push(thumbs[i]);
-                if (i + 1 < thumbs.length) ordered.push(thumbs[i + 1]);
+            for (let i = 0; i < wrappers.length; i += 2) {
+                ordered.push(wrappers[i]);
+                if (i + 1 < wrappers.length) ordered.push(wrappers[i + 1]);
             }
-            ordered.forEach((thumb) => {
+            ordered.forEach((wrapper) => {
                 setTimeout(() => {
-                    whenImageLoaded(thumb, () => {
+                    const img = wrapper.querySelector('.grid-thumb');
+                    whenImageLoaded(img, () => {
                         requestAnimationFrame(() => {
-                            thumb.classList.add('grid-thumb-visible');
+                            img.classList.add('grid-thumb-visible');
                         });
                     });
                 }, delay);
@@ -326,13 +332,14 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        const initialThumbs = Array.from(gridThumbs).slice(0, initialCount);
-        staggerReveal(initialThumbs, 150);
+        const initialWrappers = Array.from(gridWrappers).slice(0, initialCount);
+        staggerReveal(initialWrappers, 150);
 
         const scrollObserver = new IntersectionObserver((entries) => {
             const newlyVisible = [];
             entries.forEach((entry) => {
-                if (entry.isIntersecting && !entry.target.classList.contains('grid-thumb-visible')) {
+                const img = entry.target.querySelector('.grid-thumb');
+                if (entry.isIntersecting && img && !img.classList.contains('grid-thumb-visible')) {
                     newlyVisible.push(entry.target);
                     scrollObserver.unobserve(entry.target);
                 }
@@ -340,8 +347,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (newlyVisible.length > 0) staggerReveal(newlyVisible, 0);
         }, { threshold: 0.15 });
 
-        gridThumbs.forEach((thumb) => {
-            if (!initialThumbs.includes(thumb)) scrollObserver.observe(thumb);
+        gridWrappers.forEach((wrapper) => {
+            if (!initialWrappers.includes(wrapper)) scrollObserver.observe(wrapper);
         });
 
         // Use clone to remove old event listeners if loadDynamicContent is called multiple times
@@ -349,22 +356,22 @@ document.addEventListener('DOMContentLoaded', () => {
         loadMoreBtn.parentNode.replaceChild(newBtn, loadMoreBtn);
 
         newBtn.addEventListener('click', () => {
-            const nextShow = Math.min(shown + 6, gridThumbs.length);
-            const newThumbs = [];
+            const nextShow = Math.min(shown + 6, gridWrappers.length);
+            const newWrappers = [];
             for (let i = shown; i < nextShow; i++) {
-                gridThumbs[i].classList.remove('grid-thumb-hidden');
-                newThumbs.push(gridThumbs[i]);
-                scrollObserver.observe(gridThumbs[i]);
+                gridWrappers[i].classList.remove('grid-thumb-hidden');
+                newWrappers.push(gridWrappers[i]);
+                scrollObserver.observe(gridWrappers[i]);
             }
             shown = nextShow;
-            if (shown >= gridThumbs.length) newBtn.style.display = 'none';
+            if (shown >= gridWrappers.length) newBtn.style.display = 'none';
             requestAnimationFrame(() => {
                 const inView = [];
-                newThumbs.forEach((thumb) => {
-                    const rect = thumb.getBoundingClientRect();
+                newWrappers.forEach((wrapper) => {
+                    const rect = wrapper.getBoundingClientRect();
                     if (rect.top < window.innerHeight && rect.bottom > 0) {
-                        inView.push(thumb);
-                        scrollObserver.unobserve(thumb);
+                        inView.push(wrapper);
+                        scrollObserver.unobserve(wrapper);
                     }
                 });
                 if (inView.length > 0) staggerReveal(inView, 0);
