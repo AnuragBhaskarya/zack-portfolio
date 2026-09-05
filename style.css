@@ -2252,7 +2252,7 @@ img,
     }
 
     .load-more-btn {
-        display: block;
+        display: inline-flex;
     }
 
     /* --- How It Works Section --- */

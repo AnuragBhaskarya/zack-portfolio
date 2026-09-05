@@ -290,7 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (shown >= gridThumbs.length) {
             loadMoreBtn.style.display = 'none';
         } else {
-            loadMoreBtn.style.display = 'inline-flex';
+            loadMoreBtn.style.display = '';
         }
 
         function whenImageLoaded(img, callback) {
