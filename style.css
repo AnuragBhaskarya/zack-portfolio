@@ -2238,6 +2238,7 @@ img,
 
     .portfolio-grid {
         display: grid;
+        min-height: 1200px;
     }
 
     .grid-thumb {
@@ -2252,7 +2253,9 @@ img,
     }
 
     .load-more-btn {
-        display: inline-flex;
+        display: flex;
+        width: max-content;
+        margin: 20px auto 40px auto;
     }
 
     /* --- How It Works Section --- */
