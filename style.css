@@ -1110,15 +1110,17 @@ footer {
     transform: rotate(20deg);
 }
 .brand-bg-shapes::before {
-    top: -20px;
-    right: 20px;
+    top: 50%;
+    margin-top: -150px;
+    right: -150px;
     border: 1px solid rgba(255,255,255,0.8);
     backdrop-filter: blur(5px);
     animation: floatWiggleBefore 8s ease-in-out infinite;
 }
 .brand-bg-shapes::after {
-    top: 80px;
-    right: -40px;
+    top: 50%;
+    margin-top: -70px;
+    right: -180px;
     background: linear-gradient(135deg, rgba(235, 73, 38, 0.15) 0%, rgba(255,255,255,0) 100%);
     transform: rotate(35deg);
     animation: floatWiggleAfter 9s ease-in-out infinite 1s;
