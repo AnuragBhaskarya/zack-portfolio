@@ -1282,17 +1282,17 @@ footer {
 /* Footer Card Animations */
 @keyframes floatWiggleBefore {
     0% { transform: translateY(0) rotate(20deg); }
-    25% { transform: translateY(-3px) rotate(20.5deg); }
-    50% { transform: translateY(-6px) rotate(20deg); }
-    75% { transform: translateY(-3px) rotate(19.5deg); }
+    25% { transform: translateY(-8px) rotate(22deg); }
+    50% { transform: translateY(-16px) rotate(20deg); }
+    75% { transform: translateY(-8px) rotate(18deg); }
     100% { transform: translateY(0) rotate(20deg); }
 }
 
 @keyframes floatWiggleAfter {
     0% { transform: translateY(0) rotate(35deg); }
-    25% { transform: translateY(-4px) rotate(35.5deg); }
-    50% { transform: translateY(-8px) rotate(35deg); }
-    75% { transform: translateY(-4px) rotate(34.5deg); }
+    25% { transform: translateY(-12px) rotate(38deg); }
+    50% { transform: translateY(-24px) rotate(35deg); }
+    75% { transform: translateY(-12px) rotate(32deg); }
     100% { transform: translateY(0) rotate(35deg); }
 }
 
