@@ -156,7 +156,7 @@ body {
 }
 .list-item:active { cursor: grabbing; }
 .item-content { display: flex; align-items: center; gap: 20px; flex: 1; }
-.drag-handle { color: var(--text-muted); cursor: grab; font-size: 20px; padding-right: 10px; }
+.drag-handle, .fa-grip-vertical { color: var(--text-muted); cursor: grab; font-size: 20px; padding-right: 10px; touch-action: none; -webkit-touch-callout: none; }
 .thumb-preview { width: 120px; height: 67px; object-fit: cover; border-radius: 4px; }
 .item-actions { display: flex; gap: 10px; }
 

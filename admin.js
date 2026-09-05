@@ -339,211 +339,254 @@ document.addEventListener('DOMContentLoaded', () => {
         loadAllData();
     });
 
-    // --- Unified Pointer Drag Engine (Serialhub exact port) ---
+    // ══════════════════════════════════════════════
+    //  UNIFIED POINTER DRAG ENGINE
+    //  Exact port from serialhub — mouse + touch
+    // ══════════════════════════════════════════════
     let _drag = {
         active: false,
         item: null,
         ghost: null,
         placeholder: null,
-        offsetY: 0,
         startY: 0,
-        scrollSpeed: 0,
-        scrollTimer: null,
-        positions: new Map() // for FLIP animation
+        offsetY: 0,
+        lastPointerY: 0,
+        scrollRAF: null,
     };
 
-    function initDragEngine() {
-        const thumbList = document.getElementById('thumbnailsList');
-        const faqList = document.getElementById('faqsList');
+    // ── Core drag functions ──
 
-        // Remove old listeners to avoid duplicates on re-render
-        if (thumbList) thumbList.removeEventListener('pointerdown', dragStart);
-        if (faqList) faqList.removeEventListener('pointerdown', dragStart);
-
-        if (thumbList) thumbList.addEventListener('pointerdown', dragStart);
-        if (faqList) faqList.addEventListener('pointerdown', dragStart);
-        
-        // These can be safely re-added, document level
-        document.removeEventListener('pointermove', dragMove);
-        document.removeEventListener('pointerup', dragEnd);
-        document.removeEventListener('pointercancel', dragEnd);
-        
-        document.addEventListener('pointermove', dragMove, { passive: false });
-        document.addEventListener('pointerup', dragEnd);
-        document.addEventListener('pointercancel', dragEnd);
-    }
-
-    function dragStart(e) {
-        if (!e.target.closest('.fa-grip-vertical')) return;
-        const item = e.target.closest('.list-item');
-        if (!item) return;
-        e.preventDefault();
+    function dragStart(item, pointerY) {
+        const list = item.parentNode;
         const rect = item.getBoundingClientRect();
+
         _drag.active = true;
         _drag.item = item;
-        _drag.offsetY = e.clientY - rect.top;
-        _drag.startY = e.clientY;
-        recordPositions();
+        _drag.offsetY = pointerY - rect.top;
+        _drag.lastPointerY = pointerY;
+
+        // Create floating ghost clone
         const ghost = item.cloneNode(true);
         ghost.className = 'list-item sort-ghost';
         ghost.style.width = rect.width + 'px';
-        ghost.style.height = rect.height + 'px';
+        ghost.style.top = rect.top + 'px';
         ghost.style.left = rect.left + 'px';
-        ghost.style.top = (e.clientY - _drag.offsetY) + 'px';
         document.body.appendChild(ghost);
         _drag.ghost = ghost;
+
+        // Create placeholder (green insertion line)
         const ph = document.createElement('div');
         ph.className = 'sort-placeholder';
         _drag.placeholder = ph;
+
+        // Hide original
         item.classList.add('dragging');
+
+        // Start edge-scroll loop
         startEdgeScroll();
     }
 
-    function dragMove(e) {
-        if (!_drag.active || !_drag.ghost) return;
-        e.preventDefault();
-        const currentY = e.clientY;
-        _drag.ghost.style.top = (currentY - _drag.offsetY) + 'px';
-        updateScrollSpeed(currentY);
-        const list = _drag.item.parentNode;
+    // ── FLIP Animation Helper ──
+    function recordPositions(list) {
         const items = [...list.querySelectorAll('.list-item:not(.dragging)')];
+        const map = new Map();
+        items.forEach(item => map.set(item, item.getBoundingClientRect()));
+        return map;
+    }
+
+    function playFLIP(posMap) {
+        posMap.forEach((oldRect, item) => {
+            const newRect = item.getBoundingClientRect();
+            const deltaY = oldRect.top - newRect.top;
+            if (Math.abs(deltaY) < 1) return;
+
+            // Instantly jump to old position
+            item.style.transition = 'none';
+            item.style.transform = `translateY(${deltaY}px)`;
+
+            // Next frame: animate to new position
+            requestAnimationFrame(() => {
+                item.style.transition = 'transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1)';
+                item.style.transform = '';
+                item.addEventListener('transitionend', function cleanup() {
+                    item.style.transition = '';
+                    item.style.transform = '';
+                    item.removeEventListener('transitionend', cleanup);
+                });
+            });
+        });
+    }
+
+    function dragMove(pointerY) {
+        if (!_drag.active) return;
+        const ghost = _drag.ghost;
+        const list = _drag.item.parentNode;
+
+        // Move ghost to follow pointer
+        ghost.style.top = (pointerY - _drag.offsetY) + 'px';
+
+        // Store pointer Y for edge-scroll
+        _drag.lastPointerY = pointerY;
+
+        // Find which item we're hovering over
+        const items = [...list.querySelectorAll('.list-item:not(.dragging)')];
+
         let targetNode = null;
-        for (let i = 0; i < items.length; i++) {
-            const itemRect = items[i].getBoundingClientRect();
-            const itemMid = itemRect.top + itemRect.height / 2;
-            if (currentY < itemMid) {
-                targetNode = items[i];
+        for (const target of items) {
+            const r = target.getBoundingClientRect();
+            const midY = r.top + r.height / 2;
+            if (pointerY < midY) {
+                targetNode = target;
                 break;
             }
         }
+
+        // Check if placeholder is already in the right spot
         const phParent = _drag.placeholder.parentNode;
         const phNext = _drag.placeholder.nextSibling;
-        if (targetNode === null) {
-            if (phParent !== list || phNext !== null) {
-                recordPositions();
-                if (phParent) phParent.removeChild(_drag.placeholder);
-                list.appendChild(_drag.placeholder);
-                playFLIP();
-            }
+        if (targetNode === null && phParent && phNext === null) return;
+        if (targetNode && phNext === targetNode) return;
+
+        // Record positions before the move
+        const posMap = recordPositions(list);
+
+        // Remove old placeholder
+        if (phParent) phParent.removeChild(_drag.placeholder);
+
+        // Insert at new position
+        if (targetNode) {
+            list.insertBefore(_drag.placeholder, targetNode);
         } else {
-            if (phNext !== targetNode) {
-                recordPositions();
-                if (phParent) phParent.removeChild(_drag.placeholder);
-                list.insertBefore(_drag.placeholder, targetNode);
-                playFLIP();
-            }
+            list.appendChild(_drag.placeholder);
         }
+
+        // Animate the shift
+        playFLIP(posMap);
     }
 
-    function dragEnd(e) {
+    function dragEnd() {
         if (!_drag.active) return;
+
+        const list = _drag.item.parentNode;
+        const placedItem = _drag.item;
+
+        // Record positions before the final move
+        const posMap = recordPositions(list);
+
+        // Move the real item to placeholder position
+        if (_drag.placeholder.parentNode) {
+            list.insertBefore(placedItem, _drag.placeholder);
+            _drag.placeholder.parentNode.removeChild(_drag.placeholder);
+        }
+
+        // Show the item again
+        placedItem.classList.remove('dragging');
+
+        // Green flash animation
+        placedItem.classList.add('just-placed');
+        setTimeout(() => placedItem.classList.remove('just-placed'), 700);
+
+        // Remove ghost
+        if (_drag.ghost && _drag.ghost.parentNode) {
+            _drag.ghost.parentNode.removeChild(_drag.ghost);
+        }
+
         stopEdgeScroll();
+
+        // Animate surrounding items into their new positions
+        playFLIP(posMap);
+
+        // Save new order
+        saveNewOrder(list.id);
+
         _drag.active = false;
-        if (_drag.ghost) {
-            _drag.ghost.remove();
-            _drag.ghost = null;
-        }
-        if (_drag.item && _drag.placeholder) {
-            const list = _drag.item.parentNode;
-            const placedItem = _drag.item;
-            recordPositions();
-            if (_drag.placeholder.parentNode) {
-                list.insertBefore(placedItem, _drag.placeholder);
-                _drag.placeholder.parentNode.removeChild(_drag.placeholder);
-            }
-            placedItem.classList.remove('dragging');
-            placedItem.classList.add('just-placed');
-            setTimeout(() => placedItem.classList.remove('just-placed'), 700);
-            playFLIP();
-            saveNewOrder(list.id);
-        }
-        _drag.placeholder = null;
         _drag.item = null;
+        _drag.ghost = null;
+        _drag.placeholder = null;
     }
 
-    function recordPositions() {
-        if (!_drag.item) return;
-        const list = _drag.item.parentNode;
-        const items = list.querySelectorAll('.list-item:not(.dragging)');
-        items.forEach(item => {
-            const rect = item.getBoundingClientRect();
-            _drag.positions.set(item, rect.top);
-            item.style.transition = 'none';
-            item.style.transform = 'none';
-        });
-    }
-
-    function playFLIP() {
-        if (!_drag.item) return;
-        const list = _drag.item.parentNode;
-        const items = list.querySelectorAll('.list-item:not(.dragging)');
-        list.offsetHeight;
-        items.forEach(item => {
-            const oldTop = _drag.positions.get(item);
-            if (oldTop !== undefined) {
-                const newTop = item.getBoundingClientRect().top;
-                const delta = oldTop - newTop;
-                if (delta !== 0) {
-                    item.style.transform = `translateY(${delta}px)`;
-                    item.style.transition = 'none';
-                    requestAnimationFrame(() => {
-                        item.style.transition = 'transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)';
-                        item.style.transform = 'none';
-                    });
-                }
-            }
-        });
-    }
-
-    function updateScrollSpeed(clientY) {
-        const scrollThreshold = 100;
-        const maxSpeed = 15;
-        const viewportHeight = window.innerHeight;
-        if (clientY < scrollThreshold) {
-            const ratio = (scrollThreshold - clientY) / scrollThreshold;
-            _drag.scrollSpeed = -(ratio * maxSpeed);
-        } else if (clientY > viewportHeight - scrollThreshold) {
-            const ratio = (clientY - (viewportHeight - scrollThreshold)) / scrollThreshold;
-            _drag.scrollSpeed = (ratio * maxSpeed);
-        } else {
-            _drag.scrollSpeed = 0;
-        }
-    }
-
+    // ── Edge Auto-Scroll ──
     function startEdgeScroll() {
-        stopEdgeScroll();
-        _drag.scrollTimer = requestAnimationFrame(scrollLoop);
-    }
+        const EDGE = 60;
+        const SPEED = 8;
 
-    function scrollLoop() {
-        if (!_drag.active) return;
-        if (_drag.scrollSpeed !== 0) {
-            let scrollTarget = window;
-            const modalContent = document.querySelector('.modal-content');
-            if (modalContent && modalContent.scrollHeight > modalContent.clientHeight) {
-                scrollTarget = modalContent;
+        function tick() {
+            if (!_drag.active) return;
+            const y = _drag.lastPointerY || 0;
+            const vh = window.innerHeight;
+
+            if (y < EDGE) {
+                window.scrollBy(0, -SPEED);
+            } else if (y > vh - EDGE) {
+                window.scrollBy(0, SPEED);
             }
-            if (scrollTarget === window) {
-                window.scrollBy(0, _drag.scrollSpeed);
-            } else {
-                scrollTarget.scrollTop += _drag.scrollSpeed;
-            }
+            _drag.scrollRAF = requestAnimationFrame(tick);
         }
-        _drag.scrollTimer = requestAnimationFrame(scrollLoop);
+        _drag.scrollRAF = requestAnimationFrame(tick);
     }
 
     function stopEdgeScroll() {
-        if (_drag.scrollTimer) {
-            cancelAnimationFrame(_drag.scrollTimer);
-            _drag.scrollTimer = null;
+        if (_drag.scrollRAF) {
+            cancelAnimationFrame(_drag.scrollRAF);
+            _drag.scrollRAF = null;
         }
+    }
+
+    // ── Attach mouse + touch events to each list item ──
+    function attachDragListeners(item) {
+        const handle = item.querySelector('.fa-grip-vertical');
+        if (!handle) return;
+
+        // MOUSE (desktop)
+        handle.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            dragStart(item, e.clientY);
+
+            function onMouseMove(e) { e.preventDefault(); dragMove(e.clientY); }
+            function onMouseUp() {
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+                dragEnd();
+            }
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        });
+
+        // TOUCH (iOS / Android)
+        handle.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            dragStart(item, e.touches[0].clientY);
+        }, { passive: false });
+
+        item.addEventListener('touchmove', (e) => {
+            if (!_drag.active || _drag.item !== item) return;
+            e.preventDefault();
+            dragMove(e.touches[0].clientY);
+        }, { passive: false });
+
+        item.addEventListener('touchend', () => {
+            if (_drag.active && _drag.item === item) dragEnd();
+        });
+    }
+
+    // ── initDragEngine: attach listeners to all .list-item elements ──
+    function initDragEngine() {
+        const lists = [
+            document.getElementById('thumbnailsList'),
+            document.getElementById('faqsList')
+        ];
+        lists.forEach(list => {
+            if (!list) return;
+            const items = list.querySelectorAll('.list-item');
+            items.forEach(item => attachDragListeners(item));
+        });
     }
 
     async function saveNewOrder(listId) {
         const items = [...document.querySelectorAll(`#${listId} .list-item`)];
         const newOrder = items.map((item, index) => ({ id: item.dataset.id, order_index: index }));
         try {
-            await apiRequest(`/api/admin/${listId.replace('-list', 's')}`, 'PUT', newOrder);
+            await apiRequest(`/api/admin/${listId.replace('List', '')}`, 'PUT', newOrder);
         } catch (e) {
             console.error('Reorder error:', e);
         }
