@@ -553,20 +553,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // TOUCH (iOS / Android)
+        // touchstart on handle, but move/end/cancel on document for reliability
         handle.addEventListener('touchstart', (e) => {
             e.preventDefault();
             dragStart(item, e.touches[0].clientY);
-        }, { passive: false });
 
-        item.addEventListener('touchmove', (e) => {
-            if (!_drag.active || _drag.item !== item) return;
-            e.preventDefault();
-            dragMove(e.touches[0].clientY);
+            function onTouchMove(e) {
+                if (!_drag.active) return;
+                e.preventDefault();
+                dragMove(e.touches[0].clientY);
+            }
+            function onTouchEnd() {
+                document.removeEventListener('touchmove', onTouchMove);
+                document.removeEventListener('touchend', onTouchEnd);
+                document.removeEventListener('touchcancel', onTouchEnd);
+                dragEnd();
+            }
+            document.addEventListener('touchmove', onTouchMove, { passive: false });
+            document.addEventListener('touchend', onTouchEnd);
+            document.addEventListener('touchcancel', onTouchEnd);
         }, { passive: false });
-
-        item.addEventListener('touchend', () => {
-            if (_drag.active && _drag.item === item) dragEnd();
-        });
     }
 
     // ── initDragEngine: attach listeners to all .list-item elements ──
