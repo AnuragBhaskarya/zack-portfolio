@@ -1111,19 +1111,21 @@ footer {
 }
 .brand-bg-shapes::before {
     top: 50%;
-    margin-top: -150px;
-    right: -150px;
+    margin-top: 34px;
+    right: -185px;
     border: 1px solid rgba(255,255,255,0.8);
     backdrop-filter: blur(5px);
-    animation: floatWiggleBefore 8s ease-in-out infinite;
+    --base-rot: 20deg;
+    animation: floatWiggle 8s ease-in-out infinite 0.2s;
 }
 .brand-bg-shapes::after {
     top: 50%;
-    margin-top: -70px;
-    right: -180px;
+    margin-top: 96px;
+    right: -220px;
     background: linear-gradient(135deg, rgba(235, 73, 38, 0.15) 0%, rgba(255,255,255,0) 100%);
     transform: rotate(35deg);
-    animation: floatWiggleAfter 9s ease-in-out infinite 1s;
+    --base-rot: 35deg;
+    animation: floatWiggle 8s ease-in-out infinite 0.5s;
 }
 
 /* Ensure text stays on top of shapes */
@@ -1282,14 +1284,9 @@ footer {
 }
 
 /* Footer Card Animations */
-@keyframes floatWiggleBefore {
-    0%, 100% { transform: translateY(0) rotate(20deg); }
-    50% { transform: translateY(-16px) rotate(23deg); }
-}
-
-@keyframes floatWiggleAfter {
-    0%, 100% { transform: translateY(0) rotate(35deg); }
-    50% { transform: translateY(-20px) rotate(38deg); }
+@keyframes floatWiggle {
+    0%, 100% { transform: translateY(0) rotate(var(--base-rot, 0deg)); }
+    50% { transform: translateY(-16px) rotate(calc(var(--base-rot, 0deg) + 3deg)); }
 }
 
 /* ===== ANIMATIONS ===== */
