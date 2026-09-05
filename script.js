@@ -559,10 +559,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- FAQ Banner Animations ---
-    const faqBannerContainer = document.querySelector('.faq-banner-container');
-    if (faqBannerContainer) {
-        const orangeSpan = faqBannerContainer.querySelector('.orange-banner span');
-        const whiteSpan = faqBannerContainer.querySelector('.white-banner span');
+    const faqBannerContainers = document.querySelectorAll('.faq-banner-container');
+    
+    faqBannerContainers.forEach(container => {
+        const orangeSpan = container.querySelector('.orange-banner span');
+        const whiteSpan = container.querySelector('.white-banner span');
         
         const splitText = (span, baseDelay) => {
             if (!span) return;
@@ -594,8 +595,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     observer.unobserve(entry.target);
                     
                     // Trigger "Let's clear things up" after banners finish (approx 2000ms)
+                    // Only apply to the FAQ section container specifically
                     setTimeout(() => {
-                        const faqHandwritten = document.querySelector('.faq-handwritten');
+                        const faqHandwritten = entry.target.closest('.faq')?.querySelector('.faq-handwritten');
                         if (faqHandwritten) {
                             const arrow = faqHandwritten.querySelector('.handwriting-arrow');
                             const text = faqHandwritten.querySelector('.handwriting-text');
@@ -609,8 +611,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }, { threshold: 0.5 });
         
-        bannerObserver.observe(faqBannerContainer);
-    }
+        bannerObserver.observe(container);
+    });
 
     const hwObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
