@@ -280,23 +280,60 @@ body::before {
     }
 }
 
-/* SortableJS Drag & Drop Effects */
-.sortable-ghost {
-    opacity: 0.5 !important;
-    background: transparent !important;
-    border: 2px dotted #ff9800 !important;
-    border-radius: 12px;
-    filter: grayscale(100%);
+/* Custom Unified Pointer Drag Engine Effects */
+.list-item {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
 }
-.sortable-drag, .sortable-fallback {
-    opacity: 1 !important;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.15) !important;
-    transform: scale(1.03) rotate(2deg) !important;
-    background: rgba(255, 255, 255, 0.85) !important;
-    backdrop-filter: blur(25px) !important;
-    -webkit-backdrop-filter: blur(25px) !important;
-    cursor: grabbing !important;
-    z-index: 9999 !important;
+
+.list-item.dragging {
+    opacity: 0.15 !important;
+    border: 1px dashed rgba(255, 255, 255, 0.2) !important;
+    background: transparent !important;
+}
+
+.sort-ghost {
+    position: fixed !important;
+    z-index: 10000 !important;
+    pointer-events: none !important;
+    opacity: 0.92 !important;
+    border: 1px solid var(--accent-color) !important;
+    background: rgba(14, 14, 18, 0.95) !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(90, 200, 250, 0.3) !important;
+    transform: scale(1.02) !important;
+    border-radius: 12px;
+}
+
+.sort-placeholder {
+    height: 4px;
+    margin: 0.3rem 0.5rem;
+    border-radius: 4px;
+    background: #34c759;
+    box-shadow: 0 0 12px rgba(52, 199, 89, 0.4);
+    transition: opacity 0.15s ease;
+}
+
+.list-item.just-placed {
+    animation: greenFlash 0.7s ease;
+}
+
+@keyframes greenFlash {
+    0% {
+        border-color: #34c759;
+        background: rgba(52, 199, 89, 0.2);
+        box-shadow: 0 0 20px rgba(52, 199, 89, 0.35);
+    }
+    40% {
+        border-color: #34c759;
+        background: rgba(52, 199, 89, 0.12);
+        box-shadow: 0 0 10px rgba(52, 199, 89, 0.2);
+    }
+    100% {
+        border-color: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.05);
+        box-shadow: none;
+    }
 }
 
 /* Icon Button (Minimal) */

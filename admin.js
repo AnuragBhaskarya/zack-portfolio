@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
         });
-        initSortable(list, 'thumbnails');
+        initDragEngine();
     }
 
     document.getElementById('thumbnailUpload').addEventListener('change', async (e) => {
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
         });
-        initSortable(list, 'faqs');
+        initDragEngine();
     }
 
     // --- Reviews ---
@@ -339,28 +339,214 @@ document.addEventListener('DOMContentLoaded', () => {
         loadAllData();
     });
 
-    // --- Sortable Integration ---
-    function initSortable(container, type) {
-        Sortable.create(container, {
-            handle: '.fa-grip-vertical',
-            animation: 350,
-            easing: "cubic-bezier(0.25, 1, 0.5, 1)",
-            ghostClass: 'sortable-ghost',
-            dragClass: 'sortable-drag',
-            forceFallback: true,
-            fallbackClass: 'sortable-fallback',
-            fallbackOnBody: true,
-            swapThreshold: 0.65,
-            onEnd: async () => {
-                // Get new order
-                const items = Array.from(container.children);
-                const updates = items.map((el, index) => {
-                    return { id: el.dataset.id, display_order: index };
-                });
-                // Send batch update
-                await apiRequest(`/api/admin/${type}`, 'PUT', updates);
+    // --- Unified Pointer Drag Engine (Serialhub exact port) ---
+    let _drag = {
+        active: false,
+        item: null,
+        ghost: null,
+        placeholder: null,
+        offsetY: 0,
+        startY: 0,
+        scrollSpeed: 0,
+        scrollTimer: null,
+        positions: new Map() // for FLIP animation
+    };
+
+    function initDragEngine() {
+        const thumbList = document.getElementById('thumbnailsList');
+        const faqList = document.getElementById('faqsList');
+
+        // Remove old listeners to avoid duplicates on re-render
+        if (thumbList) thumbList.removeEventListener('pointerdown', dragStart);
+        if (faqList) faqList.removeEventListener('pointerdown', dragStart);
+
+        if (thumbList) thumbList.addEventListener('pointerdown', dragStart);
+        if (faqList) faqList.addEventListener('pointerdown', dragStart);
+        
+        // These can be safely re-added, document level
+        document.removeEventListener('pointermove', dragMove);
+        document.removeEventListener('pointerup', dragEnd);
+        document.removeEventListener('pointercancel', dragEnd);
+        
+        document.addEventListener('pointermove', dragMove, { passive: false });
+        document.addEventListener('pointerup', dragEnd);
+        document.addEventListener('pointercancel', dragEnd);
+    }
+
+    function dragStart(e) {
+        if (!e.target.closest('.fa-grip-vertical')) return;
+        const item = e.target.closest('.list-item');
+        if (!item) return;
+        e.preventDefault();
+        const rect = item.getBoundingClientRect();
+        _drag.active = true;
+        _drag.item = item;
+        _drag.offsetY = e.clientY - rect.top;
+        _drag.startY = e.clientY;
+        recordPositions();
+        const ghost = item.cloneNode(true);
+        ghost.className = 'list-item sort-ghost';
+        ghost.style.width = rect.width + 'px';
+        ghost.style.height = rect.height + 'px';
+        ghost.style.left = rect.left + 'px';
+        ghost.style.top = (e.clientY - _drag.offsetY) + 'px';
+        document.body.appendChild(ghost);
+        _drag.ghost = ghost;
+        const ph = document.createElement('div');
+        ph.className = 'sort-placeholder';
+        _drag.placeholder = ph;
+        item.classList.add('dragging');
+        startEdgeScroll();
+    }
+
+    function dragMove(e) {
+        if (!_drag.active || !_drag.ghost) return;
+        e.preventDefault();
+        const currentY = e.clientY;
+        _drag.ghost.style.top = (currentY - _drag.offsetY) + 'px';
+        updateScrollSpeed(currentY);
+        const list = _drag.item.parentNode;
+        const items = [...list.querySelectorAll('.list-item:not(.dragging)')];
+        let targetNode = null;
+        for (let i = 0; i < items.length; i++) {
+            const itemRect = items[i].getBoundingClientRect();
+            const itemMid = itemRect.top + itemRect.height / 2;
+            if (currentY < itemMid) {
+                targetNode = items[i];
+                break;
+            }
+        }
+        const phParent = _drag.placeholder.parentNode;
+        const phNext = _drag.placeholder.nextSibling;
+        if (targetNode === null) {
+            if (phParent !== list || phNext !== null) {
+                recordPositions();
+                if (phParent) phParent.removeChild(_drag.placeholder);
+                list.appendChild(_drag.placeholder);
+                playFLIP();
+            }
+        } else {
+            if (phNext !== targetNode) {
+                recordPositions();
+                if (phParent) phParent.removeChild(_drag.placeholder);
+                list.insertBefore(_drag.placeholder, targetNode);
+                playFLIP();
+            }
+        }
+    }
+
+    function dragEnd(e) {
+        if (!_drag.active) return;
+        stopEdgeScroll();
+        _drag.active = false;
+        if (_drag.ghost) {
+            _drag.ghost.remove();
+            _drag.ghost = null;
+        }
+        if (_drag.item && _drag.placeholder) {
+            const list = _drag.item.parentNode;
+            const placedItem = _drag.item;
+            recordPositions();
+            if (_drag.placeholder.parentNode) {
+                list.insertBefore(placedItem, _drag.placeholder);
+                _drag.placeholder.parentNode.removeChild(_drag.placeholder);
+            }
+            placedItem.classList.remove('dragging');
+            placedItem.classList.add('just-placed');
+            setTimeout(() => placedItem.classList.remove('just-placed'), 700);
+            playFLIP();
+            saveNewOrder(list.id);
+        }
+        _drag.placeholder = null;
+        _drag.item = null;
+    }
+
+    function recordPositions() {
+        if (!_drag.item) return;
+        const list = _drag.item.parentNode;
+        const items = list.querySelectorAll('.list-item:not(.dragging)');
+        items.forEach(item => {
+            const rect = item.getBoundingClientRect();
+            _drag.positions.set(item, rect.top);
+            item.style.transition = 'none';
+            item.style.transform = 'none';
+        });
+    }
+
+    function playFLIP() {
+        if (!_drag.item) return;
+        const list = _drag.item.parentNode;
+        const items = list.querySelectorAll('.list-item:not(.dragging)');
+        list.offsetHeight;
+        items.forEach(item => {
+            const oldTop = _drag.positions.get(item);
+            if (oldTop !== undefined) {
+                const newTop = item.getBoundingClientRect().top;
+                const delta = oldTop - newTop;
+                if (delta !== 0) {
+                    item.style.transform = `translateY(${delta}px)`;
+                    item.style.transition = 'none';
+                    requestAnimationFrame(() => {
+                        item.style.transition = 'transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)';
+                        item.style.transform = 'none';
+                    });
+                }
             }
         });
+    }
+
+    function updateScrollSpeed(clientY) {
+        const scrollThreshold = 100;
+        const maxSpeed = 15;
+        const viewportHeight = window.innerHeight;
+        if (clientY < scrollThreshold) {
+            const ratio = (scrollThreshold - clientY) / scrollThreshold;
+            _drag.scrollSpeed = -(ratio * maxSpeed);
+        } else if (clientY > viewportHeight - scrollThreshold) {
+            const ratio = (clientY - (viewportHeight - scrollThreshold)) / scrollThreshold;
+            _drag.scrollSpeed = (ratio * maxSpeed);
+        } else {
+            _drag.scrollSpeed = 0;
+        }
+    }
+
+    function startEdgeScroll() {
+        stopEdgeScroll();
+        _drag.scrollTimer = requestAnimationFrame(scrollLoop);
+    }
+
+    function scrollLoop() {
+        if (!_drag.active) return;
+        if (_drag.scrollSpeed !== 0) {
+            let scrollTarget = window;
+            const modalContent = document.querySelector('.modal-content');
+            if (modalContent && modalContent.scrollHeight > modalContent.clientHeight) {
+                scrollTarget = modalContent;
+            }
+            if (scrollTarget === window) {
+                window.scrollBy(0, _drag.scrollSpeed);
+            } else {
+                scrollTarget.scrollTop += _drag.scrollSpeed;
+            }
+        }
+        _drag.scrollTimer = requestAnimationFrame(scrollLoop);
+    }
+
+    function stopEdgeScroll() {
+        if (_drag.scrollTimer) {
+            cancelAnimationFrame(_drag.scrollTimer);
+            _drag.scrollTimer = null;
+        }
+    }
+
+    async function saveNewOrder(listId) {
+        const items = [...document.querySelectorAll(`#${listId} .list-item`)];
+        const newOrder = items.map((item, index) => ({ id: item.dataset.id, order_index: index }));
+        try {
+            await apiRequest(`/api/admin/${listId.replace('-list', 's')}`, 'PUT', newOrder);
+        } catch (e) {
+            console.error('Reorder error:', e);
+        }
     }
 
 });
