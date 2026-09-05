@@ -282,7 +282,7 @@ body::before {
 
 /* Custom Unified Pointer Drag Engine Effects */
 .dragging {
-    opacity: 0 !important;
+    display: none !important;
 }
 .sort-ghost {
     position: absolute !important;
@@ -296,12 +296,11 @@ body::before {
     border-radius: 12px;
 }
 .sort-placeholder {
-    opacity: 0.2 !important;
-    background: rgba(255, 255, 255, 0.2) !important;
-    border: 2px dashed rgba(0, 0, 0, 0.2) !important;
+    opacity: 0.5 !important;
+    border: 2px dotted #ff9800 !important;
     border-radius: 12px;
-    margin-bottom: 15px; /* match list-item gap */
-    width: 100%;
+    filter: grayscale(100%);
+    /* Since it's a clone of .list-item, it handles its own sizing/margins! */
 }
 
 /* Icon Button (Minimal) */

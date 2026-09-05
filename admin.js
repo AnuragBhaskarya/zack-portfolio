@@ -411,13 +411,13 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.appendChild(ghost);
         _drag.ghost = ghost;
 
-        // Create placeholder
-        const ph = document.createElement('div');
-        ph.className = 'sort-placeholder';
-        ph.style.height = rect.height + 'px';
+        // Create placeholder (ghost clone of original)
+        const ph = item.cloneNode(true);
+        ph.className = 'list-item sort-placeholder';
+        ph.style.animation = 'none';
         _drag.placeholder = ph;
 
-        // Hide original
+        // Hide original completely to prevent double spacing
         item.classList.add('dragging');
         startEdgeScroll();
     }
