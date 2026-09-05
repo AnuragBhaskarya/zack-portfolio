@@ -2239,6 +2239,7 @@ img,
     .portfolio-grid {
         display: grid;
         min-height: 1200px;
+        align-content: start;
     }
 
     .grid-thumb {
