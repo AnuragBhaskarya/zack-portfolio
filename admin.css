@@ -280,27 +280,23 @@ body::before {
     }
 }
 
-/* Custom Unified Pointer Drag Engine Effects */
-.dragging {
-    display: none !important;
+/* SortableJS Drag & Drop Effects */
+.sortable-ghost {
+    opacity: 0.5 !important;
+    background: transparent !important;
+    border: 2px dotted #ff9800 !important;
+    border-radius: 12px;
+    filter: grayscale(100%);
 }
-.sort-ghost {
-    position: absolute !important;
-    z-index: 9999 !important;
-    pointer-events: none !important;
+.sortable-drag, .sortable-fallback {
+    opacity: 1 !important;
     box-shadow: 0 30px 60px rgba(0,0,0,0.15) !important;
     transform: scale(1.03) rotate(2deg) !important;
     background: rgba(255, 255, 255, 0.85) !important;
     backdrop-filter: blur(25px) !important;
     -webkit-backdrop-filter: blur(25px) !important;
-    border-radius: 12px;
-}
-.sort-placeholder {
-    opacity: 0.5 !important;
-    border: 2px dotted #ff9800 !important;
-    border-radius: 12px;
-    filter: grayscale(100%);
-    /* Since it's a clone of .list-item, it handles its own sizing/margins! */
+    cursor: grabbing !important;
+    z-index: 9999 !important;
 }
 
 /* Icon Button (Minimal) */

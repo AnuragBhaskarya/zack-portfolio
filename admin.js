@@ -339,204 +339,28 @@ document.addEventListener('DOMContentLoaded', () => {
         loadAllData();
     });
 
-    // ══════════════════════════════════════════════
-    //  UNIFIED POINTER DRAG ENGINE (Custom)
-    // ══════════════════════════════════════════════
-    let _drag = {
-        active: false,
-        item: null,
-        ghost: null,
-        placeholder: null,
-        offsetY: 0,
-        scrollRAF: null,
-        container: null,
-        apiType: null
-    };
-
+    // --- Sortable Integration ---
     function initSortable(container, type) {
-        const items = container.querySelectorAll('.list-item');
-        items.forEach(item => {
-            const handle = item.querySelector('.fa-grip-vertical');
-            if(!handle) return;
-            
-            // Mouse
-            handle.addEventListener('mousedown', (e) => {
-                e.preventDefault();
-                dragStart(item, e.clientY, container, type);
-                function onMouseMove(e) { e.preventDefault(); dragMove(e.clientY); }
-                function onMouseUp() {
-                    document.removeEventListener('mousemove', onMouseMove);
-                    document.removeEventListener('mouseup', onMouseUp);
-                    dragEnd();
-                }
-                document.addEventListener('mousemove', onMouseMove);
-                document.addEventListener('mouseup', onMouseUp);
-            });
-
-            // Touch
-            handle.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                dragStart(item, e.touches[0].clientY, container, type);
-            }, { passive: false });
-
-            item.addEventListener('touchmove', (e) => {
-                if (!_drag.active || _drag.item !== item) return;
-                e.preventDefault();
-                dragMove(e.touches[0].clientY);
-            }, { passive: false });
-
-            item.addEventListener('touchend', () => {
-                if (_drag.active && _drag.item === item) dragEnd();
-            });
-        });
-    }
-
-    function dragStart(item, pointerY, container, type) {
-        const rect = item.getBoundingClientRect();
-        _drag.active = true;
-        _drag.item = item;
-        _drag.container = container;
-        _drag.apiType = type;
-        _drag.offsetY = pointerY - rect.top;
-
-        // Create floating ghost
-        const ghost = item.cloneNode(true);
-        ghost.className = 'list-item sort-ghost';
-        ghost.style.width = rect.width + 'px';
-        ghost.style.height = rect.height + 'px';
-        ghost.style.top = rect.top + 'px';
-        ghost.style.left = rect.left + 'px';
-        // Remove animation from ghost to prevent weird rendering
-        ghost.style.animation = 'none';
-        document.body.appendChild(ghost);
-        _drag.ghost = ghost;
-
-        // Create placeholder (ghost clone of original)
-        const ph = item.cloneNode(true);
-        ph.className = 'list-item sort-placeholder';
-        ph.style.animation = 'none';
-        _drag.placeholder = ph;
-
-        // Hide original completely to prevent double spacing
-        item.classList.add('dragging');
-        startEdgeScroll();
-    }
-
-    function recordPositions(list) {
-        const items = [...list.querySelectorAll('.list-item:not(.dragging)')];
-        const map = new Map();
-        items.forEach(item => map.set(item, item.getBoundingClientRect()));
-        return map;
-    }
-
-    function playFLIP(posMap) {
-        posMap.forEach((oldRect, item) => {
-            const newRect = item.getBoundingClientRect();
-            const deltaY = oldRect.top - newRect.top;
-            if (Math.abs(deltaY) < 1) return;
-            item.style.transition = 'none';
-            item.style.transform = `translateY(${deltaY}px)`;
-            requestAnimationFrame(() => {
-                item.style.transition = 'transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1)';
-                item.style.transform = '';
-                item.addEventListener('transitionend', function cleanup() {
-                    item.style.transition = '';
-                    item.style.transform = '';
-                    item.removeEventListener('transitionend', cleanup);
+        Sortable.create(container, {
+            handle: '.fa-grip-vertical',
+            animation: 350,
+            easing: "cubic-bezier(0.25, 1, 0.5, 1)",
+            ghostClass: 'sortable-ghost',
+            dragClass: 'sortable-drag',
+            forceFallback: true,
+            fallbackClass: 'sortable-fallback',
+            fallbackOnBody: true,
+            swapThreshold: 0.65,
+            onEnd: async () => {
+                // Get new order
+                const items = Array.from(container.children);
+                const updates = items.map((el, index) => {
+                    return { id: el.dataset.id, display_order: index };
                 });
-            });
-        });
-    }
-
-    function dragMove(pointerY) {
-        if (!_drag.active) return;
-        const ghost = _drag.ghost;
-        const list = _drag.container;
-
-        ghost.style.top = (pointerY - _drag.offsetY) + 'px';
-        _drag.lastPointerY = pointerY;
-
-        const items = [...list.querySelectorAll('.list-item:not(.dragging)')];
-        let targetNode = null;
-        for (const target of items) {
-            const r = target.getBoundingClientRect();
-            const midY = r.top + r.height / 2;
-            if (pointerY < midY) {
-                targetNode = target;
-                break;
+                // Send batch update
+                await apiRequest(`/api/admin/${type}`, 'PUT', updates);
             }
-        }
-
-        const phParent = _drag.placeholder.parentNode;
-        const phNext = _drag.placeholder.nextSibling;
-        if (targetNode === null && phParent && phNext === null) return;
-        if (targetNode && phNext === targetNode) return;
-
-        const posMap = recordPositions(list);
-        if (phParent) phParent.removeChild(_drag.placeholder);
-        
-        if (targetNode) {
-            list.insertBefore(_drag.placeholder, targetNode);
-        } else {
-            list.appendChild(_drag.placeholder);
-        }
-        playFLIP(posMap);
-    }
-
-    async function dragEnd() {
-        if (!_drag.active) return;
-        const list = _drag.container;
-        const placedItem = _drag.item;
-        const apiType = _drag.apiType;
-
-        const posMap = recordPositions(list);
-        if (_drag.placeholder.parentNode) {
-            list.insertBefore(placedItem, _drag.placeholder);
-            _drag.placeholder.parentNode.removeChild(_drag.placeholder);
-        }
-
-        placedItem.classList.remove('dragging');
-        if (_drag.ghost && _drag.ghost.parentNode) {
-            _drag.ghost.parentNode.removeChild(_drag.ghost);
-        }
-        stopEdgeScroll();
-        playFLIP(posMap);
-
-        _drag.active = false;
-        _drag.item = null;
-        _drag.ghost = null;
-        _drag.placeholder = null;
-        _drag.container = null;
-
-        // Save order to server
-        const currentItems = Array.from(list.children);
-        const updates = currentItems.map((el, index) => {
-            return { id: el.dataset.id, display_order: index };
         });
-        await apiRequest(`/api/admin/${apiType}`, 'PUT', updates);
-    }
-
-    function startEdgeScroll() {
-        const EDGE = 50;
-        const SPEED = 6;
-        function tick() {
-            if (!_drag.active) return;
-            const y = _drag.lastPointerY || 0;
-            if (y < EDGE) {
-                window.scrollBy(0, -SPEED);
-            } else if (y > window.innerHeight - EDGE) {
-                window.scrollBy(0, SPEED);
-            }
-            _drag.scrollRAF = requestAnimationFrame(tick);
-        }
-        _drag.scrollRAF = requestAnimationFrame(tick);
-    }
-
-    function stopEdgeScroll() {
-        if (_drag.scrollRAF) {
-            cancelAnimationFrame(_drag.scrollRAF);
-            _drag.scrollRAF = null;
-        }
     }
 
 });
