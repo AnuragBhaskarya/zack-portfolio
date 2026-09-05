@@ -10,6 +10,7 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
+button, input, textarea, a { touch-action: manipulation; }
 
 body {
     font-family: 'Inter', sans-serif;
@@ -43,7 +44,8 @@ body {
 .login-box input {
     width: 100%; padding: 12px; margin-bottom: 15px;
     border-radius: 6px; border: 1px solid var(--border-color);
-    background: #000; color: #fff; outline: none;
+    background: rgba(255, 255, 255, 0.7); color: var(--text-main); outline: none;
+    font-size: 16px;
 }
 .login-box button {
     width: 100%; padding: 12px; border-radius: 50px;
@@ -179,7 +181,7 @@ body {
     width: 100%; padding: 12px; margin-bottom: 20px; border-radius: 8px;
     border: 1px solid var(--border-color); background: rgba(255, 255, 255, 0.7);
     color: var(--text-main); outline: none; transition: all 0.2s ease;
-    font-family: inherit; font-size: 14px;
+    font-family: inherit; font-size: 16px;
 }
 .modal-content input:focus, .modal-content textarea:focus {
     background: #ffffff;
