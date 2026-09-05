@@ -1014,16 +1014,22 @@ main {
 
 /* ===== FOOTER ===== */
 footer {
-    background: var(--bg-primary);
-    padding: 80px 20px 40px;
+    background: var(--card-bg);
+    color: var(--dark);
+    padding: 60px 40px 40px;
     max-width: 1200px;
-    margin: 0 auto;
+    width: calc(100% - 40px);
+    margin: 80px auto 40px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    overflow: hidden;
 }
 
 .footer-container {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 30px;
     margin-bottom: 60px;
 }
 
@@ -1033,21 +1039,58 @@ footer {
     }
 }
 
+.footer-col {
+    background: #18191c;
+    color: white;
+    padding: 40px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-hover);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ensure ZackGFX logo is white inside dark card */
+.footer-col .text-dark {
+    color: white;
+}
+
 .footer-subtitle {
-    color: var(--text-muted);
+    color: rgba(255, 255, 255, 0.7);
     margin-top: 15px;
 }
 
 .footer-heading {
-    font-family: monospace;
-    letter-spacing: 0.1em;
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin-bottom: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 1.1rem;
+    color: white;
+    margin-bottom: 24px;
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    align-self: flex-start;
+}
+
+.footer-heading::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background: var(--accent);
+    opacity: 0.5;
+    z-index: -1;
+    border-radius: 4px;
+}
+
+.links-col ul {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .links-col ul li {
-    margin-bottom: 15px;
     font-weight: 600;
 }
 
@@ -1055,17 +1098,29 @@ footer {
     color: var(--accent);
 }
 
+.links-col a {
+    color: rgba(255, 255, 255, 0.9);
+    transition: var(--transition);
+}
+
 .links-col a:hover {
     color: var(--accent);
+    padding-left: 8px;
 }
 
 .email-link {
-    font-weight: 600;
-    font-size: 1.1rem;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: white;
+    display: inline-block;
+    border-bottom: 2px solid transparent;
+    transition: var(--transition);
+    align-self: flex-start;
 }
 
 .email-link:hover {
     color: var(--accent);
+    border-bottom-color: var(--accent);
 }
 
 .mt-4 {
@@ -1078,29 +1133,35 @@ footer {
 }
 
 .social-icon {
-    width: 40px;
-    height: 40px;
-    background: var(--dark);
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.1);
     color: white;
-    border-radius: 10px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 1.2rem;
+    transition: var(--transition);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .social-icon:hover {
     background: var(--accent);
-    transform: translateY(-3px);
+    color: white;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(235, 73, 38, 0.3);
+    border-color: var(--accent);
 }
 
 .copyright {
-    background: var(--card-bg);
-    padding: 20px;
+    background: var(--bg-secondary);
+    padding: 24px;
     border-radius: var(--radius-md);
     text-align: center;
     color: var(--text-muted);
-    font-size: 0.9rem;
-    box-shadow: var(--shadow-soft);
+    font-size: 0.95rem;
+    border: 1px solid var(--border-color);
 }
 
 /* ===== ANIMATIONS ===== */
@@ -1616,12 +1677,19 @@ img,
 
     /* --- Footer --- */
     footer {
-        padding: 40px 16px 16px;
+        padding: 40px 20px 20px;
+        margin: 8px 8px 16px 8px;
+        width: auto;
+        border-radius: 24px;
     }
 
     .footer-container {
-        gap: 24px;
+        gap: 16px;
         margin-bottom: 30px;
+    }
+
+    .footer-col {
+        padding: 24px;
     }
 
     .logo-text {
@@ -1633,17 +1701,16 @@ img,
     }
 
     .footer-heading {
-        font-size: 0.72rem;
-        margin-bottom: 12px;
+        font-size: 0.9rem;
+        margin-bottom: 16px;
     }
 
     .links-col ul li {
-        margin-bottom: 10px;
         font-size: 0.9rem;
     }
 
     .email-link {
-        font-size: 0.9rem;
+        font-size: 1rem;
     }
 
     .mt-4 {
@@ -1651,10 +1718,10 @@ img,
     }
 
     .social-icon {
-        width: 36px;
-        height: 36px;
-        border-radius: 8px;
-        font-size: 0.85rem;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        font-size: 1rem;
     }
 
     .copyright {

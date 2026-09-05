@@ -609,7 +609,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (loadMoreBtn && portfolioGrid) {
         const gridThumbs = portfolioGrid.querySelectorAll('.grid-thumb');
-        const initialCount = 16; // 8 rows × 2 columns
+        const initialCount = 12; // 6 rows × 2 columns
         let shown = initialCount;
         const isMobile = window.innerWidth <= 768;
 
@@ -625,8 +625,7 @@ document.addEventListener('DOMContentLoaded', () => {
             loadMoreBtn.style.display = 'none';
         }
 
-        // --- Staggered reveal for mobile ---
-        if (isMobile) {
+        // --- Staggered reveal ---
             // Helper: execute callback when image finishes loading
             function whenImageLoaded(img, callback) {
                 if (img.complete && img.naturalWidth > 0) {
@@ -695,7 +694,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Load More: reveal hidden thumbs with stagger animation
             loadMoreBtn.addEventListener('click', () => {
-                const nextShow = Math.min(shown + 4, gridThumbs.length);
+                const nextShow = Math.min(shown + 6, gridThumbs.length);
                 const newThumbs = [];
                 for (let i = shown; i < nextShow; i++) {
                     gridThumbs[i].classList.remove('grid-thumb-hidden');
@@ -723,19 +722,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
             });
-        } else {
-            // Desktop: no stagger animation, just load-more logic
-            loadMoreBtn.addEventListener('click', () => {
-                const nextShow = Math.min(shown + 4, gridThumbs.length);
-                for (let i = shown; i < nextShow; i++) {
-                    gridThumbs[i].classList.remove('grid-thumb-hidden');
-                }
-                shown = nextShow;
-                if (shown >= gridThumbs.length) {
-                    loadMoreBtn.style.display = 'none';
-                }
-            });
-        }
     }
 
     // --- Image Protection (Prevent Right-Click & Drag) ---
