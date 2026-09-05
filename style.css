@@ -1878,6 +1878,19 @@ footer {
     font-weight: 500;
 }
 
+.developer-link {
+    font-weight: bold;
+    color: var(--accent);
+    display: inline-block;
+    transition: transform 0.3s ease, text-shadow 0.3s ease;
+    text-decoration: none;
+}
+
+.developer-link:hover {
+    transform: scale(1.1);
+    text-shadow: 0 0 12px var(--accent);
+}
+
 .copy-right {
     border-left: 1px solid rgba(0,0,0,0.1);
     padding-left: 25px;
