@@ -799,15 +799,17 @@ main {
 }
 
 .hiw-card-title {
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: var(--dark);
+    font-family: 'Outfit', 'Nunito', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--accent);
     margin-bottom: 8px;
     letter-spacing: -0.01em;
 }
 
 .hiw-card-desc {
-    font-size: 0.88rem;
+    font-family: 'Outfit', 'Inter', sans-serif;
+    font-size: 0.9rem;
     color: var(--text-muted);
     line-height: 1.5;
     font-weight: 500;
