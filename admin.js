@@ -597,7 +597,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function saveNewOrder(listId) {
         const items = [...document.querySelectorAll(`#${listId} .list-item`)];
-        const newOrder = items.map((item, index) => ({ id: item.dataset.id, order_index: index }));
+        const newOrder = items.map((item, index) => ({ id: item.dataset.id, display_order: index }));
         try {
             await apiRequest(`/api/admin/${listId.replace('List', '')}`, 'PUT', newOrder);
         } catch (e) {
