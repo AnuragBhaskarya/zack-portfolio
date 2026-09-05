@@ -280,22 +280,28 @@ body::before {
     }
 }
 
-/* SortableJS Drag & Drop Effects */
-.sortable-ghost {
-    opacity: 0.2 !important;
-    background: rgba(255, 255, 255, 0.2) !important;
-    border: 2px dashed rgba(0, 0, 0, 0.2) !important;
-    transform: scale(0.98);
+/* Custom Unified Pointer Drag Engine Effects */
+.dragging {
+    opacity: 0 !important;
 }
-.sortable-drag, .sortable-fallback {
-    opacity: 1 !important;
+.sort-ghost {
+    position: absolute !important;
+    z-index: 9999 !important;
+    pointer-events: none !important;
     box-shadow: 0 30px 60px rgba(0,0,0,0.15) !important;
     transform: scale(1.03) rotate(2deg) !important;
     background: rgba(255, 255, 255, 0.85) !important;
     backdrop-filter: blur(25px) !important;
     -webkit-backdrop-filter: blur(25px) !important;
-    cursor: grabbing !important;
-    z-index: 9999 !important;
+    border-radius: 12px;
+}
+.sort-placeholder {
+    opacity: 0.2 !important;
+    background: rgba(255, 255, 255, 0.2) !important;
+    border: 2px dashed rgba(0, 0, 0, 0.2) !important;
+    border-radius: 12px;
+    margin-bottom: 15px; /* match list-item gap */
+    width: 100%;
 }
 
 /* Icon Button (Minimal) */
