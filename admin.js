@@ -357,6 +357,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // ── Core drag functions ──
 
     function dragStart(item, pointerY) {
+        if (_drag.active) dragEnd(); // Safety: cleanup any stuck drag state
+
         const list = item.parentNode;
         const rect = item.getBoundingClientRect();
 
@@ -534,6 +536,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ── Attach mouse + touch events to each list item ──
     function attachDragListeners(item) {
+        if (item.dataset.dragAttached) return; // Prevent duplicate listeners
+        item.dataset.dragAttached = "true";
+
         const handle = item.querySelector('.fa-grip-vertical');
         if (!handle) return;
 
