@@ -124,9 +124,9 @@ document.addEventListener('DOMContentLoaded', () => {
     async function renderThumbnails() {
         const list = document.getElementById('thumbnailsList');
         list.innerHTML = '';
-        appData.thumbnails.forEach(t => {
+        appData.thumbnails.forEach((t, i) => {
             list.innerHTML += `
-                <div class="list-item" data-id="${t.id}">
+                <div class="list-item" data-id="${t.id}" style="opacity: 0; animation: fadeSlideUp 0.4s ease-out forwards ${i * 0.05}s;">
                     <div class="item-content">
                         <i class="fa-solid fa-grip-vertical drag-handle"></i>
                         <img src="${t.image_base64}" class="thumb-preview">
@@ -156,9 +156,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderFaqs() {
         const list = document.getElementById('faqsList');
         list.innerHTML = '';
-        appData.faqs.forEach(f => {
+        appData.faqs.forEach((f, i) => {
             list.innerHTML += `
-                <div class="list-item" data-id="${f.id}">
+                <div class="list-item" data-id="${f.id}" style="opacity: 0; animation: fadeSlideUp 0.4s ease-out forwards ${i * 0.05}s;">
                     <div class="item-content">
                         <i class="fa-solid fa-grip-vertical drag-handle"></i>
                         <div>
@@ -180,9 +180,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderReviews() {
         const list = document.getElementById('reviewsList');
         list.innerHTML = '';
-        appData.reviews.forEach(r => {
+        appData.reviews.forEach((r, i) => {
             list.innerHTML += `
-                <div class="list-item" data-id="${r.id}">
+                <div class="list-item" data-id="${r.id}" style="opacity: 0; animation: fadeSlideUp 0.4s ease-out forwards ${i * 0.05}s;">
                     <div class="item-content">
                         <i class="fa-solid fa-grip-vertical drag-handle"></i>
                         <img src="${r.avatar_base64 || 'https://files.catbox.moe/1z0zdx.png'}" style="width: 40px; height: 40px; border-radius: 50%;">
