@@ -128,11 +128,11 @@ document.addEventListener('DOMContentLoaded', () => {
             list.innerHTML += `
                 <div class="list-item" data-id="${t.id}" style="opacity: 0; animation: fadeSlideUp 0.4s ease-out forwards ${i * 0.05}s;">
                     <div class="item-content">
-                        <i class="fa-solid fa-grip-vertical drag-handle"></i>
+                        <i class="fa-solid fa-grip-vertical text-muted"></i>
                         <img src="${t.image_base64}" class="thumb-preview">
                     </div>
                     <div class="item-actions">
-                        <button class="btn btn-danger" onclick="deleteItem('thumbnails', '${t.id}')">Delete</button>
+                        <button class="btn btn-danger icon-btn" onclick="deleteItem('thumbnails', '${t.id}')" title="Delete"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 </div>
             `;
@@ -342,8 +342,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Sortable Integration ---
     function initSortable(container, type) {
         Sortable.create(container, {
-            handle: '.drag-handle',
-            animation: 150,
+            handle: '.fa-grip-vertical',
+            animation: 200,
+            ghostClass: 'sortable-ghost',
+            dragClass: 'sortable-drag',
+            forceFallback: true,
+            fallbackClass: 'sortable-fallback',
             onEnd: async () => {
                 // Get new order
                 const items = Array.from(container.children);

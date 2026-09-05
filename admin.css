@@ -268,3 +268,26 @@ body::before {
         width: 90%;
     }
 }
+
+/* SortableJS Drag & Drop Effects */
+.sortable-ghost {
+    opacity: 0.3 !important;
+    background: #f4f4f4 !important;
+    border: 2px dashed var(--primary) !important;
+}
+.sortable-drag, .sortable-fallback {
+    opacity: 1 !important;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3) !important;
+    transform: scale(1.02);
+    background: var(--panel-bg) !important;
+    cursor: grabbing !important;
+}
+
+/* Icon Button (Minimal) */
+.icon-btn {
+    padding: 10px 14px;
+    border-radius: 50%;
+}
+.icon-btn i {
+    margin: 0;
+}
