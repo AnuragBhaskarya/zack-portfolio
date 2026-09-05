@@ -207,15 +207,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const confirmModalCancel = document.getElementById('confirmModalCancel');
     const confirmModalConfirm = document.getElementById('confirmModalConfirm');
 
+    function openModal(modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    function closeModal(modal) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+
     function showConfirm(msg) {
         return new Promise((resolve) => {
             confirmModalText.innerText = msg;
-            confirmModal.classList.remove('hidden');
+            openModal(confirmModal);
             
             const cleanup = () => {
                 confirmModalCancel.removeEventListener('click', onCancel);
                 confirmModalConfirm.removeEventListener('click', onConfirm);
-                confirmModal.classList.add('hidden');
+                closeModal(confirmModal);
             };
             
             const onCancel = () => { cleanup(); resolve(false); };
@@ -237,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Modals Logic ---
     document.querySelectorAll('.close-modal').forEach(btn => {
         btn.addEventListener('click', () => {
-            document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden'));
+            document.querySelectorAll('.modal').forEach(m => closeModal(m));
         });
     });
 
@@ -248,7 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('faqModalTitle').innerText = 'Add FAQ';
         faqForm.reset();
         document.getElementById('faqId').value = '';
-        faqModal.classList.remove('hidden');
+        openModal(faqModal);
     });
 
     window.editFaq = (id) => {
@@ -258,7 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('faqId').value = f.id;
         document.getElementById('faqQuestion').value = f.question;
         document.getElementById('faqAnswer').value = f.answer;
-        faqModal.classList.remove('hidden');
+        openModal(faqModal);
     };
 
     faqForm.addEventListener('submit', async (e) => {
@@ -274,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             await apiRequest('/api/admin/faqs', 'POST', payload);
         }
-        faqModal.classList.add('hidden');
+        closeModal(faqModal);
         loadAllData();
     });
 
@@ -297,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('reviewId').value = '';
         currentAvatarBase64 = '';
         document.getElementById('reviewAvatarPreview').classList.add('hidden');
-        reviewModal.classList.remove('hidden');
+        openModal(reviewModal);
     });
 
     window.editReview = (id) => {
@@ -316,7 +326,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             document.getElementById('reviewAvatarPreview').classList.add('hidden');
         }
-        reviewModal.classList.remove('hidden');
+        openModal(reviewModal);
     };
 
     reviewForm.addEventListener('submit', async (e) => {
@@ -335,7 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             await apiRequest('/api/admin/reviews', 'POST', payload);
         }
-        reviewModal.classList.add('hidden');
+        closeModal(reviewModal);
         loadAllData();
     });
 
