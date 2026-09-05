@@ -1114,12 +1114,14 @@ footer {
     right: 20px;
     border: 1px solid rgba(255,255,255,0.8);
     backdrop-filter: blur(5px);
+    animation: floatWiggleBefore 8s ease-in-out infinite;
 }
 .brand-bg-shapes::after {
     top: 80px;
     right: -40px;
     background: linear-gradient(135deg, rgba(235, 73, 38, 0.15) 0%, rgba(255,255,255,0) 100%);
     transform: rotate(35deg);
+    animation: floatWiggleAfter 9s ease-in-out infinite 1s;
 }
 
 /* Ensure text stays on top of shapes */
@@ -1278,20 +1280,20 @@ footer {
 }
 
 /* Footer Card Animations */
-@keyframes floatWiggle {
-    0% { transform: translateY(0) rotate(0deg); }
-    25% { transform: translateY(-3px) rotate(0.5deg); }
-    50% { transform: translateY(-6px) rotate(0deg); }
-    75% { transform: translateY(-3px) rotate(-0.5deg); }
-    100% { transform: translateY(0) rotate(0deg); }
+@keyframes floatWiggleBefore {
+    0% { transform: translateY(0) rotate(20deg); }
+    25% { transform: translateY(-3px) rotate(20.5deg); }
+    50% { transform: translateY(-6px) rotate(20deg); }
+    75% { transform: translateY(-3px) rotate(19.5deg); }
+    100% { transform: translateY(0) rotate(20deg); }
 }
 
-.links-col {
-    animation: floatWiggle 6s ease-in-out infinite;
-}
-
-.contact-col {
-    animation: floatWiggle 7.5s ease-in-out infinite 1s;
+@keyframes floatWiggleAfter {
+    0% { transform: translateY(0) rotate(35deg); }
+    25% { transform: translateY(-4px) rotate(35.5deg); }
+    50% { transform: translateY(-8px) rotate(35deg); }
+    75% { transform: translateY(-4px) rotate(34.5deg); }
+    100% { transform: translateY(0) rotate(35deg); }
 }
 
 /* ===== ANIMATIONS ===== */
