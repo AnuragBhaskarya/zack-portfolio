@@ -1373,11 +1373,14 @@ main {
 }
 
 .about-content .section-title {
-    color: var(--dark);
+    color: #ff5225;
     text-align: left;
     margin-bottom: 24px;
     font-size: clamp(2.5rem, 5vw, 4rem);
-    text-transform: uppercase;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    text-transform: none;
+    letter-spacing: -0.02em;
 }
 
 .about-desc {
