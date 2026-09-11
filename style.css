@@ -1400,7 +1400,7 @@ main {
 }
 
 .stat-number {
-    font-size: clamp(3rem, 6vw, 4.5rem);
+    font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 900;
     color: var(--accent);
     line-height: 1;
@@ -1409,7 +1409,8 @@ main {
     display: flex;
     align-items: baseline;
     white-space: nowrap;
-    min-width: 220px;
+    width: 280px;
+    flex-shrink: 0;
 }
 
 .stat-plus {
