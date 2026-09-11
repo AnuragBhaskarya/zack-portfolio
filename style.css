@@ -1812,7 +1812,7 @@ main {
 }
 
 .about-desc {
-    font-size: 1.25rem;
+    font-size: clamp(0.95rem, 1.2vw, 1.05rem);
     color: var(--text-muted);
     line-height: 1.6;
     font-weight: 500;
@@ -3011,6 +3011,11 @@ img,
         grid-template-columns: 1fr;
         gap: 40px;
         padding: 40px 20px;
+    }
+
+    .about-desc {
+        font-size: 0.9rem;
+        line-height: 1.5;
     }
 
     .stat-item {
