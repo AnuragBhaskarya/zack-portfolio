@@ -545,25 +545,45 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }, { threshold: 0.5 });
 
-        // About Me Stats Animation using Odometer
-        window.odometerOptions = {
-            duration: 2000,
-            animation: 'count' 
-        };
-
+        // About Me Stats Animation (Smooth JavaScript Count-up)
         const aboutObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const counters = entry.target.querySelectorAll('.count-up');
                     counters.forEach(counter => {
                         const target = parseFloat(counter.getAttribute('data-target'));
-                        counter.innerHTML = target;
+                        const decimals = parseInt(counter.getAttribute('data-decimals') || '0');
+                        const duration = 1800;
+
+                        let startTime = null;
+                        const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+
+                        const step = (timestamp) => {
+                            if (!startTime) startTime = timestamp;
+                            const progress = Math.min((timestamp - startTime) / duration, 1);
+                            const easedProgress = easeOutQuart(progress);
+                            const current = easedProgress * target;
+
+                            if (decimals > 0) {
+                                counter.textContent = current.toFixed(decimals);
+                            } else {
+                                counter.textContent = Math.floor(current).toLocaleString();
+                            }
+
+                            if (progress < 1) {
+                                window.requestAnimationFrame(step);
+                            } else {
+                                counter.textContent = decimals > 0 ? target.toFixed(decimals) : target.toLocaleString();
+                            }
+                        };
+
+                        window.requestAnimationFrame(step);
                     });
                 } else {
                     const counters = entry.target.querySelectorAll('.count-up');
                     counters.forEach(counter => {
                         const decimals = parseInt(counter.getAttribute('data-decimals') || '0');
-                        counter.innerHTML = decimals > 0 ? '0.0' : '0';
+                        counter.textContent = decimals > 0 ? '0.0' : '0';
                     });
                 }
             });
