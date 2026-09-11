@@ -544,6 +544,56 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }, { threshold: 0.5 });
+
+        // About Me Stats Animation
+        const aboutObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counters = entry.target.querySelectorAll('.count-up');
+                    counters.forEach(counter => {
+                        const target = parseFloat(counter.getAttribute('data-target'));
+                        const decimals = parseInt(counter.getAttribute('data-decimals') || '0');
+                        const duration = 2000;
+                        
+                        let startTime = null;
+                        const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+
+                        const step = (timestamp) => {
+                            if (!startTime) startTime = timestamp;
+                            const progress = Math.min((timestamp - startTime) / duration, 1);
+                            
+                            const easedProgress = easeOutQuart(progress);
+                            const current = easedProgress * target;
+                            
+                            if (decimals > 0) {
+                                counter.innerText = current.toFixed(decimals);
+                            } else {
+                                counter.innerText = Math.floor(current);
+                            }
+
+                            if (progress < 1) {
+                                window.requestAnimationFrame(step);
+                            } else {
+                                counter.innerText = decimals > 0 ? target.toFixed(decimals) : target;
+                            }
+                        };
+                        
+                        window.requestAnimationFrame(step);
+                    });
+                } else {
+                    const counters = entry.target.querySelectorAll('.count-up');
+                    counters.forEach(counter => {
+                        const decimals = parseInt(counter.getAttribute('data-decimals') || '0');
+                        counter.innerText = decimals > 0 ? '0.0' : '0';
+                    });
+                }
+            });
+        }, { threshold: 0.2 });
+
+        const aboutStats = document.querySelector('.about-stats');
+        if (aboutStats) {
+            aboutObserver.observe(aboutStats);
+        }
     }
 
     function initInteractiveMarquees() {
