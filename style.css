@@ -1325,23 +1325,55 @@ main {
 /* ===== ABOUT ME SECTION ===== */
 .about-me {
     padding: 100px 20px;
-    background-color: var(--dark);
-    color: white;
+    background-color: var(--bg-primary);
     position: relative;
-    overflow: hidden;
 }
 
-.about-container {
+.about-card {
     max-width: 1000px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 60px;
     align-items: center;
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 60px;
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    overflow: hidden;
+}
+
+.about-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% + 40px);
+    z-index: 0;
+    opacity: 0.05;
+    pointer-events: none;
+    background-image:
+        repeating-linear-gradient(
+            0deg,
+            transparent, transparent 39px,
+            rgba(0, 0, 0, 1) 39px, rgba(0, 0, 0, 1) 40px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            transparent, transparent 39px,
+            rgba(0, 0, 0, 1) 39px, rgba(0, 0, 0, 1) 40px
+        );
+}
+
+.about-content, .about-stats {
+    position: relative;
+    z-index: 1;
 }
 
 .about-content .section-title {
-    color: white;
+    color: var(--dark);
     text-align: left;
     margin-bottom: 24px;
     font-size: clamp(2.5rem, 5vw, 4rem);
@@ -1350,9 +1382,9 @@ main {
 
 .about-desc {
     font-size: 1.25rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-muted);
     line-height: 1.6;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 .about-stats {
@@ -1384,7 +1416,7 @@ main {
     font-size: 1.25rem;
     font-weight: 600;
     text-transform: capitalize;
-    color: white;
+    color: var(--dark);
 }
 
 /* ===== FAQ SECTION ===== */
@@ -2377,9 +2409,10 @@ img,
     }
 
     /* --- About Me Section --- */
-    .about-container {
+    .about-card {
         grid-template-columns: 1fr;
         gap: 40px;
+        padding: 40px 20px;
     }
     
     .stat-item {
