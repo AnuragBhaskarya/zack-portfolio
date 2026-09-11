@@ -389,6 +389,7 @@ main {
 .tracks-deferred .icon-asset {
     animation-play-state: paused;
 }
+
 .tracks-deferred.tracks-active .icon-node,
 .tracks-deferred.tracks-active .circle-track,
 .tracks-deferred.tracks-active .icon-asset {
@@ -726,6 +727,7 @@ main {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 20px;
 }
+
 @media (max-width: 850px) {
     .hiw-grid {
         grid-template-columns: 1fr !important;
@@ -758,20 +760,16 @@ main {
     opacity: 0.05;
     pointer-events: none;
     background-image:
-        repeating-linear-gradient(
-            0deg,
+        repeating-linear-gradient(0deg,
             transparent, transparent 39px,
-            rgba(0, 0, 0, 1) 39px, rgba(0, 0, 0, 1) 40px
-        ),
-        repeating-linear-gradient(
-            90deg,
+            rgba(0, 0, 0, 1) 39px, rgba(0, 0, 0, 1) 40px),
+        repeating-linear-gradient(90deg,
             transparent, transparent 39px,
-            rgba(0, 0, 0, 1) 39px, rgba(0, 0, 0, 1) 40px
-        );
+            rgba(0, 0, 0, 1) 39px, rgba(0, 0, 0, 1) 40px);
     animation: gridScrollUp 12s linear infinite;
 }
 
-.hiw-card > * {
+.hiw-card>* {
     position: relative;
     z-index: 1;
 }
@@ -798,6 +796,7 @@ main {
     justify-content: center;
     margin-bottom: 18px;
 }
+
 .hiw-card-title {
     font-family: 'Outfit', 'Nunito', sans-serif;
     font-size: 1.25rem;
@@ -868,6 +867,7 @@ main {
     margin-top: calc(var(--h) / -2);
     z-index: 2;
 }
+
 .hiw-node .hiw-icon-bubble {
     position: absolute;
     left: 0;
@@ -879,33 +879,55 @@ main {
 
 .hiw-conn-lines {
     position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     z-index: 1;
 }
+
 /* Icon Pop-in Animations */
 .hiw-card.hiw-in-view .step1-icon-cloud {
     animation: hiwPopIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both, hiwGentleFloat 4.5s ease-in-out 0.6s infinite;
 }
+
 .hiw-card.hiw-in-view .step1-icon-mega {
     animation: hiwPopIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.25s both, hiwGentleFloat 4.2s ease-in-out 0.8s infinite;
 }
+
 .hiw-card.hiw-in-view .step1-icon-gdrive {
     animation: hiwPopIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s both, hiwGentleFloat 4s ease-in-out 1s infinite;
 }
 
 /* Lines draw sequentially after icons appear */
-.hiw-card.hiw-in-view .wipe-rect-3 { animation: hiwWipeRect 0.4s ease-in-out 0.3s both; } /* from Cloud */
-.hiw-card.hiw-in-view .wipe-rect-1 { animation: hiwWipeRect 0.3s ease-in-out 0.5s both; } /* from Mega */
-.hiw-card.hiw-in-view .wipe-rect-2 { animation: hiwWipeRect 0.3s ease-in-out 0.6s both; } /* from GDrive */
+.hiw-card.hiw-in-view .wipe-rect-3 {
+    animation: hiwWipeRect 0.4s ease-in-out 0.3s both;
+}
+
+/* from Cloud */
+.hiw-card.hiw-in-view .wipe-rect-1 {
+    animation: hiwWipeRect 0.3s ease-in-out 0.5s both;
+}
+
+/* from Mega */
+.hiw-card.hiw-in-view .wipe-rect-2 {
+    animation: hiwWipeRect 0.3s ease-in-out 0.6s both;
+}
+
+/* from GDrive */
 
 .hiw-card.hiw-in-view .step1-icon-upload {
     animation: hiwPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.9s both, hiwGentleFloat 4s ease-in-out 1.5s infinite;
 }
 
 @keyframes hiwWipeRect {
-    from { width: 0; }
-    to { width: 100%; }
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
 }
 
 .hiw-conn-lines path {
@@ -914,7 +936,9 @@ main {
 }
 
 @keyframes hiwFlow {
-    to { stroke-dashoffset: -12; }
+    to {
+        stroke-dashoffset: -12;
+    }
 }
 
 /* --- Step 02 Specific Styles --- */
@@ -922,7 +946,7 @@ main {
     width: 100%;
     height: 100%;
     background: #fff;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -943,8 +967,9 @@ main {
     white-space: nowrap;
     opacity: 0;
     pointer-events: none;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 .hiw-tooltip::after {
     content: '';
     position: absolute;
@@ -963,101 +988,367 @@ main {
     z-index: 200;
     pointer-events: none;
     opacity: 0;
-    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
-    transform: translate(-5px, -3px); 
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+    transform: translate(-5px, -3px);
 }
 
 /* Animations that trigger when card is in view */
-.hiw-card.hiw-in-view .app-1 .step2-hover { animation: hiwAppHover1 6s infinite; }
-.hiw-card.hiw-in-view .app-2 .step2-hover { animation: hiwAppHover2 6s infinite; }
-.hiw-card.hiw-in-view .app-3 .step2-hover { animation: hiwAppHover3 6s infinite; }
-.hiw-card.hiw-in-view .app-4 .step2-hover { animation: hiwAppHover4 6s infinite; }
+.hiw-card.hiw-in-view .app-1 .step2-hover {
+    animation: hiwAppHover1 6s infinite;
+}
 
-.hiw-card.hiw-in-view .app-1 .hiw-tooltip { animation: hiwTooltip1 6s infinite; }
-.hiw-card.hiw-in-view .app-2 .hiw-tooltip { animation: hiwTooltip2 6s infinite; }
-.hiw-card.hiw-in-view .app-3 .hiw-tooltip { animation: hiwTooltip3 6s infinite; }
-.hiw-card.hiw-in-view .app-4 .hiw-tooltip { animation: hiwTooltip4 6s infinite; }
+.hiw-card.hiw-in-view .app-2 .step2-hover {
+    animation: hiwAppHover2 6s infinite;
+}
+
+.hiw-card.hiw-in-view .app-3 .step2-hover {
+    animation: hiwAppHover3 6s infinite;
+}
+
+.hiw-card.hiw-in-view .app-4 .step2-hover {
+    animation: hiwAppHover4 6s infinite;
+}
+
+.hiw-card.hiw-in-view .app-1 .hiw-tooltip {
+    animation: hiwTooltip1 6s infinite;
+}
+
+.hiw-card.hiw-in-view .app-2 .hiw-tooltip {
+    animation: hiwTooltip2 6s infinite;
+}
+
+.hiw-card.hiw-in-view .app-3 .hiw-tooltip {
+    animation: hiwTooltip3 6s infinite;
+}
+
+.hiw-card.hiw-in-view .app-4 .hiw-tooltip {
+    animation: hiwTooltip4 6s infinite;
+}
 
 .hiw-card.hiw-in-view .hiw-cursor {
     animation: hiwCursorMove 6s ease-in-out infinite;
-    opacity: 1; /* Cursor is always visible */
+    opacity: 1;
+    /* Cursor is always visible */
 }
 
-.hiw-card.hiw-in-view .app-1 .step2-popin { animation: hiwPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both, hiwGentleFloat 4s ease-in-out 0.65s infinite; }
-.hiw-card.hiw-in-view .app-2 .step2-popin { animation: hiwPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.25s both, hiwGentleFloat 4.5s ease-in-out 1.2s infinite; }
-.hiw-card.hiw-in-view .app-3 .step2-popin { animation: hiwPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.35s both, hiwGentleFloat 3.8s ease-in-out 0.8s infinite; }
-.hiw-card.hiw-in-view .app-4 .step2-popin { animation: hiwPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.45s both, hiwGentleFloat 4.2s ease-in-out 0.4s infinite; }
+.hiw-card.hiw-in-view .app-1 .step2-popin {
+    animation: hiwPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both, hiwGentleFloat 4s ease-in-out 0.65s infinite;
+}
+
+.hiw-card.hiw-in-view .app-2 .step2-popin {
+    animation: hiwPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.25s both, hiwGentleFloat 4.5s ease-in-out 1.2s infinite;
+}
+
+.hiw-card.hiw-in-view .app-3 .step2-popin {
+    animation: hiwPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.35s both, hiwGentleFloat 3.8s ease-in-out 0.8s infinite;
+}
+
+.hiw-card.hiw-in-view .app-4 .step2-popin {
+    animation: hiwPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.45s both, hiwGentleFloat 4.2s ease-in-out 0.4s infinite;
+}
 
 
 /* App 1 (Photoshop) Hover */
 @keyframes hiwAppHover1 {
-    0%, 8.3% { transform: scale(1.15); box-shadow: 0 10px 25px var(--glow); }
-    10.3%, 98% { transform: scale(1); box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
-    100% { transform: scale(1.15); box-shadow: 0 10px 25px var(--glow); }
+
+    0%,
+    8.3% {
+        transform: scale(1.15);
+        box-shadow: 0 10px 25px var(--glow);
+    }
+
+    10.3%,
+    98% {
+        transform: scale(1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    100% {
+        transform: scale(1.15);
+        box-shadow: 0 10px 25px var(--glow);
+    }
 }
+
 @keyframes hiwTooltip1 {
-    0%, 8.3% { opacity: 1; transform: translateX(-50%) translateY(0); }
-    10.3%, 98% { opacity: 0; transform: translateX(-50%) translateY(5px); }
-    100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    0%,
+    8.3% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    10.3%,
+    98% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(5px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
 }
 
 /* App 2 (Illustrator) Hover */
 @keyframes hiwAppHover2 {
-    0%, 23% { transform: scale(1); box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
-    25%, 33.3% { transform: scale(1.15); box-shadow: 0 10px 25px var(--glow); }
-    35.3%, 100% { transform: scale(1); box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+
+    0%,
+    23% {
+        transform: scale(1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    25%,
+    33.3% {
+        transform: scale(1.15);
+        box-shadow: 0 10px 25px var(--glow);
+    }
+
+    35.3%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
 }
+
 @keyframes hiwTooltip2 {
-    0%, 23% { opacity: 0; transform: translateX(-50%) translateY(5px); }
-    25%, 33.3% { opacity: 1; transform: translateX(-50%) translateY(0); }
-    35.3%, 100% { opacity: 0; transform: translateX(-50%) translateY(5px); }
+
+    0%,
+    23% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(5px);
+    }
+
+    25%,
+    33.3% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    35.3%,
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(5px);
+    }
 }
 
 /* App 3 (Figma) Hover */
 @keyframes hiwAppHover3 {
-    0%, 48% { transform: scale(1); box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
-    50%, 58.3% { transform: scale(1.15); box-shadow: 0 10px 25px var(--glow); }
-    60.3%, 100% { transform: scale(1); box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+
+    0%,
+    48% {
+        transform: scale(1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    50%,
+    58.3% {
+        transform: scale(1.15);
+        box-shadow: 0 10px 25px var(--glow);
+    }
+
+    60.3%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
 }
+
 @keyframes hiwTooltip3 {
-    0%, 48% { opacity: 0; transform: translateX(-50%) translateY(5px); }
-    50%, 58.3% { opacity: 1; transform: translateX(-50%) translateY(0); }
-    60.3%, 100% { opacity: 0; transform: translateX(-50%) translateY(5px); }
+
+    0%,
+    48% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(5px);
+    }
+
+    50%,
+    58.3% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    60.3%,
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(5px);
+    }
 }
 
 /* App 4 (Lightroom) Hover */
 @keyframes hiwAppHover4 {
-    0%, 73% { transform: scale(1); box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
-    75%, 83.3% { transform: scale(1.15); box-shadow: 0 10px 25px var(--glow); }
-    85.3%, 100% { transform: scale(1); box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+
+    0%,
+    73% {
+        transform: scale(1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    75%,
+    83.3% {
+        transform: scale(1.15);
+        box-shadow: 0 10px 25px var(--glow);
+    }
+
+    85.3%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
 }
+
 @keyframes hiwTooltip4 {
-    0%, 73% { opacity: 0; transform: translateX(-50%) translateY(5px); }
-    75%, 83.3% { opacity: 1; transform: translateX(-50%) translateY(0); }
-    85.3%, 100% { opacity: 0; transform: translateX(-50%) translateY(5px); }
+
+    0%,
+    73% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(5px);
+    }
+
+    75%,
+    83.3% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    85.3%,
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(5px);
+    }
 }
 
-.hiw-card.hiw-in-view .app-1 { animation: hiwAppZ1 6s infinite; }
-.hiw-card.hiw-in-view .app-2 { animation: hiwAppZ2 6s infinite; }
-.hiw-card.hiw-in-view .app-3 { animation: hiwAppZ3 6s infinite; }
-.hiw-card.hiw-in-view .app-4 { animation: hiwAppZ4 6s infinite; }
+.hiw-card.hiw-in-view .app-1 {
+    animation: hiwAppZ1 6s infinite;
+}
 
-@keyframes hiwAppZ1 { 0%, 8.3% { z-index: 100; } 10.3%, 98% { z-index: 2; } 100% { z-index: 100; } }
-@keyframes hiwAppZ2 { 0%, 23% { z-index: 2; } 25%, 33.3% { z-index: 100; } 35.3%, 100% { z-index: 2; } }
-@keyframes hiwAppZ3 { 0%, 48% { z-index: 2; } 50%, 58.3% { z-index: 100; } 60.3%, 100% { z-index: 2; } }
-@keyframes hiwAppZ4 { 0%, 73% { z-index: 2; } 75%, 83.3% { z-index: 100; } 85.3%, 100% { z-index: 2; } }
+.hiw-card.hiw-in-view .app-2 {
+    animation: hiwAppZ2 6s infinite;
+}
+
+.hiw-card.hiw-in-view .app-3 {
+    animation: hiwAppZ3 6s infinite;
+}
+
+.hiw-card.hiw-in-view .app-4 {
+    animation: hiwAppZ4 6s infinite;
+}
+
+@keyframes hiwAppZ1 {
+
+    0%,
+    8.3% {
+        z-index: 100;
+    }
+
+    10.3%,
+    98% {
+        z-index: 2;
+    }
+
+    100% {
+        z-index: 100;
+    }
+}
+
+@keyframes hiwAppZ2 {
+
+    0%,
+    23% {
+        z-index: 2;
+    }
+
+    25%,
+    33.3% {
+        z-index: 100;
+    }
+
+    35.3%,
+    100% {
+        z-index: 2;
+    }
+}
+
+@keyframes hiwAppZ3 {
+
+    0%,
+    48% {
+        z-index: 2;
+    }
+
+    50%,
+    58.3% {
+        z-index: 100;
+    }
+
+    60.3%,
+    100% {
+        z-index: 2;
+    }
+}
+
+@keyframes hiwAppZ4 {
+
+    0%,
+    73% {
+        z-index: 2;
+    }
+
+    75%,
+    83.3% {
+        z-index: 100;
+    }
+
+    85.3%,
+    100% {
+        z-index: 2;
+    }
+}
 
 @keyframes hiwCursorMove {
-    0%, 8.3% { left: 50%; top: 22%; }
-    25%, 33.3% { left: 85%; top: 10%; }
-    50%, 58.3% { left: 20%; top: 65%; }
-    75%, 83.3% { left: 85%; top: 75%; }
-    100% { left: 50%; top: 22%; }
+
+    0%,
+    8.3% {
+        left: 50%;
+        top: 22%;
+    }
+
+    25%,
+    33.3% {
+        left: 85%;
+        top: 10%;
+    }
+
+    50%,
+    58.3% {
+        left: 20%;
+        top: 65%;
+    }
+
+    75%,
+    83.3% {
+        left: 85%;
+        top: 75%;
+    }
+
+    100% {
+        left: 50%;
+        top: 22%;
+    }
 }
 
 /* Float positions for Step 03 (2 chat bubbles) */
-.hiw-card:nth-child(3) .hiw-float-1 { right: 5%; bottom: 15%; top: auto; left: auto; }
-.hiw-card:nth-child(3) .hiw-float-2 { left: 5%; top: 15%; }
+.hiw-card:nth-child(3) .hiw-float-1 {
+    right: 5%;
+    bottom: 15%;
+    top: auto;
+    left: auto;
+}
+
+.hiw-card:nth-child(3) .hiw-float-2 {
+    left: 5%;
+    top: 15%;
+}
 
 /* --- Step 4 Visual Controls (Adjust these values to change size, rotation, and position) --- */
 :root {
@@ -1081,26 +1372,45 @@ main {
 }
 
 /* Float positions for Step 04 (3 file chips) */
-.hiw-card:nth-child(4) .hiw-float-1 { left: var(--step4-chip1-left); top: var(--step4-chip1-top); z-index: 1; }
-.hiw-card:nth-child(4) .hiw-float-2 { left: var(--step4-chip2-left); top: var(--step4-chip2-top); z-index: 2; }
-.hiw-card:nth-child(4) .hiw-float-3 { left: var(--step4-chip3-left); top: var(--step4-chip3-top); z-index: 3; right: auto; bottom: auto; }
+.hiw-card:nth-child(4) .hiw-float-1 {
+    left: var(--step4-chip1-left);
+    top: var(--step4-chip1-top);
+    z-index: 1;
+}
+
+.hiw-card:nth-child(4) .hiw-float-2 {
+    left: var(--step4-chip2-left);
+    top: var(--step4-chip2-top);
+    z-index: 2;
+}
+
+.hiw-card:nth-child(4) .hiw-float-3 {
+    left: var(--step4-chip3-left);
+    top: var(--step4-chip3-top);
+    z-index: 3;
+    right: auto;
+    bottom: auto;
+}
 
 /* --- Animation Keyframes & In-View Triggers --- */
 .hiw-card.hiw-in-view .hiw-float-1 {
     animation: hiwPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both,
-               hiwGentleFloat 4s ease-in-out 0.65s infinite;
+        hiwGentleFloat 4s ease-in-out 0.65s infinite;
 }
+
 .hiw-card.hiw-in-view .hiw-float-2 {
     animation: hiwPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both,
-               hiwGentleFloat 4.5s ease-in-out 0.8s infinite;
+        hiwGentleFloat 4.5s ease-in-out 0.8s infinite;
 }
+
 .hiw-card.hiw-in-view .hiw-float-3 {
     animation: hiwPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.45s both,
-               hiwGentleFloat 5s ease-in-out 0.95s infinite;
+        hiwGentleFloat 5s ease-in-out 0.95s infinite;
 }
+
 .hiw-card.hiw-in-view .hiw-float-4 {
     animation: hiwPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.6s both,
-               hiwGentleFloat 4.2s ease-in-out 1.1s infinite;
+        hiwGentleFloat 4.2s ease-in-out 1.1s infinite;
 }
 
 @keyframes hiwPopIn {
@@ -1108,6 +1418,7 @@ main {
         opacity: 0;
         transform: scale(0.3) translateY(25px);
     }
+
     100% {
         opacity: 1;
         transform: scale(1) translateY(0);
@@ -1115,8 +1426,15 @@ main {
 }
 
 @keyframes hiwGentleFloat {
-    0%, 100% { transform: scale(1) translateY(0); }
-    50% { transform: scale(1) translateY(-8px); }
+
+    0%,
+    100% {
+        transform: scale(1) translateY(0);
+    }
+
+    50% {
+        transform: scale(1) translateY(-8px);
+    }
 }
 
 /* --- Card Entrance Animation --- */
@@ -1135,6 +1453,7 @@ main {
         opacity: 0;
         transform: translateY(30px);
     }
+
     100% {
         opacity: 1;
         transform: translateY(0);
@@ -1142,10 +1461,21 @@ main {
 }
 
 /* Stagger delays applied via data-hiw-delay */
-.hiw-card.hiw-anim[data-hiw-delay="0"].hiw-card-visible { animation-delay: 0s; }
-.hiw-card.hiw-anim[data-hiw-delay="1"].hiw-card-visible { animation-delay: 0.12s; }
-.hiw-card.hiw-anim[data-hiw-delay="2"].hiw-card-visible { animation-delay: 0.24s; }
-.hiw-card.hiw-anim[data-hiw-delay="3"].hiw-card-visible { animation-delay: 0.36s; }
+.hiw-card.hiw-anim[data-hiw-delay="0"].hiw-card-visible {
+    animation-delay: 0s;
+}
+
+.hiw-card.hiw-anim[data-hiw-delay="1"].hiw-card-visible {
+    animation-delay: 0.12s;
+}
+
+.hiw-card.hiw-anim[data-hiw-delay="2"].hiw-card-visible {
+    animation-delay: 0.24s;
+}
+
+.hiw-card.hiw-anim[data-hiw-delay="3"].hiw-card-visible {
+    animation-delay: 0.36s;
+}
 
 /* --- Chat Bubbles (Step 03) --- */
 .hiw-chat-row {
@@ -1153,7 +1483,8 @@ main {
     display: flex;
     align-items: flex-end;
     gap: 12px;
-    opacity: 1; /* Wrapper is always visible, children animate in */
+    opacity: 1;
+    /* Wrapper is always visible, children animate in */
 }
 
 .hiw-chat-bubble {
@@ -1166,7 +1497,8 @@ main {
     white-space: nowrap;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     border: 1px solid rgba(0, 0, 0, 0.05);
-    opacity: 0; /* Hidden initially */
+    opacity: 0;
+    /* Hidden initially */
 }
 
 .chat-pfp {
@@ -1175,19 +1507,26 @@ main {
     border-radius: 50%;
     object-fit: cover;
     flex-shrink: 0;
-    opacity: 0; /* Hidden initially */
+    opacity: 0;
+    /* Hidden initially */
     transform: scale(0);
 }
 
-.chat-left .chat-pfp { border: 1px solid rgba(0,0,0,0.1); }
-.chat-right .chat-pfp { border: 1.5px solid rgba(255,255,255,0.4); }
+.chat-left .chat-pfp {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
 
-.chat-left .hiw-chat-bubble { 
-    border-bottom-left-radius: 4px; 
+.chat-right .chat-pfp {
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+}
+
+.chat-left .hiw-chat-bubble {
+    border-bottom-left-radius: 4px;
     transform-origin: left bottom;
 }
-.chat-right .hiw-chat-bubble { 
-    border-bottom-right-radius: 4px; 
+
+.chat-right .hiw-chat-bubble {
+    border-bottom-right-radius: 4px;
     transform-origin: right bottom;
 }
 
@@ -1206,6 +1545,7 @@ main {
 .hiw-card.hiw-in-view .chat-left {
     animation: hiwFloatLeft 4.5s ease-in-out 0s infinite;
 }
+
 .hiw-card.hiw-in-view .chat-right {
     animation: hiwFloatRight 4s ease-in-out 0s infinite;
 }
@@ -1214,35 +1554,77 @@ main {
 .hiw-card.hiw-in-view .chat-left .chat-pfp {
     animation: hiwPfpPop 0.5s cubic-bezier(0.34, 1.8, 0.64, 1) 0.15s both;
 }
+
 .hiw-card.hiw-in-view .chat-left .hiw-chat-bubble {
     animation: hiwBubblePopLeft 0.5s cubic-bezier(0.34, 1.8, 0.64, 1) 0.4s both;
 }
+
 .hiw-card.hiw-in-view .chat-right .chat-pfp {
     animation: hiwPfpPop 0.5s cubic-bezier(0.34, 1.8, 0.64, 1) 0.9s both;
 }
+
 .hiw-card.hiw-in-view .chat-right .hiw-chat-bubble {
     animation: hiwBubblePopRight 0.5s cubic-bezier(0.34, 1.8, 0.64, 1) 1.15s both;
 }
 
 @keyframes hiwPfpPop {
-    0% { opacity: 0; transform: scale(0); }
-    100% { opacity: 1; transform: scale(1); }
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
+
 @keyframes hiwBubblePopLeft {
-    0% { opacity: 0; transform: scale(0) rotate(15deg); }
-    100% { opacity: 1; transform: scale(1) rotate(0); }
+    0% {
+        opacity: 0;
+        transform: scale(0) rotate(15deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+    }
 }
+
 @keyframes hiwBubblePopRight {
-    0% { opacity: 0; transform: scale(0) rotate(-15deg); }
-    100% { opacity: 1; transform: scale(1) rotate(0); }
+    0% {
+        opacity: 0;
+        transform: scale(0) rotate(-15deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+    }
 }
+
 @keyframes hiwFloatLeft {
-    0%, 100% { transform: translateY(0) rotate(2deg); }
-    50% { transform: translateY(-8px) rotate(2deg); }
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(2deg);
+    }
+
+    50% {
+        transform: translateY(-8px) rotate(2deg);
+    }
 }
+
 @keyframes hiwFloatRight {
-    0%, 100% { transform: translateY(0) rotate(-3deg); }
-    50% { transform: translateY(-8px) rotate(-3deg); }
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(-3deg);
+    }
+
+    50% {
+        transform: translateY(-8px) rotate(-3deg);
+    }
 }
 
 /* --- File Chips (Step 04) --- */
@@ -1262,6 +1644,7 @@ main {
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
     opacity: 0;
 }
+
 .hiw-file-chip svg {
     width: 22px;
     height: 22px;
@@ -1285,47 +1668,94 @@ main {
 /* Animations for Step 4 */
 .hiw-card.hiw-in-view .hiw-float-1.hiw-file-chip {
     animation: hiwPopInChip1 0.5s cubic-bezier(0.34, 1.8, 0.64, 1) 0.15s both,
-               hiwFloatChip1 4s ease-in-out 0.65s infinite;
+        hiwFloatChip1 4s ease-in-out 0.65s infinite;
 }
+
 .hiw-card.hiw-in-view .hiw-float-2.hiw-file-chip {
     animation: hiwPopInChip2 0.5s cubic-bezier(0.34, 1.8, 0.64, 1) 0.3s both,
-               hiwFloatChip2 4.5s ease-in-out 0.8s infinite;
+        hiwFloatChip2 4.5s ease-in-out 0.8s infinite;
 }
+
 .hiw-card.hiw-in-view .hiw-float-3.hiw-publish-chip {
     animation: hiwPopInChip3 0.5s cubic-bezier(0.34, 1.8, 0.64, 1) 0.45s both,
-               hiwFloatChip3 5s ease-in-out 0.95s infinite;
+        hiwFloatChip3 5s ease-in-out 0.95s infinite;
 }
 
 @keyframes hiwPopInChip1 {
-    0% { opacity: 0; transform: scale(0.3) translateY(25px) rotate(0deg); }
-    100% { opacity: 1; transform: scale(var(--step4-chip-scale)) translateY(0) rotate(var(--step4-chip1-rotate)); }
+    0% {
+        opacity: 0;
+        transform: scale(0.3) translateY(25px) rotate(0deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(var(--step4-chip-scale)) translateY(0) rotate(var(--step4-chip1-rotate));
+    }
 }
+
 @keyframes hiwFloatChip1 {
-    0%, 100% { transform: scale(var(--step4-chip-scale)) translateY(0) rotate(var(--step4-chip1-rotate)); }
-    50% { transform: scale(var(--step4-chip-scale)) translateY(-8px) rotate(var(--step4-chip1-rotate)); }
+
+    0%,
+    100% {
+        transform: scale(var(--step4-chip-scale)) translateY(0) rotate(var(--step4-chip1-rotate));
+    }
+
+    50% {
+        transform: scale(var(--step4-chip-scale)) translateY(-8px) rotate(var(--step4-chip1-rotate));
+    }
 }
 
 @keyframes hiwPopInChip2 {
-    0% { opacity: 0; transform: scale(0.3) translateY(25px) rotate(0deg); }
-    100% { opacity: 1; transform: scale(var(--step4-chip-scale)) translateY(0) rotate(var(--step4-chip2-rotate)); }
+    0% {
+        opacity: 0;
+        transform: scale(0.3) translateY(25px) rotate(0deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(var(--step4-chip-scale)) translateY(0) rotate(var(--step4-chip2-rotate));
+    }
 }
+
 @keyframes hiwFloatChip2 {
-    0%, 100% { transform: scale(var(--step4-chip-scale)) translateY(0) rotate(var(--step4-chip2-rotate)); }
-    50% { transform: scale(var(--step4-chip-scale)) translateY(-8px) rotate(var(--step4-chip2-rotate)); }
+
+    0%,
+    100% {
+        transform: scale(var(--step4-chip-scale)) translateY(0) rotate(var(--step4-chip2-rotate));
+    }
+
+    50% {
+        transform: scale(var(--step4-chip-scale)) translateY(-8px) rotate(var(--step4-chip2-rotate));
+    }
 }
 
 @keyframes hiwPopInChip3 {
-    0% { opacity: 0; transform: scale(0.3) translateY(25px) rotate(0deg); }
-    100% { opacity: 1; transform: scale(var(--step4-chip-scale)) translateY(0) rotate(var(--step4-chip3-rotate)); }
+    0% {
+        opacity: 0;
+        transform: scale(0.3) translateY(25px) rotate(0deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(var(--step4-chip-scale)) translateY(0) rotate(var(--step4-chip3-rotate));
+    }
 }
+
 @keyframes hiwFloatChip3 {
-    0%, 100% { transform: scale(var(--step4-chip-scale)) translateY(0) rotate(var(--step4-chip3-rotate)); }
-    50% { transform: scale(var(--step4-chip-scale)) translateY(-8px) rotate(var(--step4-chip3-rotate)); }
+
+    0%,
+    100% {
+        transform: scale(var(--step4-chip-scale)) translateY(0) rotate(var(--step4-chip3-rotate));
+    }
+
+    50% {
+        transform: scale(var(--step4-chip-scale)) translateY(-8px) rotate(var(--step4-chip3-rotate));
+    }
 }
 
 /* ===== ABOUT ME SECTION ===== */
 .about-me {
-    padding: 0px 20px;
+    padding: 20px 20px;
     background-color: var(--bg-primary);
     position: relative;
 }
@@ -1356,19 +1786,16 @@ main {
     opacity: 0.05;
     pointer-events: none;
     background-image:
-        repeating-linear-gradient(
-            0deg,
+        repeating-linear-gradient(0deg,
             transparent, transparent 39px,
-            rgba(0, 0, 0, 1) 39px, rgba(0, 0, 0, 1) 40px
-        ),
-        repeating-linear-gradient(
-            90deg,
+            rgba(0, 0, 0, 1) 39px, rgba(0, 0, 0, 1) 40px),
+        repeating-linear-gradient(90deg,
             transparent, transparent 39px,
-            rgba(0, 0, 0, 1) 39px, rgba(0, 0, 0, 1) 40px
-        );
+            rgba(0, 0, 0, 1) 39px, rgba(0, 0, 0, 1) 40px);
 }
 
-.about-content, .about-stats {
+.about-content,
+.about-stats {
     position: relative;
     z-index: 1;
 }
@@ -1468,7 +1895,10 @@ main {
 .faq-banner::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: -1;
     transform-origin: left;
     transform: scaleX(0);
@@ -1478,7 +1908,8 @@ main {
 .orange-banner {
     color: #ffffff;
     transform: rotate(-3deg);
-    z-index: 1; /* Under the white banner */
+    z-index: 1;
+    /* Under the white banner */
 }
 
 .orange-banner::before {
@@ -1488,8 +1919,10 @@ main {
 .white-banner {
     color: #111111;
     transform: rotate(2deg);
-    margin-top: -8px; /* Reduced overlap effect */
-    z-index: 2; /* On top of the orange banner */
+    margin-top: -8px;
+    /* Reduced overlap effect */
+    z-index: 2;
+    /* On top of the orange banner */
 }
 
 .white-banner::before {
@@ -1497,8 +1930,13 @@ main {
 }
 
 @keyframes bgWipe {
-    0% { transform: scaleX(0); }
-    100% { transform: scaleX(1); }
+    0% {
+        transform: scaleX(0);
+    }
+
+    100% {
+        transform: scaleX(1);
+    }
 }
 
 .faq-banner-container.start-anim .faq-banner::before {
@@ -1736,9 +2174,9 @@ footer {
     width: calc(100% - 40px);
     margin: 80px auto 40px;
     border-radius: 24px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
     position: relative;
-    border: 1px solid rgba(0,0,0,0.04);
+    border: 1px solid rgba(0, 0, 0, 0.04);
 }
 
 .footer-container {
@@ -1759,7 +2197,7 @@ footer {
     color: var(--dark);
     padding: 40px;
     border-radius: 16px;
-    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.03);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.03);
     display: flex;
     flex-direction: column;
     position: relative;
@@ -1813,6 +2251,7 @@ footer {
     pointer-events: none;
     z-index: 0;
 }
+
 .brand-bg-shapes::before,
 .brand-bg-shapes::after {
     content: '';
@@ -1820,31 +2259,33 @@ footer {
     width: 300px;
     height: 300px;
     border-radius: 30px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%);
-    box-shadow: -10px 10px 30px rgba(0,0,0,0.02);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.2) 100%);
+    box-shadow: -10px 10px 30px rgba(0, 0, 0, 0.02);
     transform: rotate(20deg);
 }
+
 .brand-bg-shapes::before {
     top: 50%;
     margin-top: 34px;
     right: -185px;
-    border: 1px solid rgba(255,255,255,0.8);
+    border: 1px solid rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(5px);
     --base-rot: 20deg;
     animation: floatWiggle 8s ease-in-out infinite 0.2s;
 }
+
 .brand-bg-shapes::after {
     top: 50%;
     margin-top: 96px;
     right: -220px;
-    background: linear-gradient(135deg, rgba(235, 73, 38, 0.15) 0%, rgba(255,255,255,0) 100%);
+    background: linear-gradient(135deg, rgba(235, 73, 38, 0.15) 0%, rgba(255, 255, 255, 0) 100%);
     transform: rotate(35deg);
     --base-rot: 35deg;
     animation: floatWiggle 8s ease-in-out infinite 0.5s;
 }
 
 /* Ensure text stays on top of shapes */
-.brand-col > * {
+.brand-col>* {
     position: relative;
     z-index: 1;
 }
@@ -1889,6 +2330,7 @@ footer {
     align-items: center;
     gap: 15px;
 }
+
 .link-left i {
     font-size: 1.1rem;
     width: 20px;
@@ -1915,13 +2357,13 @@ footer {
 .email-link .icon-box {
     width: 45px;
     height: 45px;
-    background: rgba(0,0,0,0.03);
+    background: rgba(0, 0, 0, 0.03);
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
-    border: 1px solid rgba(0,0,0,0.04);
+    border: 1px solid rgba(0, 0, 0, 0.04);
     transition: var(--transition);
 }
 
@@ -1938,7 +2380,7 @@ footer {
 .contact-divider {
     width: 100%;
     height: 1px;
-    background: rgba(0,0,0,0.06);
+    background: rgba(0, 0, 0, 0.06);
     margin: 25px 0;
 }
 
@@ -1951,7 +2393,7 @@ footer {
 .social-icon {
     width: 45px;
     height: 45px;
-    background: rgba(0,0,0,0.03);
+    background: rgba(0, 0, 0, 0.03);
     color: var(--dark);
     border-radius: 12px;
     display: flex;
@@ -1959,7 +2401,7 @@ footer {
     justify-content: center;
     font-size: 1.2rem;
     transition: var(--transition);
-    border: 1px solid rgba(0,0,0,0.04);
+    border: 1px solid rgba(0, 0, 0, 0.04);
 }
 
 .social-icon:hover {
@@ -1977,7 +2419,7 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.03);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.03);
 }
 
 .copy-left p {
@@ -2000,7 +2442,7 @@ footer {
 }
 
 .copy-right {
-    border-left: 1px solid rgba(0,0,0,0.1);
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
     padding-left: 25px;
 }
 
@@ -2013,25 +2455,70 @@ footer {
 
 /* Footer Card Animations */
 @keyframes floatWiggle {
-    0%, 100% { transform: translateY(0) rotate(var(--base-rot, 0deg)); }
-    50% { transform: translateY(-16px) rotate(calc(var(--base-rot, 0deg) + 3deg)); }
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(var(--base-rot, 0deg));
+    }
+
+    50% {
+        transform: translateY(-16px) rotate(calc(var(--base-rot, 0deg) + 3deg));
+    }
 }
 
 /* ===== ANIMATIONS ===== */
 @keyframes bounceInTrack {
-    0% { transform: translate(-50%, -50%) scale(0.3); opacity: 0; }
-    45% { transform: translate(-50%, -50%) scale(1.03); opacity: 0.9; }
-    60% { transform: translate(-50%, -50%) scale(0.975); opacity: 1; }
-    72% { transform: translate(-50%, -50%) scale(1.015); opacity: 1; }
-    82% { transform: translate(-50%, -50%) scale(0.99); opacity: 1; }
-    90% { transform: translate(-50%, -50%) scale(1.005); opacity: 1; }
-    96% { transform: translate(-50%, -50%) scale(0.998); opacity: 1; }
-    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    0% {
+        transform: translate(-50%, -50%) scale(0.3);
+        opacity: 0;
+    }
+
+    45% {
+        transform: translate(-50%, -50%) scale(1.03);
+        opacity: 0.9;
+    }
+
+    60% {
+        transform: translate(-50%, -50%) scale(0.975);
+        opacity: 1;
+    }
+
+    72% {
+        transform: translate(-50%, -50%) scale(1.015);
+        opacity: 1;
+    }
+
+    82% {
+        transform: translate(-50%, -50%) scale(0.99);
+        opacity: 1;
+    }
+
+    90% {
+        transform: translate(-50%, -50%) scale(1.005);
+        opacity: 1;
+    }
+
+    96% {
+        transform: translate(-50%, -50%) scale(0.998);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
 }
 
 @keyframes fadeSlideUp {
-    0% { transform: translateY(30px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
+    0% {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 #hero-tracks-left .circle-track,
@@ -2041,14 +2528,37 @@ footer {
     animation: bounceInTrack 1.3s ease-out both;
 }
 
-#hero-tracks-left .track-1, #portfolio-tracks-left .track-1 { animation-delay: 0.1s; }
-#hero-tracks-left .track-2, #portfolio-tracks-left .track-2 { animation-delay: 0.18s; }
-#hero-tracks-left .track-3, #portfolio-tracks-left .track-3 { animation-delay: 0.26s; }
-#hero-tracks-right .track-1, #portfolio-tracks-right .track-1 { animation-delay: 0.14s; }
-#hero-tracks-right .track-2, #portfolio-tracks-right .track-2 { animation-delay: 0.22s; }
-#hero-tracks-right .track-3, #portfolio-tracks-right .track-3 { animation-delay: 0.3s; }
+#hero-tracks-left .track-1,
+#portfolio-tracks-left .track-1 {
+    animation-delay: 0.1s;
+}
 
-.hero-content > * {
+#hero-tracks-left .track-2,
+#portfolio-tracks-left .track-2 {
+    animation-delay: 0.18s;
+}
+
+#hero-tracks-left .track-3,
+#portfolio-tracks-left .track-3 {
+    animation-delay: 0.26s;
+}
+
+#hero-tracks-right .track-1,
+#portfolio-tracks-right .track-1 {
+    animation-delay: 0.14s;
+}
+
+#hero-tracks-right .track-2,
+#portfolio-tracks-right .track-2 {
+    animation-delay: 0.22s;
+}
+
+#hero-tracks-right .track-3,
+#portfolio-tracks-right .track-3 {
+    animation-delay: 0.3s;
+}
+
+.hero-content>* {
     animation: fadeSlideUp 0.8s ease-out both;
 }
 
@@ -2057,11 +2567,25 @@ footer {
     animation-delay: 0.5s;
 }
 
-.hero-content .badge { animation-delay: 0.6s; }
-.hero-content .hero-title { animation-delay: 0.8s; }
-.hero-content .hero-subtitle { animation-delay: 1.0s; }
-.hero-content .hero-cta { animation-delay: 1.2s; }
-.hero-content .trust-badge { animation-delay: 1.4s; }
+.hero-content .badge {
+    animation-delay: 0.6s;
+}
+
+.hero-content .hero-title {
+    animation-delay: 0.8s;
+}
+
+.hero-content .hero-subtitle {
+    animation-delay: 1.0s;
+}
+
+.hero-content .hero-cta {
+    animation-delay: 1.2s;
+}
+
+.hero-content .trust-badge {
+    animation-delay: 1.4s;
+}
 
 /* Lazy Animation Styles */
 .lazy-anim {
@@ -2077,8 +2601,13 @@ footer {
 }
 
 @keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 .header {
@@ -2088,19 +2617,51 @@ footer {
 
 /* ===== HANDWRITTEN ANIMATIONS ===== */
 @keyframes arrowSlideFade {
-    0% { transform: translateX(-20px); opacity: 0; filter: blur(5px); }
-    100% { transform: translateX(0); opacity: 1; filter: blur(0px); }
+    0% {
+        transform: translateX(-20px);
+        opacity: 0;
+        filter: blur(5px);
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+        filter: blur(0px);
+    }
 }
 
 @keyframes arrowSlideDownFade {
-    0% { transform: translateY(-20px); opacity: 0; filter: blur(5px); }
-    100% { transform: translateY(0); opacity: 1; filter: blur(0px); }
+    0% {
+        transform: translateY(-20px);
+        opacity: 0;
+        filter: blur(5px);
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+        filter: blur(0px);
+    }
 }
 
 @keyframes letterBounceFade {
-    0% { transform: translateY(10px); opacity: 0; filter: blur(5px); }
-    50% { transform: translateY(-3px); opacity: 1; filter: blur(0px); }
-    100% { transform: translateY(0); opacity: 1; filter: blur(0px); }
+    0% {
+        transform: translateY(10px);
+        opacity: 0;
+        filter: blur(5px);
+    }
+
+    50% {
+        transform: translateY(-3px);
+        opacity: 1;
+        filter: blur(0px);
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+        filter: blur(0px);
+    }
 }
 
 .handwriting-arrow {
@@ -2138,18 +2699,21 @@ footer {
 img,
 .thumb-card,
 .grid-thumb {
-    -webkit-touch-callout: none !important; /* Disables iOS long-press context menu (Save Image) */
+    -webkit-touch-callout: none !important;
+    /* Disables iOS long-press context menu (Save Image) */
     -webkit-user-select: none !important;
     -khtml-user-select: none !important;
     -moz-user-select: none !important;
     -ms-user-select: none !important;
     user-select: none !important;
-    -webkit-user-drag: none !important;     /* Disables dragging image to save in WebKit/Blink */
+    -webkit-user-drag: none !important;
+    /* Disables dragging image to save in WebKit/Blink */
 }
 
 .portfolio img,
 .grid-thumb {
-    pointer-events: none !important;        /* Prevents direct tap/hold targeting on portfolio images */
+    pointer-events: none !important;
+    /* Prevents direct tap/hold targeting on portfolio images */
 }
 
 .thumb-wrapper {
@@ -2162,14 +2726,21 @@ img,
     animation: skeletonLoading 1.5s infinite linear;
     overflow: hidden;
 }
+
 @keyframes skeletonLoading {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
 }
 
 .grid-thumb {
     position: absolute;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -2202,15 +2773,29 @@ img,
     }
 
     /* Keep hero text slide-up animation like desktop, with smaller distance */
-    .hero-content > * {
+    .hero-content>* {
         animation: fadeSlideUp 0.7s ease-out both !important;
     }
 
-    .hero-content .badge { animation-delay: 0.2s !important; }
-    .hero-content .hero-title { animation-delay: 0.35s !important; }
-    .hero-content .hero-subtitle { animation-delay: 0.5s !important; }
-    .hero-content .hero-cta { animation-delay: 0.65s !important; }
-    .hero-content .trust-badge { animation-delay: 0.8s !important; }
+    .hero-content .badge {
+        animation-delay: 0.2s !important;
+    }
+
+    .hero-content .hero-title {
+        animation-delay: 0.35s !important;
+    }
+
+    .hero-content .hero-subtitle {
+        animation-delay: 0.5s !important;
+    }
+
+    .hero-content .hero-cta {
+        animation-delay: 0.65s !important;
+    }
+
+    .hero-content .trust-badge {
+        animation-delay: 0.8s !important;
+    }
 
     /* Make all containers rigid (no fade-up) on mobile */
     .portfolio {
@@ -2334,22 +2919,23 @@ img,
         opacity: 0.12;
         pointer-events: none;
         background-image:
-            repeating-linear-gradient(
-                0deg,
+            repeating-linear-gradient(0deg,
                 transparent, transparent 39px,
-                rgba(0, 0, 0, 0.3) 39px, rgba(0, 0, 0, 0.3) 40px
-            ),
-            repeating-linear-gradient(
-                90deg,
+                rgba(0, 0, 0, 0.3) 39px, rgba(0, 0, 0, 0.3) 40px),
+            repeating-linear-gradient(90deg,
                 transparent, transparent 39px,
-                rgba(0, 0, 0, 0.3) 39px, rgba(0, 0, 0, 0.3) 40px
-            );
+                rgba(0, 0, 0, 0.3) 39px, rgba(0, 0, 0, 0.3) 40px);
         animation: gridScrollUp 12s linear infinite;
     }
 
     @keyframes gridScrollUp {
-        0%   { transform: translateY(0); }
-        100% { transform: translateY(-40px); }
+        0% {
+            transform: translateY(0);
+        }
+
+        100% {
+            transform: translateY(-40px);
+        }
     }
 
     /* --- Portfolio Section --- */
@@ -2426,13 +3012,13 @@ img,
         gap: 40px;
         padding: 40px 20px;
     }
-    
+
     .stat-item {
         flex-direction: column;
         align-items: flex-start;
         gap: 5px;
     }
-    
+
     .stat-number {
         min-width: auto;
     }
@@ -2516,7 +3102,7 @@ img,
         contain-intrinsic-size: auto 350px;
     }
 
-    .testimonials > .badge {
+    .testimonials>.badge {
         font-size: 0.6rem;
     }
 
