@@ -1405,6 +1405,7 @@ main {
     color: var(--accent);
     line-height: 1;
     font-family: 'Outfit', sans-serif;
+    font-variant-numeric: tabular-nums;
     min-width: 140px;
 }
 
