@@ -1330,11 +1330,11 @@ main {
 }
 
 .about-card {
-    max-width: 1050px;
+    max-width: 1000px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 1.15fr;
-    gap: 40px;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
     align-items: center;
     background: var(--card-bg);
     border-radius: var(--radius-lg);
@@ -1395,31 +1395,32 @@ main {
 
 .stat-item {
     display: flex;
-    align-items: center;
-    gap: 16px;
+    align-items: baseline;
+    gap: 14px;
 }
 
 .stat-number {
-    font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+    font-size: clamp(2.2rem, 4.5vw, 3.6rem);
     font-weight: 900;
     color: var(--accent);
     line-height: 1;
     font-family: 'Outfit', sans-serif;
     font-variant-numeric: tabular-nums;
-    display: flex;
+    display: inline-flex;
     align-items: baseline;
     white-space: nowrap;
-    width: 180px;
+    width: auto;
     flex-shrink: 0;
 }
 
 .stat-plus {
     color: var(--accent);
+    margin-left: 2px;
 }
 
 .stat-label {
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 1.1rem;
+    font-weight: 700;
     text-transform: capitalize;
     color: var(--dark);
     white-space: nowrap;
