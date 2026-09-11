@@ -104,6 +104,16 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderThumbnails(thumbnails) {
         if (!thumbnails || thumbnails.length === 0) return;
 
+        // Pre-decode all images asynchronously for maximum loading speed
+        thumbnails.forEach(t => {
+            const src = t.url || t.image_base64;
+            if (src) {
+                const img = new Image();
+                img.decoding = 'async';
+                img.src = src;
+            }
+        });
+
         // Populate Mobile Grid
         const grid = document.getElementById('portfolioGrid');
         if (grid) {
@@ -113,10 +123,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 wrapper.className = 'thumb-wrapper';
                 
                 const img = document.createElement('img');
-                img.src = t.url || t.image_base64; // Handle both formats just in case
+                img.src = t.url || t.image_base64;
                 img.alt = 'Thumbnail';
                 img.className = 'grid-thumb';
-                img.loading = 'lazy';
+                img.loading = 'eager';
+                img.decoding = 'async';
+                img.setAttribute('fetchpriority', 'high');
                 
                 wrapper.appendChild(img);
                 grid.appendChild(wrapper);
@@ -135,7 +147,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const p2 = thumbnails.slice(third, third * 2);
             const p3 = thumbnails.slice(third * 2);
 
-            const buildGroup = (arr) => arr.map(t => `<img src="${t.image_base64}" alt="Thumbnail" class="thumb-card">`).join('');
+            const buildGroup = (arr) => arr.map(t => {
+                const src = t.url || t.image_base64;
+                return `<img src="${src}" alt="Thumbnail" class="thumb-card" loading="eager" decoding="async" fetchpriority="high">`;
+            }).join('');
             
             track1.innerHTML = `<div class="marquee-group">${buildGroup(p1)}</div><div class="marquee-group">${buildGroup(p1)}</div>`;
             track2.innerHTML = `<div class="marquee-group">${buildGroup(p2)}</div><div class="marquee-group">${buildGroup(p2)}</div>`;
