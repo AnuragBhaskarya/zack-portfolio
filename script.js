@@ -104,17 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderThumbnails(thumbnails) {
         if (!thumbnails || thumbnails.length === 0) return;
 
-        // Pre-decode all images asynchronously for maximum loading speed
-        thumbnails.forEach(t => {
-            const src = t.url || t.image_base64;
-            if (src) {
-                const img = new Image();
-                img.decoding = 'async';
-                img.src = src;
-            }
-        });
-
-        // Populate Mobile Grid
+        // Populate Mobile Grid (lazy loaded since it's below the fold)
         const grid = document.getElementById('portfolioGrid');
         if (grid) {
             grid.innerHTML = '';
@@ -126,17 +116,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 img.src = t.url || t.image_base64;
                 img.alt = 'Thumbnail';
                 img.className = 'grid-thumb';
-                img.loading = 'eager';
+                img.loading = 'lazy';
                 img.decoding = 'async';
-                img.setAttribute('fetchpriority', 'high');
                 
                 wrapper.appendChild(img);
                 grid.appendChild(wrapper);
             });
         }
 
-        // Populate Marquees
-        // Distribute thumbnails evenly across 3 tracks
+        // Populate Marquees (desktop view)
         const track1 = document.getElementById('marqueeTrack1');
         const track2 = document.getElementById('marqueeTrack2');
         const track3 = document.getElementById('marqueeTrack3');
@@ -149,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const buildGroup = (arr) => arr.map(t => {
                 const src = t.url || t.image_base64;
-                return `<img src="${src}" alt="Thumbnail" class="thumb-card" loading="eager" decoding="async" fetchpriority="high">`;
+                return `<img src="${src}" alt="Thumbnail" class="thumb-card" loading="eager" decoding="async">`;
             }).join('');
             
             track1.innerHTML = `<div class="marquee-group">${buildGroup(p1)}</div><div class="marquee-group">${buildGroup(p1)}</div>`;

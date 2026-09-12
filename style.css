@@ -625,13 +625,21 @@ main {
     width: 100%;
     position: relative;
     padding: 10px 0;
-    opacity: 0;
-    transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-    will-change: opacity;
 }
 
-.marquee-row-wrapper.visible {
+/* Hide the actual thumb-cards until loaded, but keep skeletons visible */
+.marquee-row-wrapper .thumb-card {
+    opacity: 0;
+    transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.marquee-row-wrapper.visible .thumb-card {
     opacity: 1;
+}
+
+/* Hide skeletons once content is loaded */
+.marquee-row-wrapper.visible .thumb-skeleton {
+    display: none;
 }
 
 .marquee-row-wrapper::before {
