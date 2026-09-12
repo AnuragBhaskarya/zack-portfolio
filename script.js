@@ -614,12 +614,11 @@ document.addEventListener('DOMContentLoaded', () => {
                                 const targetDigit = parseInt(char, 10);
                                 // The right-most digits spin more, simulating an odometer's mechanical linkage
                                 const posFromRight = targetStr.length - 1 - i;
-                                // Natural odometer variation: rightmost digits spin more, leftmost spin least
-                                const spinVariation = [0, 0, 1, 1, 2]; // left-to-right: slow → fast
-                                const spins = (spinVariation[posFromRight] || 0) + 1;
-                                totalChanges = spins * 10 + targetDigit;
-                                // Domino stagger: slight cascading delay for mechanical feel
-                                delay = posFromRight * 50;
+                                // Dramatic odometer variation: rightmost whirs fast, leftmost barely moves
+                                const spins = 1 + posFromRight * 1.5; // e.g. 1, 2.5, 4, 5.5...
+                                totalChanges = Math.round(spins * 10) + targetDigit;
+                                // Strong cascading stagger for visible wave effect
+                                delay = posFromRight * 120;
                             } else {
                                 layer1.textContent = char;
                                 layer2.style.opacity = 0;
