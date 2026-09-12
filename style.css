@@ -130,11 +130,12 @@ ul {
     z-index: 1000;
     width: 90%;
     max-width: 600px;
-    transition: max-width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .header.scrolled {
-    max-width: 280px;
+    width: fit-content;
+    max-width: 100%;
 }
 
 .nav-container {
@@ -151,6 +152,8 @@ ul {
 .header.scrolled .nav-container {
     padding: 6px 6px 6px 16px;
     background: #272727;
+    gap: 12px;
+    justify-content: center;
 }
 
 .logo {
