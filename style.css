@@ -151,7 +151,7 @@ ul {
 
 .header.scrolled .nav-container {
     padding: 6px 6px 6px 16px;
-    background: #272727;
+    background: #031e01;
 }
 
 .logo {
@@ -227,9 +227,6 @@ ul {
 }
 
 .available-text {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
     display: inline-block;
     max-width: 0;
     overflow: hidden;
@@ -244,6 +241,17 @@ ul {
     max-width: 130px;
     opacity: 1;
     color: #10b981;
+}
+
+/* Ensure the logo stretches to fill the space when scrolled so text centers properly */
+.header.scrolled .logo {
+    flex: 1;
+}
+
+.header.scrolled .logo-text-wrapper {
+    display: flex;
+    flex: 1;
+    justify-content: center;
 }
 
 .menu-toggle {
