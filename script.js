@@ -556,7 +556,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     counters.forEach(counter => {
                         const target = parseFloat(counter.getAttribute('data-target'));
                         const decimals = parseInt(counter.getAttribute('data-decimals') || '0');
-                        const duration = 4000; // Slower and smoother
+                        const duration = 2500;
 
                         const formatVal = (val) => decimals > 0 ? val.toFixed(decimals) : Math.floor(val).toLocaleString();
                         const targetStr = formatVal(target);
@@ -602,7 +602,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 const targetDigit = parseInt(char, 10);
                                 // The right-most digits spin more, simulating an odometer's mechanical linkage
                                 const posFromRight = targetStr.length - 1 - i;
-                                const spins = Math.min(posFromRight + 1, 3);
+                                const spins = Math.min(posFromRight + 1, 2);
                                 totalChanges = spins * 10 + targetDigit;
                                 delay = posFromRight * 40;
                             } else {
