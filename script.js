@@ -568,7 +568,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     counters.forEach(counter => {
                         const target = parseFloat(counter.getAttribute('data-target'));
                         const decimals = parseInt(counter.getAttribute('data-decimals') || '0');
-                        const duration = 3000; // 3.0 seconds for an even slower, more majestic ease
+                        const duration = 2400; // Reduced from 3000 to minimize "dead" windup time
 
                         const formatVal = (val) => decimals > 0 ? val.toFixed(decimals) : Math.floor(val).toLocaleString();
                         const targetStr = formatVal(target);
@@ -616,8 +616,8 @@ document.addEventListener('DOMContentLoaded', () => {
                                 const posFromRight = targetStr.length - 1 - i;
                                 const spins = Math.min(posFromRight + 1, 4); // Max 4 spins to keep it readable and smooth
                                 totalChanges = spins * 10 + targetDigit;
-                                // Domino stagger: rightmost starts first (0 delay), tens digit starts 100ms later, etc.
-                                delay = posFromRight * 100;
+                                // Domino stagger: reduced delay so digits don't sit at 0 for too long
+                                delay = posFromRight * 40;
                             } else {
                                 layer1.textContent = char;
                                 layer2.style.opacity = 0;
@@ -714,7 +714,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }
             });
-        }, { threshold: 0.2 });
+        }, { threshold: 0.05 });
 
         const aboutStats = document.querySelector('.about-stats');
         if (aboutStats) {
