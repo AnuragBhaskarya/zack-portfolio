@@ -164,6 +164,8 @@ ul {
 .logo-img-wrapper {
     position: relative;
     display: inline-flex;
+    max-width: 40px;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .logo-icon {
@@ -2917,9 +2919,13 @@ img,
         display: none !important;
     }
 
-    /* Hide logo image by default on mobile, show when scrolled */
+    /* Hide logo image smoothly by default on mobile, show when scrolled */
     .header:not(.scrolled) .logo-img-wrapper {
-        display: none;
+        max-width: 0;
+        opacity: 0;
+        margin-right: -10px; /* Offset the flex gap */
+        overflow: hidden;
+        transform: scale(0);
     }
 
     /* Keep hero text slide-up animation like desktop, with smaller distance */
