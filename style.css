@@ -134,8 +134,7 @@ ul {
 }
 
 .header.scrolled {
-    width: fit-content;
-    max-width: 100%;
+    max-width: 310px;
 }
 
 .nav-container {
@@ -152,8 +151,6 @@ ul {
 .header.scrolled .nav-container {
     padding: 6px 6px 6px 16px;
     background: #272727;
-    gap: 12px;
-    justify-content: center;
 }
 
 .logo {
