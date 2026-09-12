@@ -568,7 +568,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     counters.forEach(counter => {
                         const target = parseFloat(counter.getAttribute('data-target'));
                         const decimals = parseInt(counter.getAttribute('data-decimals') || '0');
-                        const duration = 2500; // 2.5 seconds for a majestic, ultra-smooth transition
+                        const duration = 3000; // 3.0 seconds for an even slower, more majestic ease
 
                         const formatVal = (val) => decimals > 0 ? val.toFixed(decimals) : Math.floor(val).toLocaleString();
                         const targetStr = formatVal(target);
@@ -608,12 +608,16 @@ document.addEventListener('DOMContentLoaded', () => {
                             counter.appendChild(col);
                             
                             let totalChanges = 0;
+                            let delay = 0;
+                            
                             if (isDigit) {
                                 const targetDigit = parseInt(char, 10);
                                 // The right-most digits spin more, simulating an odometer's mechanical linkage
                                 const posFromRight = targetStr.length - 1 - i;
                                 const spins = Math.min(posFromRight + 1, 4); // Max 4 spins to keep it readable and smooth
                                 totalChanges = spins * 10 + targetDigit;
+                                // Domino stagger: rightmost starts first (0 delay), tens digit starts 100ms later, etc.
+                                delay = posFromRight * 100;
                             } else {
                                 layer1.textContent = char;
                                 layer2.style.opacity = 0;
@@ -624,28 +628,43 @@ document.addEventListener('DOMContentLoaded', () => {
                                 nextLayer: layer2,   // Outgoing
                                 isDigit: isDigit,
                                 char: char,
-                                totalChanges: totalChanges
+                                totalChanges: totalChanges,
+                                delay: delay
                             });
                         }
                         
                         let startTime = null;
                         
-                        // easeInOutCubic for a perfect smooth start and smooth stop
-                        const easeInOutCubic = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+                        // easeInOutQuart for a more dramatic, deeper ease in and ease out
+                        const easeInOutQuart = t => t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
                         // Derivative to calculate exact motion blur based on speed
-                        const getVelocity = t => t < 0.5 ? 12 * t * t : 3 * Math.pow(-2 * t + 2, 2);
+                        const getVelocity = t => t < 0.5 ? 32 * t * t * t : 4 * Math.pow(-2 * t + 2, 3);
 
                         const step = (timestamp) => {
                             if (!startTime) startTime = timestamp;
 
-                            const progress = Math.min((timestamp - startTime) / duration, 1);
-                            const easedProgress = easeInOutCubic(progress);
-                            const velocity = getVelocity(progress);
-                            const baseBlur = velocity * 1.5; // Very subtle, smooth blur (max ~4.5px)
+                            let allDone = true;
 
                             columns.forEach(col => {
                                 if (!col.isDigit) return;
                                 
+                                const colTime = timestamp - startTime - col.delay;
+                                
+                                // Before delay finishes, hold at starting position '0'
+                                if (colTime < 0) {
+                                    col.activeLayer.textContent = '0';
+                                    col.nextLayer.style.opacity = 0;
+                                    allDone = false;
+                                    return;
+                                }
+
+                                const progress = Math.min(colTime / duration, 1);
+                                if (progress < 1) allDone = false;
+
+                                const easedProgress = easeInOutQuart(progress);
+                                const velocity = getVelocity(progress);
+                                const baseBlur = velocity * 1.5; // Max velocity is ~4, so max baseBlur is ~6px
+
                                 if (progress >= 1) {
                                     col.activeLayer.textContent = col.char;
                                     col.activeLayer.style.transform = `translateY(0%) scale(1)`;
@@ -663,7 +682,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 col.nextLayer.textContent = currentDigit;
                                 col.activeLayer.textContent = nextDigit;
                                 
-                                // Reduced translation distance (50%) to keep it centered and elegant
+                                // Outgoing layer (moves UP) - blur increases from nil to max (f goes 0 to 1)
                                 const oldY = -50 * f;
                                 const oldScale = 1 - f;
                                 const oldBlur = f * baseBlur;
@@ -672,6 +691,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 col.nextLayer.style.filter = `blur(${oldBlur}px)`;
                                 col.nextLayer.style.opacity = 1 - f;
                                 
+                                // Incoming layer (moves IN from BOTTOM) - blur decreases from max to nil (1-f goes 1 to 0)
                                 const newY = 50 * (1 - f);
                                 const newScale = f;
                                 const newBlur = (1 - f) * baseBlur;
@@ -681,7 +701,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 col.activeLayer.style.opacity = f;
                             });
 
-                            if (progress < 1) {
+                            if (!allDone) {
                                 window.requestAnimationFrame(step);
                             }
                         };
