@@ -3045,9 +3045,9 @@ img,
     }
 
     .stat-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 5px;
+        flex-direction: row;
+        align-items: baseline;
+        gap: 10px;
     }
 
     .stat-number {
