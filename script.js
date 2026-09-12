@@ -560,7 +560,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }, { threshold: 0.5 });
 
-        // About Me Stats Animation (Slot Machine Dial Effect)
+        // About Me Stats Animation (Slot Machine Dial Effect - Independent Digits)
         const aboutObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -582,37 +582,76 @@ document.addEventListener('DOMContentLoaded', () => {
                         counter.style.verticalAlign = 'bottom';
                         counter.style.justifyContent = 'center';
                         
-                        // Static placeholder that updates its text to push layout naturally without jumping
-                        const layoutHolder = document.createElement('span');
-                        layoutHolder.style.visibility = 'hidden';
-                        layoutHolder.style.whiteSpace = 'nowrap';
-                        layoutHolder.style.fontVariantNumeric = 'tabular-nums';
-                        counter.appendChild(layoutHolder);
-
-                        const layer1 = document.createElement('span');
-                        const layer2 = document.createElement('span');
+                        let columns = [];
                         
-                        const layerStyle = `position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform-origin: center; white-space: nowrap; font-variant-numeric: tabular-nums; will-change: transform, filter, opacity;`;
-                        layer1.style.cssText = layerStyle;
-                        layer2.style.cssText = layerStyle;
-                        
-                        counter.appendChild(layer1);
-                        counter.appendChild(layer2);
-                        
-                        let activeLayer = layer1;
-                        let nextLayer = layer2;
+                        const updateString = (newString, timestamp, isFinal) => {
+                            // Add new columns on the left if needed
+                            while (columns.length < newString.length) {
+                                const col = document.createElement('span');
+                                col.style.position = 'relative';
+                                col.style.display = 'inline-flex';
+                                col.style.justifyContent = 'center';
+                                
+                                const layoutHolder = document.createElement('span');
+                                layoutHolder.style.visibility = 'hidden';
+                                col.appendChild(layoutHolder);
+                                
+                                const layer1 = document.createElement('span');
+                                const layer2 = document.createElement('span');
+                                const layerStyle = `position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform-origin: center; will-change: transform, filter, opacity;`;
+                                layer1.style.cssText = layerStyle;
+                                layer2.style.cssText = layerStyle;
+                                
+                                col.appendChild(layer1);
+                                col.appendChild(layer2);
+                                
+                                counter.insertBefore(col, counter.firstChild);
+                                
+                                columns.unshift({
+                                    container: col,
+                                    activeLayer: layer1,
+                                    nextLayer: layer2,
+                                    targetChar: '',
+                                    layoutHolder: layoutHolder,
+                                    isAnimating: false,
+                                    startTime: 0,
+                                    duration: 100
+                                });
+                            }
+                            
+                            // Update from right to left
+                            for (let i = 0; i < newString.length; i++) {
+                                const colIndex = columns.length - 1 - i;
+                                const charIndex = newString.length - 1 - i;
+                                const char = newString[charIndex];
+                                const col = columns[colIndex];
+                                
+                                if (col.targetChar !== char) {
+                                    if (col.isAnimating && !isFinal) {
+                                        // Skip update to let current spin finish -> creates organic variation
+                                        continue; 
+                                    }
+                                    
+                                    const temp = col.activeLayer;
+                                    col.activeLayer = col.nextLayer;
+                                    col.nextLayer = temp;
+                                    
+                                    col.targetChar = char;
+                                    col.activeLayer.textContent = char;
+                                    col.layoutHolder.textContent = (char === '.' || char === ',') ? char : '0';
+                                    
+                                    col.isAnimating = true;
+                                    col.startTime = timestamp;
+                                    // Random duration between 60ms and 140ms for independent reel feel
+                                    col.duration = 60 + Math.random() * 80; 
+                                }
+                            }
+                        };
                         
                         let startTime = null;
                         let lastUpdateTime = 0;
-                        
-                        const updateInterval = 120; // Time per "slot" tick
-                        let dialStartTime = 0;
-                        let isAnimatingDial = false;
-                        let dialTargetString = formatVal(0);
-                        
-                        layoutHolder.textContent = dialTargetString;
-                        activeLayer.textContent = dialTargetString;
-                        nextLayer.style.opacity = 0;
+                        let initialized = false;
+                        const updateInterval = 40; // Try to feed new numbers rapidly
                         
                         const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
 
@@ -620,76 +659,62 @@ document.addEventListener('DOMContentLoaded', () => {
                             if (!startTime) {
                                 startTime = timestamp;
                                 lastUpdateTime = timestamp;
-                                dialStartTime = timestamp;
+                            }
+                            if (!initialized) {
+                                updateString(formatVal(0), timestamp, false);
+                                initialized = true;
                             }
 
                             const progress = Math.min((timestamp - startTime) / duration, 1);
                             const easedProgress = easeOutQuart(progress);
                             const currentVal = easedProgress * target;
                             
-                            // Trigger a new dial flip
                             if (progress < 1 && timestamp - lastUpdateTime >= updateInterval) {
-                                const nextString = formatVal(currentVal);
-                                if (nextString !== dialTargetString) {
-                                    const temp = activeLayer;
-                                    activeLayer = nextLayer;
-                                    nextLayer = temp;
-                                    
-                                    dialTargetString = nextString;
-                                    activeLayer.textContent = dialTargetString;
-                                    layoutHolder.textContent = dialTargetString;
-                                    
-                                    dialStartTime = timestamp;
-                                    isAnimatingDial = true;
-                                    lastUpdateTime = timestamp;
-                                }
+                                updateString(formatVal(currentVal), timestamp, false);
+                                lastUpdateTime = timestamp;
                             }
                             
-                            // Final frame
-                            if (progress >= 1 && dialTargetString !== formatVal(target)) {
-                                const temp = activeLayer;
-                                activeLayer = nextLayer;
-                                nextLayer = temp;
-                                dialTargetString = formatVal(target);
-                                activeLayer.textContent = dialTargetString;
-                                layoutHolder.textContent = dialTargetString;
-                                dialStartTime = timestamp;
-                                isAnimatingDial = true;
+                            if (progress >= 1 && !counter.dataset.finished) {
+                                updateString(formatVal(target), timestamp, true);
+                                counter.dataset.finished = 'true';
                             }
 
-                            if (isAnimatingDial) {
-                                // Linear animation so consecutive ticks blend smoothly in velocity
-                                const dialProgress = Math.min((timestamp - dialStartTime) / updateInterval, 1);
-                                
-                                // Outgoing layer goes up, scales down, blurs
-                                const oldY = -100 * dialProgress;
-                                const oldScale = 1 - 0.4 * dialProgress;
-                                const oldBlur = dialProgress * 10; 
-                                
-                                nextLayer.style.transform = `translateY(${oldY}%) scale(${oldScale})`;
-                                nextLayer.style.filter = `blur(${oldBlur}px)`;
-                                nextLayer.style.opacity = 1 - dialProgress;
-                                
-                                // Incoming layer comes from bottom, scales up, unblurs
-                                const newY = 100 * (1 - dialProgress);
-                                const newScale = 0.6 + 0.4 * dialProgress;
-                                const newBlur = (1 - dialProgress) * 10;
-                                
-                                activeLayer.style.transform = `translateY(${newY}%) scale(${newScale})`;
-                                activeLayer.style.filter = `blur(${newBlur}px)`;
-                                activeLayer.style.opacity = dialProgress;
-                                
-                                if (dialProgress >= 1 && progress >= 1) {
-                                    isAnimatingDial = false;
+                            let isAnyAnimating = false;
+                            
+                            columns.forEach(col => {
+                                if (col.isAnimating) {
+                                    isAnyAnimating = true;
+                                    const dialProgress = Math.min((timestamp - col.startTime) / col.duration, 1);
+                                    
+                                    // Outgoing layer (nextLayer) moves up, scales down, blurs
+                                    const oldY = -100 * dialProgress;
+                                    const oldScale = 1 - 0.4 * dialProgress;
+                                    const oldBlur = dialProgress * 10; 
+                                    
+                                    col.nextLayer.style.transform = `translateY(${oldY}%) scale(${oldScale})`;
+                                    col.nextLayer.style.filter = `blur(${oldBlur}px)`;
+                                    col.nextLayer.style.opacity = 1 - dialProgress;
+                                    
+                                    // Incoming layer (activeLayer) comes from bottom, scales up
+                                    const newY = 100 * (1 - dialProgress);
+                                    const newScale = 0.6 + 0.4 * dialProgress;
+                                    const newBlur = (1 - dialProgress) * 10;
+                                    
+                                    col.activeLayer.style.transform = `translateY(${newY}%) scale(${newScale})`;
+                                    col.activeLayer.style.filter = `blur(${newBlur}px)`;
+                                    col.activeLayer.style.opacity = dialProgress;
+                                    
+                                    if (dialProgress >= 1) {
+                                        col.isAnimating = false;
+                                        col.activeLayer.style.transform = `translateY(0%) scale(1)`;
+                                        col.activeLayer.style.filter = `blur(0px)`;
+                                        col.activeLayer.style.opacity = 1;
+                                        col.nextLayer.style.opacity = 0;
+                                    }
                                 }
-                            } else if (progress >= 1) {
-                                activeLayer.style.transform = `translateY(0%) scale(1)`;
-                                activeLayer.style.filter = `blur(0px)`;
-                                activeLayer.style.opacity = 1;
-                                nextLayer.style.opacity = 0;
-                            }
+                            });
 
-                            if (progress < 1 || isAnimatingDial) {
+                            if (progress < 1 || isAnyAnimating) {
                                 window.requestAnimationFrame(step);
                             }
                         };
@@ -699,6 +724,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     const counters = entry.target.querySelectorAll('.count-up');
                     counters.forEach(counter => {
+                        delete counter.dataset.finished;
                         const decimals = parseInt(counter.getAttribute('data-decimals') || '0');
                         counter.innerHTML = decimals > 0 ? '0.0' : '0';
                     });
