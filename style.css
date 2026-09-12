@@ -2928,6 +2928,11 @@ img,
         transform: scale(0);
     }
 
+    /* Shrink the scrolled bar more tightly on mobile */
+    .header.scrolled {
+        max-width: 280px;
+    }
+
     /* Keep hero text slide-up animation like desktop, with smaller distance */
     .hero-content>* {
         animation: fadeSlideUp 0.7s ease-out both !important;
