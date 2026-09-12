@@ -680,19 +680,19 @@ document.addEventListener('DOMContentLoaded', () => {
                                 col.nextLayer.textContent = currentDigit;
                                 col.activeLayer.textContent = nextDigit;
                                 
-                                // Outgoing layer (moves UP) - blur only kicks in at the very edge (f near 1)
+                                // Outgoing layer (moves UP) - blur kicks in slightly earlier (f^3 curve)
                                 const oldY = -50 * f;
                                 const oldScale = 1 - f;
-                                const oldBlur = Math.pow(f, 6) * maxBlur;
+                                const oldBlur = Math.pow(f, 3) * maxBlur;
                                 
                                 col.nextLayer.style.transform = `translateY(${oldY}%) scale(${oldScale})`;
                                 col.nextLayer.style.filter = `blur(${oldBlur}px)`;
                                 col.nextLayer.style.opacity = 1 - f;
                                 
-                                // Incoming layer (moves IN from BOTTOM) - blur vanishes quickly (1-f near 0)
+                                // Incoming layer (moves IN from BOTTOM) - blur fades slightly slower
                                 const newY = 50 * (1 - f);
                                 const newScale = f;
-                                const newBlur = Math.pow(1 - f, 6) * maxBlur;
+                                const newBlur = Math.pow(1 - f, 3) * maxBlur;
                                 
                                 col.activeLayer.style.transform = `translateY(${newY}%) scale(${newScale})`;
                                 col.activeLayer.style.filter = `blur(${newBlur}px)`;
