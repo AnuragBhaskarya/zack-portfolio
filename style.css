@@ -150,7 +150,7 @@ ul {
 
 .header.scrolled .nav-container {
     padding: 6px 6px 6px 16px;
-    background: #000;
+    background: #272727;
 }
 
 .logo {
@@ -188,7 +188,7 @@ ul {
 
 .online-dot {
     position: absolute;
-    bottom: -2px;
+    top: -2px;
     right: -2px;
     width: 12px;
     height: 12px;
@@ -2914,11 +2914,6 @@ img,
 
     /* --- Strip heavy features --- */
     .hero-bg-container {
-        display: none !important;
-    }
-
-    .logo-icon,
-    .logo-icon-img {
         display: none !important;
     }
 
