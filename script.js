@@ -680,19 +680,19 @@ document.addEventListener('DOMContentLoaded', () => {
                                 col.nextLayer.textContent = currentDigit;
                                 col.activeLayer.textContent = nextDigit;
                                 
-                                // Outgoing layer (moves UP) - blur increases strictly based on vertical position
+                                // Outgoing layer (moves UP) - blur only kicks in at the very edge (f near 1)
                                 const oldY = -50 * f;
                                 const oldScale = 1 - f;
-                                const oldBlur = f * maxBlur;
+                                const oldBlur = Math.pow(f, 6) * maxBlur;
                                 
                                 col.nextLayer.style.transform = `translateY(${oldY}%) scale(${oldScale})`;
                                 col.nextLayer.style.filter = `blur(${oldBlur}px)`;
                                 col.nextLayer.style.opacity = 1 - f;
                                 
-                                // Incoming layer (moves IN from BOTTOM) - blur decreases strictly based on vertical position
+                                // Incoming layer (moves IN from BOTTOM) - blur vanishes quickly (1-f near 0)
                                 const newY = 50 * (1 - f);
                                 const newScale = f;
-                                const newBlur = (1 - f) * maxBlur;
+                                const newBlur = Math.pow(1 - f, 6) * maxBlur;
                                 
                                 col.activeLayer.style.transform = `translateY(${newY}%) scale(${newScale})`;
                                 col.activeLayer.style.filter = `blur(${newBlur}px)`;
