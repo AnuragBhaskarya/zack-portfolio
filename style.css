@@ -2917,6 +2917,11 @@ img,
         display: none !important;
     }
 
+    /* Hide logo image by default on mobile, show when scrolled */
+    .header:not(.scrolled) .logo-img-wrapper {
+        display: none;
+    }
+
     /* Keep hero text slide-up animation like desktop, with smaller distance */
     .hero-content>* {
         animation: fadeSlideUp 0.7s ease-out both !important;
