@@ -152,7 +152,7 @@ ul {
 .header.scrolled .nav-container {
     padding: 6px 6px 6px 16px;
     background: #031e01;
-    box-shadow: 0 0 15px rgba(16, 185, 129, 0.6), 0 0 30px rgba(16, 185, 129, 0.4), 0 0 60px rgba(16, 185, 129, 0.2);
+    box-shadow: 0 0 15px rgb(0 255 10 / 73%), 0 0 30px rgb(8 255 0 / 35%), 0 0 60px rgba(16, 185, 129, 0.2);
 }
 
 .logo {
