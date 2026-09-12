@@ -130,6 +130,11 @@ ul {
     z-index: 1000;
     width: 90%;
     max-width: 600px;
+    transition: max-width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.header.scrolled {
+    max-width: 340px;
 }
 
 .nav-container {
