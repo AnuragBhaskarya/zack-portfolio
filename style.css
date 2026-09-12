@@ -151,8 +151,8 @@ ul {
 
 .header.scrolled .nav-container {
     padding: 6px 6px 6px 16px;
-    background: #031e01;
-    box-shadow: 0 0 15px rgb(0 255 10 / 50%), 0 0 30px rgb(8 255 0 / 23%), 0 0 60px rgb(220 255 176);
+    background: #021e00;
+    box-shadow: 0 0 15px rgb(0 255 10 / 70%), 0 0 30px rgb(8 255 0 / 6%), 0 0 60px rgb(142 255 0 / 19%);
 }
 
 .logo {
@@ -197,7 +197,7 @@ ul {
     right: -2px;
     width: 12px;
     height: 12px;
-    background-color: #10b981;
+    background-color: #70bf00;
     border: 2px solid var(--card-bg);
     border-radius: 50%;
     opacity: 0;
@@ -243,7 +243,7 @@ ul {
 .header.scrolled .available-text {
     max-width: 130px;
     opacity: 1;
-    color: #10b981;
+    color: #57e551;
 }
 
 /* Ensure the logo stretches to fill the space when scrolled so text centers properly */
@@ -299,9 +299,9 @@ ul {
     transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 .header.scrolled .nav-btn {
-    background-color: #10b981;
+    background-color: #20bf00;
     color: white;
-    border-color: #10b981;
+    border-color: #20bf00;
 }
 
 .btn-text-default {
