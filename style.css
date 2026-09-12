@@ -3045,13 +3045,18 @@ img,
     }
 
     .stat-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 5px;
+        flex-direction: row;
+        align-items: baseline;
+        gap: 8px;
     }
 
     .stat-number {
         min-width: auto;
+    }
+
+    .stat-label {
+        font-size: 0.85rem;
+        font-weight: 800;
     }
 
     /* --- FAQ Section --- */
