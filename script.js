@@ -560,7 +560,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }, { threshold: 0.5 });
 
-        // About Me Stats Animation (Smooth JavaScript Count-up)
+        // About Me Stats Animation (Slot Machine Dial Effect)
         const aboutObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -568,37 +568,129 @@ document.addEventListener('DOMContentLoaded', () => {
                     counters.forEach(counter => {
                         const target = parseFloat(counter.getAttribute('data-target'));
                         const decimals = parseInt(counter.getAttribute('data-decimals') || '0');
-                        const duration = 1800;
+                        const duration = 1800; // 1.8 seconds
 
+                        const formatVal = (val) => decimals > 0 ? val.toFixed(decimals) : Math.floor(val).toLocaleString();
+
+                        // Setup DOM for dial effect
+                        counter.innerHTML = '';
+                        counter.style.display = 'inline-flex';
+                        counter.style.position = 'relative';
+                        counter.style.overflow = 'hidden'; 
+                        counter.style.height = '1.1em';
+                        counter.style.lineHeight = '1.1em';
+                        counter.style.verticalAlign = 'bottom';
+                        counter.style.justifyContent = 'center';
+                        
+                        // Static placeholder that updates its text to push layout naturally without jumping
+                        const layoutHolder = document.createElement('span');
+                        layoutHolder.style.visibility = 'hidden';
+                        layoutHolder.style.whiteSpace = 'nowrap';
+                        layoutHolder.style.fontVariantNumeric = 'tabular-nums';
+                        counter.appendChild(layoutHolder);
+
+                        const layer1 = document.createElement('span');
+                        const layer2 = document.createElement('span');
+                        
+                        const layerStyle = `position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform-origin: center; white-space: nowrap; font-variant-numeric: tabular-nums; will-change: transform, filter, opacity;`;
+                        layer1.style.cssText = layerStyle;
+                        layer2.style.cssText = layerStyle;
+                        
+                        counter.appendChild(layer1);
+                        counter.appendChild(layer2);
+                        
+                        let activeLayer = layer1;
+                        let nextLayer = layer2;
+                        
                         let startTime = null;
+                        let lastUpdateTime = 0;
+                        
+                        const updateInterval = 120; // Time per "slot" tick
+                        let dialStartTime = 0;
+                        let isAnimatingDial = false;
+                        let dialTargetString = formatVal(0);
+                        
+                        layoutHolder.textContent = dialTargetString;
+                        activeLayer.textContent = dialTargetString;
+                        nextLayer.style.opacity = 0;
+                        
                         const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
 
                         const step = (timestamp) => {
-                            if (!startTime) startTime = timestamp;
+                            if (!startTime) {
+                                startTime = timestamp;
+                                lastUpdateTime = timestamp;
+                                dialStartTime = timestamp;
+                            }
+
                             const progress = Math.min((timestamp - startTime) / duration, 1);
                             const easedProgress = easeOutQuart(progress);
-                            const current = easedProgress * target;
-
-                            if (decimals > 0) {
-                                counter.textContent = current.toFixed(decimals);
-                            } else {
-                                counter.textContent = Math.floor(current).toLocaleString();
+                            const currentVal = easedProgress * target;
+                            
+                            // Trigger a new dial flip
+                            if (progress < 1 && timestamp - lastUpdateTime >= updateInterval) {
+                                const nextString = formatVal(currentVal);
+                                if (nextString !== dialTargetString) {
+                                    const temp = activeLayer;
+                                    activeLayer = nextLayer;
+                                    nextLayer = temp;
+                                    
+                                    dialTargetString = nextString;
+                                    activeLayer.textContent = dialTargetString;
+                                    layoutHolder.textContent = dialTargetString;
+                                    
+                                    dialStartTime = timestamp;
+                                    isAnimatingDial = true;
+                                    lastUpdateTime = timestamp;
+                                }
+                            }
+                            
+                            // Final frame
+                            if (progress >= 1 && dialTargetString !== formatVal(target)) {
+                                const temp = activeLayer;
+                                activeLayer = nextLayer;
+                                nextLayer = temp;
+                                dialTargetString = formatVal(target);
+                                activeLayer.textContent = dialTargetString;
+                                layoutHolder.textContent = dialTargetString;
+                                dialStartTime = timestamp;
+                                isAnimatingDial = true;
                             }
 
-                            // Dynamic motion blur: strong blur while fast, fading to 0 as it settles
-                            const remaining = 1 - easedProgress;
-                            const blurAmount = remaining * 2.8;
-                            if (blurAmount > 0.05) {
-                                counter.style.filter = `blur(${blurAmount.toFixed(2)}px)`;
-                            } else {
-                                counter.style.filter = 'none';
+                            if (isAnimatingDial) {
+                                // Linear animation so consecutive ticks blend smoothly in velocity
+                                const dialProgress = Math.min((timestamp - dialStartTime) / updateInterval, 1);
+                                
+                                // Outgoing layer goes up, scales down, blurs
+                                const oldY = -100 * dialProgress;
+                                const oldScale = 1 - 0.4 * dialProgress;
+                                const oldBlur = dialProgress * 10; 
+                                
+                                nextLayer.style.transform = `translateY(${oldY}%) scale(${oldScale})`;
+                                nextLayer.style.filter = `blur(${oldBlur}px)`;
+                                nextLayer.style.opacity = 1 - dialProgress;
+                                
+                                // Incoming layer comes from bottom, scales up, unblurs
+                                const newY = 100 * (1 - dialProgress);
+                                const newScale = 0.6 + 0.4 * dialProgress;
+                                const newBlur = (1 - dialProgress) * 10;
+                                
+                                activeLayer.style.transform = `translateY(${newY}%) scale(${newScale})`;
+                                activeLayer.style.filter = `blur(${newBlur}px)`;
+                                activeLayer.style.opacity = dialProgress;
+                                
+                                if (dialProgress >= 1 && progress >= 1) {
+                                    isAnimatingDial = false;
+                                }
+                            } else if (progress >= 1) {
+                                activeLayer.style.transform = `translateY(0%) scale(1)`;
+                                activeLayer.style.filter = `blur(0px)`;
+                                activeLayer.style.opacity = 1;
+                                nextLayer.style.opacity = 0;
                             }
 
-                            if (progress < 1) {
+                            if (progress < 1 || isAnimatingDial) {
                                 window.requestAnimationFrame(step);
-                            } else {
-                                counter.textContent = decimals > 0 ? target.toFixed(decimals) : target.toLocaleString();
-                                counter.style.filter = 'none';
                             }
                         };
 
@@ -608,8 +700,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const counters = entry.target.querySelectorAll('.count-up');
                     counters.forEach(counter => {
                         const decimals = parseInt(counter.getAttribute('data-decimals') || '0');
-                        counter.textContent = decimals > 0 ? '0.0' : '0';
-                        counter.style.filter = 'none';
+                        counter.innerHTML = decimals > 0 ? '0.0' : '0';
                     });
                 }
             });
