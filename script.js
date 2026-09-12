@@ -614,10 +614,10 @@ document.addEventListener('DOMContentLoaded', () => {
                                 const targetDigit = parseInt(char, 10);
                                 // The right-most digits spin more, simulating an odometer's mechanical linkage
                                 const posFromRight = targetStr.length - 1 - i;
-                                const spins = Math.min(posFromRight + 1, 4); // Max 4 spins to keep it readable and smooth
+                                const spins = 1; // Just 1 spin — keeps animation short but same smooth speed
                                 totalChanges = spins * 10 + targetDigit;
-                                // Domino stagger: reduced delay so digits don't sit at 0 for too long
-                                delay = posFromRight * 40;
+                                // Domino stagger: reduced to match shorter animation
+                                delay = posFromRight * 30;
                             } else {
                                 layer1.textContent = char;
                                 layer2.style.opacity = 0;
