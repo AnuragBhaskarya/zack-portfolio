@@ -584,7 +584,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         
                         let columns = [];
                         
-                        const updateString = (newString, timestamp, isFinal) => {
+                        const updateString = (newString, timestamp) => {
                             // Add new columns on the left if needed
                             while (columns.length < newString.length) {
                                 const col = document.createElement('span');
@@ -627,41 +627,41 @@ document.addEventListener('DOMContentLoaded', () => {
                                 const col = columns[colIndex];
                                 
                                 if (col.targetChar !== char) {
-                                    if (col.isAnimating && !isFinal) {
-                                        // Skip update to let current spin finish -> creates organic variation
-                                        continue; 
+                                    if (col.isAnimating) {
+                                        // Seamless continuous slide: just update incoming text without resetting animation
+                                        col.targetChar = char;
+                                        col.activeLayer.textContent = char;
+                                        col.layoutHolder.textContent = (char === '.' || char === ',') ? char : '0';
+                                    } else {
+                                        // Start a new flip
+                                        const temp = col.activeLayer;
+                                        col.activeLayer = col.nextLayer;
+                                        col.nextLayer = temp;
+                                        
+                                        col.targetChar = char;
+                                        col.activeLayer.textContent = char;
+                                        col.layoutHolder.textContent = (char === '.' || char === ',') ? char : '0';
+                                        
+                                        col.isAnimating = true;
+                                        col.startTime = timestamp;
+                                        // 60-100ms for extremely fast continuous flip
+                                        col.duration = 60 + Math.random() * 40; 
                                     }
-                                    
-                                    const temp = col.activeLayer;
-                                    col.activeLayer = col.nextLayer;
-                                    col.nextLayer = temp;
-                                    
-                                    col.targetChar = char;
-                                    col.activeLayer.textContent = char;
-                                    col.layoutHolder.textContent = (char === '.' || char === ',') ? char : '0';
-                                    
-                                    col.isAnimating = true;
-                                    col.startTime = timestamp;
-                                    // Random duration between 60ms and 140ms for independent reel feel
-                                    col.duration = 60 + Math.random() * 80; 
                                 }
                             }
                         };
                         
                         let startTime = null;
-                        let lastUpdateTime = 0;
                         let initialized = false;
-                        const updateInterval = 40; // Try to feed new numbers rapidly
                         
                         const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
 
                         const step = (timestamp) => {
                             if (!startTime) {
                                 startTime = timestamp;
-                                lastUpdateTime = timestamp;
                             }
                             if (!initialized) {
-                                updateString(formatVal(0), timestamp, false);
+                                updateString(formatVal(0), timestamp);
                                 initialized = true;
                             }
 
@@ -669,13 +669,14 @@ document.addEventListener('DOMContentLoaded', () => {
                             const easedProgress = easeOutQuart(progress);
                             const currentVal = easedProgress * target;
                             
-                            if (progress < 1 && timestamp - lastUpdateTime >= updateInterval) {
-                                updateString(formatVal(currentVal), timestamp, false);
-                                lastUpdateTime = timestamp;
+                            // Feed values continuously every frame
+                            if (progress < 1) {
+                                updateString(formatVal(currentVal), timestamp);
                             }
                             
+                            // Feed final target
                             if (progress >= 1 && !counter.dataset.finished) {
-                                updateString(formatVal(target), timestamp, true);
+                                updateString(formatVal(target), timestamp);
                                 counter.dataset.finished = 'true';
                             }
 
@@ -686,19 +687,19 @@ document.addEventListener('DOMContentLoaded', () => {
                                     isAnyAnimating = true;
                                     const dialProgress = Math.min((timestamp - col.startTime) / col.duration, 1);
                                     
-                                    // Outgoing layer (nextLayer) moves up, scales down, blurs
+                                    // Outgoing layer
                                     const oldY = -100 * dialProgress;
-                                    const oldScale = 1 - 0.4 * dialProgress;
-                                    const oldBlur = dialProgress * 10; 
+                                    const oldScale = 1 - dialProgress; // Scale completely to 0
+                                    const oldBlur = dialProgress * 15; 
                                     
                                     col.nextLayer.style.transform = `translateY(${oldY}%) scale(${oldScale})`;
                                     col.nextLayer.style.filter = `blur(${oldBlur}px)`;
                                     col.nextLayer.style.opacity = 1 - dialProgress;
                                     
-                                    // Incoming layer (activeLayer) comes from bottom, scales up
+                                    // Incoming layer
                                     const newY = 100 * (1 - dialProgress);
-                                    const newScale = 0.6 + 0.4 * dialProgress;
-                                    const newBlur = (1 - dialProgress) * 10;
+                                    const newScale = dialProgress; // Scale from 0 to 1
+                                    const newBlur = (1 - dialProgress) * 15;
                                     
                                     col.activeLayer.style.transform = `translateY(${newY}%) scale(${newScale})`;
                                     col.activeLayer.style.filter = `blur(${newBlur}px)`;
