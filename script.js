@@ -585,10 +585,20 @@ document.addEventListener('DOMContentLoaded', () => {
                                 counter.textContent = Math.floor(current).toLocaleString();
                             }
 
+                            // Dynamic motion blur: strong blur while fast, fading to 0 as it settles
+                            const remaining = 1 - easedProgress;
+                            const blurAmount = remaining * 2.8;
+                            if (blurAmount > 0.05) {
+                                counter.style.filter = `blur(${blurAmount.toFixed(2)}px)`;
+                            } else {
+                                counter.style.filter = 'none';
+                            }
+
                             if (progress < 1) {
                                 window.requestAnimationFrame(step);
                             } else {
                                 counter.textContent = decimals > 0 ? target.toFixed(decimals) : target.toLocaleString();
+                                counter.style.filter = 'none';
                             }
                         };
 
@@ -599,6 +609,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     counters.forEach(counter => {
                         const decimals = parseInt(counter.getAttribute('data-decimals') || '0');
                         counter.textContent = decimals > 0 ? '0.0' : '0';
+                        counter.style.filter = 'none';
                     });
                 }
             });
