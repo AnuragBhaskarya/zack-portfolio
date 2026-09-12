@@ -150,6 +150,7 @@ ul {
 
 .header.scrolled .nav-container {
     padding: 6px 6px 6px 16px;
+    background: #000;
 }
 
 .logo {
@@ -237,6 +238,7 @@ ul {
     max-width: 150px;
     opacity: 1;
     margin-left: 6px;
+    color: #10b981;
 }
 
 .menu-toggle {
