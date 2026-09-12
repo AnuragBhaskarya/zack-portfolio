@@ -637,8 +637,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         
                         // easeInOutQuart for a more dramatic, deeper ease in and ease out
                         const easeInOutQuart = t => t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
-                        // Derivative to calculate exact motion blur based on speed
-                        const getVelocity = t => t < 0.5 ? 32 * t * t * t : 4 * Math.pow(-2 * t + 2, 3);
+                        
+                        const maxBlur = 8; // Pure spatial blur (depth of field effect)
 
                         const step = (timestamp) => {
                             if (!startTime) startTime = timestamp;
@@ -662,8 +662,6 @@ document.addEventListener('DOMContentLoaded', () => {
                                 if (progress < 1) allDone = false;
 
                                 const easedProgress = easeInOutQuart(progress);
-                                const velocity = getVelocity(progress);
-                                const baseBlur = velocity * 1.5; // Max velocity is ~4, so max baseBlur is ~6px
 
                                 if (progress >= 1) {
                                     col.activeLayer.textContent = col.char;
@@ -682,19 +680,19 @@ document.addEventListener('DOMContentLoaded', () => {
                                 col.nextLayer.textContent = currentDigit;
                                 col.activeLayer.textContent = nextDigit;
                                 
-                                // Outgoing layer (moves UP) - blur increases from nil to max (f goes 0 to 1)
+                                // Outgoing layer (moves UP) - blur increases strictly based on vertical position
                                 const oldY = -50 * f;
                                 const oldScale = 1 - f;
-                                const oldBlur = f * baseBlur;
+                                const oldBlur = f * maxBlur;
                                 
                                 col.nextLayer.style.transform = `translateY(${oldY}%) scale(${oldScale})`;
                                 col.nextLayer.style.filter = `blur(${oldBlur}px)`;
                                 col.nextLayer.style.opacity = 1 - f;
                                 
-                                // Incoming layer (moves IN from BOTTOM) - blur decreases from max to nil (1-f goes 1 to 0)
+                                // Incoming layer (moves IN from BOTTOM) - blur decreases strictly based on vertical position
                                 const newY = 50 * (1 - f);
                                 const newScale = f;
-                                const newBlur = (1 - f) * baseBlur;
+                                const newBlur = (1 - f) * maxBlur;
                                 
                                 col.activeLayer.style.transform = `translateY(${newY}%) scale(${newScale})`;
                                 col.activeLayer.style.filter = `blur(${newBlur}px)`;
