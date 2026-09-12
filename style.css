@@ -156,13 +156,11 @@ ul {
 }
 
 .logo {
-    position: relative;
     display: flex;
     align-items: center;
     gap: 10px;
     font-weight: 800;
     font-size: 1.2rem;
-    flex: 1;
     transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
@@ -232,9 +230,6 @@ ul {
 }
 
 .available-text {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
     display: inline-block;
     max-width: 0;
     overflow: hidden;
@@ -251,7 +246,17 @@ ul {
     color: #10b981;
 }
 
-/* Removed jitter-inducing flex toggles on scroll */
+/* Ensure the logo stretches to fill the space when scrolled so text centers properly */
+.header.scrolled .logo {
+    flex: 1;
+}
+
+.header.scrolled .logo-text-wrapper {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+}
+
 .menu-toggle {
     display: flex;
     align-items: center;
