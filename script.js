@@ -560,7 +560,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }, { threshold: 0.5 });
 
-        // About Me Stats Animation (Slot Machine Dial Effect - Continuous Math Function)
+        // About Me Stats Animation (Smooth Cinematic Dial)
         const aboutObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -568,7 +568,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     counters.forEach(counter => {
                         const target = parseFloat(counter.getAttribute('data-target'));
                         const decimals = parseInt(counter.getAttribute('data-decimals') || '0');
-                        const duration = 2000; // 2.0 seconds for a majestic ease-in-out
+                        const duration = 2500; // 2.5 seconds for a majestic, ultra-smooth transition
 
                         const formatVal = (val) => decimals > 0 ? val.toFixed(decimals) : Math.floor(val).toLocaleString();
                         const targetStr = formatVal(target);
@@ -577,10 +577,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         counter.innerHTML = '';
                         counter.style.display = 'inline-flex';
                         counter.style.position = 'relative';
-                        counter.style.overflow = 'hidden'; 
-                        counter.style.height = '1.1em';
-                        counter.style.lineHeight = '1.1em';
-                        counter.style.verticalAlign = 'bottom';
+                        // REMOVED overflow: hidden to prevent the "weird box cut off"
+                        counter.style.verticalAlign = 'middle';
                         counter.style.justifyContent = 'center';
                         
                         let columns = [];
@@ -612,9 +610,10 @@ document.addEventListener('DOMContentLoaded', () => {
                             let totalChanges = 0;
                             if (isDigit) {
                                 const targetDigit = parseInt(char, 10);
-                                // Each column spins a random amount of times (20 to 50 changes) to create variation
-                                // The formula ensures the final digit lands exactly on targetDigit!
-                                totalChanges = (2 + Math.floor(Math.random() * 4)) * 10 + targetDigit;
+                                // The right-most digits spin more, simulating an odometer's mechanical linkage
+                                const posFromRight = targetStr.length - 1 - i;
+                                const spins = Math.min(posFromRight + 1, 4); // Max 4 spins to keep it readable and smooth
+                                totalChanges = spins * 10 + targetDigit;
                             } else {
                                 layer1.textContent = char;
                                 layer2.style.opacity = 0;
@@ -642,7 +641,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             const progress = Math.min((timestamp - startTime) / duration, 1);
                             const easedProgress = easeInOutCubic(progress);
                             const velocity = getVelocity(progress);
-                            const baseBlur = velocity * 6; // Max velocity is 3, so max baseBlur is ~18px
+                            const baseBlur = velocity * 1.5; // Very subtle, smooth blur (max ~4.5px)
 
                             columns.forEach(col => {
                                 if (!col.isDigit) return;
@@ -664,8 +663,8 @@ document.addEventListener('DOMContentLoaded', () => {
                                 col.nextLayer.textContent = currentDigit;
                                 col.activeLayer.textContent = nextDigit;
                                 
-                                // Outgoing layer (moves UP, scales to 0)
-                                const oldY = -100 * f;
+                                // Reduced translation distance (50%) to keep it centered and elegant
+                                const oldY = -50 * f;
                                 const oldScale = 1 - f;
                                 const oldBlur = f * baseBlur;
                                 
@@ -673,8 +672,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 col.nextLayer.style.filter = `blur(${oldBlur}px)`;
                                 col.nextLayer.style.opacity = 1 - f;
                                 
-                                // Incoming layer (moves IN from BOTTOM, scales from 0)
-                                const newY = 100 * (1 - f);
+                                const newY = 50 * (1 - f);
                                 const newScale = f;
                                 const newBlur = (1 - f) * baseBlur;
                                 
