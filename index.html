@@ -53,8 +53,14 @@
     <header class="header">
         <div class="nav-container">
             <div class="logo">
-                <img src="https://files.catbox.moe/1z0zdx.png" alt="ZackGFX Logo" class="logo-icon-img" width="28" height="28">
-                <span class="logo-text"><span class="text-dark">Zack</span><span class="text-accent">GFX</span></span>
+                <div class="logo-img-wrapper">
+                    <img src="https://files.catbox.moe/1z0zdx.png" alt="ZackGFX Logo" class="logo-icon-img" width="28" height="28">
+                    <div class="online-dot"></div>
+                </div>
+                <span class="logo-text-wrapper">
+                    <span class="logo-text"><span class="text-dark">Zack</span><span class="text-accent">GFX</span></span>
+                    <span class="available-text">Available for work</span>
+                </span>
             </div>
             
             <div class="menu-toggle" id="menuToggle">
@@ -62,7 +68,10 @@
                 <i class="fa-solid fa-bars"></i>
             </div>
             
-            <a href="https://www.instagram.com/zackgfx._/" target="_blank" class="btn btn-dark nav-btn">Get started</a>
+            <a href="https://www.instagram.com/zackgfx._/" target="_blank" class="btn btn-dark nav-btn" id="navCtaBtn">
+                <span class="btn-text-default">Get started</span>
+                <span class="btn-text-scrolled">Hire Me</span>
+            </a>
         </div>
         
         <!-- Mobile Dropdown Menu -->

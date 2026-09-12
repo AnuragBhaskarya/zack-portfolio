@@ -72,6 +72,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Header Scroll Animation
+    const header = document.querySelector('.header');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+            // Close mobile menu if open when scrolling down
+            if (isMenuOpen) {
+                isMenuOpen = false;
+                mobileNav.classList.remove('active');
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars');
+            }
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+
     // Static Animations (Independent of dynamic data)
     initStaticAnimations();
 
