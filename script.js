@@ -560,7 +560,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }, { threshold: 0.5 });
 
-        // About Me Stats Animation (Slot Machine Dial Effect - Independent Digits)
+        // About Me Stats Animation (Slot Machine Dial Effect - Continuous Math Function)
         const aboutObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -568,9 +568,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     counters.forEach(counter => {
                         const target = parseFloat(counter.getAttribute('data-target'));
                         const decimals = parseInt(counter.getAttribute('data-decimals') || '0');
-                        const duration = 1800; // 1.8 seconds
+                        const duration = 2000; // 2.0 seconds for a majestic ease-in-out
 
                         const formatVal = (val) => decimals > 0 ? val.toFixed(decimals) : Math.floor(val).toLocaleString();
+                        const targetStr = formatVal(target);
 
                         // Setup DOM for dial effect
                         counter.innerHTML = '';
@@ -584,138 +585,105 @@ document.addEventListener('DOMContentLoaded', () => {
                         
                         let columns = [];
                         
-                        const updateString = (newString, timestamp) => {
-                            // Add new columns on the left if needed
-                            while (columns.length < newString.length) {
-                                const col = document.createElement('span');
-                                col.style.position = 'relative';
-                                col.style.display = 'inline-flex';
-                                col.style.justifyContent = 'center';
-                                
-                                const layoutHolder = document.createElement('span');
-                                layoutHolder.style.visibility = 'hidden';
-                                col.appendChild(layoutHolder);
-                                
-                                const layer1 = document.createElement('span');
-                                const layer2 = document.createElement('span');
-                                const layerStyle = `position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform-origin: center; will-change: transform, filter, opacity;`;
-                                layer1.style.cssText = layerStyle;
-                                layer2.style.cssText = layerStyle;
-                                
-                                col.appendChild(layer1);
-                                col.appendChild(layer2);
-                                
-                                counter.insertBefore(col, counter.firstChild);
-                                
-                                columns.unshift({
-                                    container: col,
-                                    activeLayer: layer1,
-                                    nextLayer: layer2,
-                                    targetChar: '',
-                                    layoutHolder: layoutHolder,
-                                    isAnimating: false,
-                                    startTime: 0,
-                                    duration: 100
-                                });
+                        for (let i = 0; i < targetStr.length; i++) {
+                            const char = targetStr[i];
+                            const isDigit = /\d/.test(char);
+                            
+                            const col = document.createElement('span');
+                            col.style.position = 'relative';
+                            col.style.display = 'inline-flex';
+                            col.style.justifyContent = 'center';
+                            
+                            const layoutHolder = document.createElement('span');
+                            layoutHolder.style.visibility = 'hidden';
+                            layoutHolder.textContent = (char === '.' || char === ',') ? char : '0';
+                            col.appendChild(layoutHolder);
+                            
+                            const layer1 = document.createElement('span');
+                            const layer2 = document.createElement('span');
+                            const layerStyle = `position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform-origin: center; will-change: transform, filter, opacity;`;
+                            layer1.style.cssText = layerStyle;
+                            layer2.style.cssText = layerStyle;
+                            
+                            col.appendChild(layer1);
+                            col.appendChild(layer2);
+                            counter.appendChild(col);
+                            
+                            let totalChanges = 0;
+                            if (isDigit) {
+                                const targetDigit = parseInt(char, 10);
+                                // Each column spins a random amount of times (20 to 50 changes) to create variation
+                                // The formula ensures the final digit lands exactly on targetDigit!
+                                totalChanges = (2 + Math.floor(Math.random() * 4)) * 10 + targetDigit;
+                            } else {
+                                layer1.textContent = char;
+                                layer2.style.opacity = 0;
                             }
                             
-                            // Update from right to left
-                            for (let i = 0; i < newString.length; i++) {
-                                const colIndex = columns.length - 1 - i;
-                                const charIndex = newString.length - 1 - i;
-                                const char = newString[charIndex];
-                                const col = columns[colIndex];
-                                
-                                if (col.targetChar !== char) {
-                                    if (col.isAnimating) {
-                                        // Seamless continuous slide: just update incoming text without resetting animation
-                                        col.targetChar = char;
-                                        col.activeLayer.textContent = char;
-                                        col.layoutHolder.textContent = (char === '.' || char === ',') ? char : '0';
-                                    } else {
-                                        // Start a new flip
-                                        const temp = col.activeLayer;
-                                        col.activeLayer = col.nextLayer;
-                                        col.nextLayer = temp;
-                                        
-                                        col.targetChar = char;
-                                        col.activeLayer.textContent = char;
-                                        col.layoutHolder.textContent = (char === '.' || char === ',') ? char : '0';
-                                        
-                                        col.isAnimating = true;
-                                        col.startTime = timestamp;
-                                        // 60-100ms for extremely fast continuous flip
-                                        col.duration = 60 + Math.random() * 40; 
-                                    }
-                                }
-                            }
-                        };
+                            columns.push({
+                                activeLayer: layer1, // Incoming
+                                nextLayer: layer2,   // Outgoing
+                                isDigit: isDigit,
+                                char: char,
+                                totalChanges: totalChanges
+                            });
+                        }
                         
                         let startTime = null;
-                        let initialized = false;
                         
-                        const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+                        // easeInOutCubic for a perfect smooth start and smooth stop
+                        const easeInOutCubic = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+                        // Derivative to calculate exact motion blur based on speed
+                        const getVelocity = t => t < 0.5 ? 12 * t * t : 3 * Math.pow(-2 * t + 2, 2);
 
                         const step = (timestamp) => {
-                            if (!startTime) {
-                                startTime = timestamp;
-                            }
-                            if (!initialized) {
-                                updateString(formatVal(0), timestamp);
-                                initialized = true;
-                            }
+                            if (!startTime) startTime = timestamp;
 
                             const progress = Math.min((timestamp - startTime) / duration, 1);
-                            const easedProgress = easeOutQuart(progress);
-                            const currentVal = easedProgress * target;
-                            
-                            // Feed values continuously every frame
-                            if (progress < 1) {
-                                updateString(formatVal(currentVal), timestamp);
-                            }
-                            
-                            // Feed final target
-                            if (progress >= 1 && !counter.dataset.finished) {
-                                updateString(formatVal(target), timestamp);
-                                counter.dataset.finished = 'true';
-                            }
+                            const easedProgress = easeInOutCubic(progress);
+                            const velocity = getVelocity(progress);
+                            const baseBlur = velocity * 6; // Max velocity is 3, so max baseBlur is ~18px
 
-                            let isAnyAnimating = false;
-                            
                             columns.forEach(col => {
-                                if (col.isAnimating) {
-                                    isAnyAnimating = true;
-                                    const dialProgress = Math.min((timestamp - col.startTime) / col.duration, 1);
-                                    
-                                    // Outgoing layer
-                                    const oldY = -100 * dialProgress;
-                                    const oldScale = 1 - dialProgress; // Scale completely to 0
-                                    const oldBlur = dialProgress * 15; 
-                                    
-                                    col.nextLayer.style.transform = `translateY(${oldY}%) scale(${oldScale})`;
-                                    col.nextLayer.style.filter = `blur(${oldBlur}px)`;
-                                    col.nextLayer.style.opacity = 1 - dialProgress;
-                                    
-                                    // Incoming layer
-                                    const newY = 100 * (1 - dialProgress);
-                                    const newScale = dialProgress; // Scale from 0 to 1
-                                    const newBlur = (1 - dialProgress) * 15;
-                                    
-                                    col.activeLayer.style.transform = `translateY(${newY}%) scale(${newScale})`;
-                                    col.activeLayer.style.filter = `blur(${newBlur}px)`;
-                                    col.activeLayer.style.opacity = dialProgress;
-                                    
-                                    if (dialProgress >= 1) {
-                                        col.isAnimating = false;
-                                        col.activeLayer.style.transform = `translateY(0%) scale(1)`;
-                                        col.activeLayer.style.filter = `blur(0px)`;
-                                        col.activeLayer.style.opacity = 1;
-                                        col.nextLayer.style.opacity = 0;
-                                    }
+                                if (!col.isDigit) return;
+                                
+                                if (progress >= 1) {
+                                    col.activeLayer.textContent = col.char;
+                                    col.activeLayer.style.transform = `translateY(0%) scale(1)`;
+                                    col.activeLayer.style.filter = `blur(0px)`;
+                                    col.activeLayer.style.opacity = 1;
+                                    col.nextLayer.style.opacity = 0;
+                                    return;
                                 }
+                                
+                                const currentSpin = easedProgress * col.totalChanges;
+                                const f = currentSpin % 1;
+                                const currentDigit = Math.floor(currentSpin) % 10;
+                                const nextDigit = (currentDigit + 1) % 10;
+                                
+                                col.nextLayer.textContent = currentDigit;
+                                col.activeLayer.textContent = nextDigit;
+                                
+                                // Outgoing layer (moves UP, scales to 0)
+                                const oldY = -100 * f;
+                                const oldScale = 1 - f;
+                                const oldBlur = f * baseBlur;
+                                
+                                col.nextLayer.style.transform = `translateY(${oldY}%) scale(${oldScale})`;
+                                col.nextLayer.style.filter = `blur(${oldBlur}px)`;
+                                col.nextLayer.style.opacity = 1 - f;
+                                
+                                // Incoming layer (moves IN from BOTTOM, scales from 0)
+                                const newY = 100 * (1 - f);
+                                const newScale = f;
+                                const newBlur = (1 - f) * baseBlur;
+                                
+                                col.activeLayer.style.transform = `translateY(${newY}%) scale(${newScale})`;
+                                col.activeLayer.style.filter = `blur(${newBlur}px)`;
+                                col.activeLayer.style.opacity = f;
                             });
 
-                            if (progress < 1 || isAnyAnimating) {
+                            if (progress < 1) {
                                 window.requestAnimationFrame(step);
                             }
                         };
@@ -725,7 +693,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     const counters = entry.target.querySelectorAll('.count-up');
                     counters.forEach(counter => {
-                        delete counter.dataset.finished;
                         const decimals = parseInt(counter.getAttribute('data-decimals') || '0');
                         counter.innerHTML = decimals > 0 ? '0.0' : '0';
                     });
