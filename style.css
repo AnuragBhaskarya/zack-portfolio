@@ -161,7 +161,7 @@ ul {
     gap: 10px;
     font-weight: 800;
     font-size: 1.2rem;
-    transition: flex 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .logo-img-wrapper {
@@ -213,7 +213,7 @@ ul {
 .logo-text-wrapper {
     display: flex;
     align-items: center;
-    transition: flex 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .logo-text {
