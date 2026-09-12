@@ -568,7 +568,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     counters.forEach(counter => {
                         const target = parseFloat(counter.getAttribute('data-target'));
                         const decimals = parseInt(counter.getAttribute('data-decimals') || '0');
-                        const duration = 3000; // Restored to 3.0 seconds for the preferred majestic ease
+                        const duration = 4000; // Slower and smoother
 
                         const formatVal = (val) => decimals > 0 ? val.toFixed(decimals) : Math.floor(val).toLocaleString();
                         const targetStr = formatVal(target);
@@ -614,11 +614,9 @@ document.addEventListener('DOMContentLoaded', () => {
                                 const targetDigit = parseInt(char, 10);
                                 // The right-most digits spin more, simulating an odometer's mechanical linkage
                                 const posFromRight = targetStr.length - 1 - i;
-                                // Dramatic odometer variation: rightmost whirs fast, leftmost barely moves
-                                const spins = 1 + posFromRight * 1.5; // e.g. 1, 2.5, 4, 5.5...
-                                totalChanges = Math.round(spins * 10) + targetDigit;
-                                // Strong cascading stagger for visible wave effect
-                                delay = posFromRight * 120;
+                                const spins = Math.min(posFromRight + 1, 3);
+                                totalChanges = spins * 10 + targetDigit;
+                                delay = posFromRight * 40;
                             } else {
                                 layer1.textContent = char;
                                 layer2.style.opacity = 0;
