@@ -568,7 +568,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     counters.forEach(counter => {
                         const target = parseFloat(counter.getAttribute('data-target'));
                         const decimals = parseInt(counter.getAttribute('data-decimals') || '0');
-                        const duration = 2400; // Reduced from 3000 to minimize "dead" windup time
+                        const duration = 3000; // Restored to 3.0 seconds for the preferred majestic ease
 
                         const formatVal = (val) => decimals > 0 ? val.toFixed(decimals) : Math.floor(val).toLocaleString();
                         const targetStr = formatVal(target);
