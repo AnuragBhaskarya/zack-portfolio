@@ -898,18 +898,22 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                         
                         // Phase 2: Write transforms
+                        // Cylinder radius relative to screen size. Lower = more extreme curve.
+                        const R = screenCenterX * 1.5;
+                        
                         items.forEach((item, i) => {
                             const distFromCenter = centers[i] - screenCenterX;
-                            // Normalize roughly between -1 and 1 based on screen width
-                            const normalizedDist = distFromCenter / screenCenterX; 
                             
-                            const absDist = Math.abs(normalizedDist);
-                            // Scale: 0.85 at center, increasing to ~1.2 at edges
-                            const scale = 0.85 + 0.35 * (absDist * absDist);
-                            // Rotation: angles inward towards the user
-                            const rotateY = -normalizedDist * 35; 
+                            // Map linear distance to an angle on the cylinder (radians)
+                            const theta = distFromCenter / R; 
                             
-                            item.style.transform = `perspective(1200px) scale(${scale}) rotateY(${rotateY}deg)`;
+                            // To map the flat flexbox onto a cylinder, we need to compensate X
+                            // and push the item forward in Z, then rotate it.
+                            const deltaX = R * Math.sin(theta) - distFromCenter;
+                            const deltaZ = R * (1 - Math.cos(theta));
+                            const rotateY = -theta * (180 / Math.PI);
+                            
+                            item.style.transform = `translateX(${deltaX}px) translateZ(${deltaZ}px) rotateY(${rotateY}deg)`;
                         });
                     }
                 } else {

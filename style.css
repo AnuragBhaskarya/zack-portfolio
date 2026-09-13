@@ -756,15 +756,16 @@ main {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    overflow: hidden;
     width: 100%;
+    perspective: 1200px;
+    transform-style: preserve-3d;
 }
 
 .marquee-row-wrapper {
-    overflow: hidden;
     width: 100%;
     position: relative;
     padding: 10px 0;
+    transform-style: preserve-3d;
 }
 
 /* Hide the actual thumb-cards until loaded, but keep skeletons visible */
@@ -817,15 +818,22 @@ main {
     cursor: grab;
     user-select: none;
 }
-
 .marquee-track:active {
     cursor: grabbing;
+}
+
+.marquee-track {
+    display: flex;
+    gap: 24px;
+    flex-shrink: 0;
+    transform-style: preserve-3d;
 }
 
 .marquee-group {
     display: flex;
     gap: 24px;
     flex-shrink: 0;
+    transform-style: preserve-3d;
 }
 
 .thumb-card {
