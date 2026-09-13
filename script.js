@@ -775,31 +775,48 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (resizeTimeout) clearTimeout(resizeTimeout);
                 resizeTimeout = setTimeout(() => {
                     measureWrapDist();
+                    rebuildItemsData();
                     resizeTimeout = null;
                 }, 100);
             };
             window.addEventListener('resize', resizeListener);
 
             // --- 3D Projection Setup ---
-            const items = Array.from(track.querySelectorAll('.thumb-card, .thumb-skeleton'));
-            const gap = window.innerWidth <= 768 ? 12 : 24;
-            const width = items[0] ? (items[0].getBoundingClientRect().width || 320) : 320;
-            const step = width + gap;
+            // Build itemsData per-group so the second (duplicate) group
+            // gets its offset from cachedWrapDist, not a linear continuation.
+            let itemsData = [];
             
-            const itemsData = items.map((item, index) => {
-                return {
-                    item: item,
-                    relativeCenter: index * step + (width / 2)
-                };
-            });
+            function rebuildItemsData() {
+                itemsData = [];
+                const groups = track.querySelectorAll('.marquee-group');
+                const isMobile = window.innerWidth <= 768;
+                const itemGap = isMobile ? 12 : 24;
+                const itemWidth = isMobile ? 320 : 400;
+                const itemStep = itemWidth + itemGap;
+                
+                groups.forEach((group, gIdx) => {
+                    const groupItems = Array.from(group.querySelectorAll('.thumb-card, .thumb-skeleton'));
+                    // First group starts at 0; second group starts at wrapDist
+                    // wrapDist = first group's full width + gap between groups
+                    const groupOffset = gIdx === 0 ? 0 : cachedWrapDist;
+                    
+                    groupItems.forEach((item, i) => {
+                        itemsData.push({
+                            item: item,
+                            relativeCenter: groupOffset + i * itemStep + (itemWidth / 2)
+                        });
+                    });
+                });
+            }
             
             function update3D() {
                 const screenCenterX = window.innerWidth / 2;
                 const R = screenCenterX * 1.5;
-                // wrapper is 100vw, getting its rect left ensures correct screen offset
-                const currentTrackLeft = wrapper.getBoundingClientRect().left + x;
+                const wrapperLeft = wrapper ? wrapper.getBoundingClientRect().left : 0;
+                const currentTrackLeft = wrapperLeft + x;
                 
-                itemsData.forEach(data => {
+                for (let i = 0; i < itemsData.length; i++) {
+                    const data = itemsData[i];
                     const itemScreenCenter = currentTrackLeft + data.relativeCenter;
                     const distFromCenter = itemScreenCenter - screenCenterX;
                     
@@ -809,7 +826,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const rotateY = -theta * (180 / Math.PI);
                     
                     data.item.style.transform = `translateX(${deltaX}px) translateZ(${deltaZ}px) rotateY(${rotateY}deg)`;
-                });
+                }
             }
             // -------------------------
 
@@ -931,6 +948,7 @@ document.addEventListener('DOMContentLoaded', () => {
             requestAnimationFrame(() => {
                 if (!alive || !track.isConnected) return;
                 measureWrapDist();
+                rebuildItemsData();
                 tick();
                 if (wrapper) wrapper.classList.add('visible');
             });
