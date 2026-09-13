@@ -782,14 +782,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // --- 3D Projection Setup ---
             const items = Array.from(track.querySelectorAll('.thumb-card, .thumb-skeleton'));
-            // Temporarily reset track transform to measure accurate base positions
-            track.style.transform = 'translate3d(0,0,0)';
-            const trackRectLeft = track.getBoundingClientRect().left;
-            const itemsData = items.map(item => {
-                const rect = item.getBoundingClientRect();
+            const gap = window.innerWidth <= 768 ? 12 : 24;
+            const width = items[0] ? (items[0].getBoundingClientRect().width || 320) : 320;
+            const step = width + gap;
+            
+            const itemsData = items.map((item, index) => {
                 return {
                     item: item,
-                    relativeCenter: (rect.left - trackRectLeft) + rect.width / 2
+                    relativeCenter: index * step + (width / 2)
                 };
             });
             
