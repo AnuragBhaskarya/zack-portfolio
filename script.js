@@ -886,6 +886,31 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (x !== lastRenderedX) {
                         lastRenderedX = x;
                         track.style.transform = 'translate3d(' + x + 'px,0,0)';
+                        
+                        // 3D Pinch Warp Effect
+                        const items = Array.from(track.querySelectorAll('.thumb-card, .thumb-skeleton'));
+                        const screenCenterX = window.innerWidth / 2;
+                        
+                        // Phase 1: Read positions (Avoid layout thrashing)
+                        const centers = items.map(item => {
+                            const rect = item.getBoundingClientRect();
+                            return rect.left + rect.width / 2;
+                        });
+                        
+                        // Phase 2: Write transforms
+                        items.forEach((item, i) => {
+                            const distFromCenter = centers[i] - screenCenterX;
+                            // Normalize roughly between -1 and 1 based on screen width
+                            const normalizedDist = distFromCenter / screenCenterX; 
+                            
+                            const absDist = Math.abs(normalizedDist);
+                            // Scale: 0.85 at center, increasing to ~1.2 at edges
+                            const scale = 0.85 + 0.35 * (absDist * absDist);
+                            // Rotation: angles inward towards the user
+                            const rotateY = -normalizedDist * 35; 
+                            
+                            item.style.transform = `perspective(1200px) scale(${scale}) rotateY(${rotateY}deg)`;
+                        });
                     }
                 } else {
                     lastFrameTime = now;
