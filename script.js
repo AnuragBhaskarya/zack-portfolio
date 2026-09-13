@@ -780,6 +780,39 @@ document.addEventListener('DOMContentLoaded', () => {
             };
             window.addEventListener('resize', resizeListener);
 
+            // --- 3D Projection Setup ---
+            const items = Array.from(track.querySelectorAll('.thumb-card, .thumb-skeleton'));
+            // Temporarily reset track transform to measure accurate base positions
+            track.style.transform = 'translate3d(0,0,0)';
+            const trackRectLeft = track.getBoundingClientRect().left;
+            const itemsData = items.map(item => {
+                const rect = item.getBoundingClientRect();
+                return {
+                    item: item,
+                    relativeCenter: (rect.left - trackRectLeft) + rect.width / 2
+                };
+            });
+            
+            function update3D() {
+                const screenCenterX = window.innerWidth / 2;
+                const R = screenCenterX * 1.5;
+                // wrapper is 100vw, getting its rect left ensures correct screen offset
+                const currentTrackLeft = wrapper.getBoundingClientRect().left + x;
+                
+                itemsData.forEach(data => {
+                    const itemScreenCenter = currentTrackLeft + data.relativeCenter;
+                    const distFromCenter = itemScreenCenter - screenCenterX;
+                    
+                    const theta = distFromCenter / R; 
+                    const deltaX = R * Math.sin(theta) - distFromCenter;
+                    const deltaZ = R * (1 - Math.cos(theta));
+                    const rotateY = -theta * (180 / Math.PI);
+                    
+                    data.item.style.transform = `translateX(${deltaX}px) translateZ(${deltaZ}px) rotateY(${rotateY}deg)`;
+                });
+            }
+            // -------------------------
+
             function wrapOffset(val) {
                 if (cachedWrapDist <= 0) return val;
                 val = val % cachedWrapDist;
@@ -830,6 +863,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 lastX = clientX;
                 lastTime = now;
                 track.style.transform = 'translate3d(' + x + 'px,0,0)';
+                update3D();
             }
 
             function onEnd() {
@@ -886,35 +920,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (x !== lastRenderedX) {
                         lastRenderedX = x;
                         track.style.transform = 'translate3d(' + x + 'px,0,0)';
-                        
-                        // 3D Pinch Warp Effect
-                        const items = Array.from(track.querySelectorAll('.thumb-card, .thumb-skeleton'));
-                        const screenCenterX = window.innerWidth / 2;
-                        
-                        // Phase 1: Read positions (Avoid layout thrashing)
-                        const centers = items.map(item => {
-                            const rect = item.getBoundingClientRect();
-                            return rect.left + rect.width / 2;
-                        });
-                        
-                        // Phase 2: Write transforms
-                        // Cylinder radius relative to screen size. Lower = more extreme curve.
-                        const R = screenCenterX * 1.5;
-                        
-                        items.forEach((item, i) => {
-                            const distFromCenter = centers[i] - screenCenterX;
-                            
-                            // Map linear distance to an angle on the cylinder (radians)
-                            const theta = distFromCenter / R; 
-                            
-                            // To map the flat flexbox onto a cylinder, we need to compensate X
-                            // and push the item forward in Z, then rotate it.
-                            const deltaX = R * Math.sin(theta) - distFromCenter;
-                            const deltaZ = R * (1 - Math.cos(theta));
-                            const rotateY = -theta * (180 / Math.PI);
-                            
-                            item.style.transform = `translateX(${deltaX}px) translateZ(${deltaZ}px) rotateY(${rotateY}deg)`;
-                        });
+                        update3D();
                     }
                 } else {
                     lastFrameTime = now;
